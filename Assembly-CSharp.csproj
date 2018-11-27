@@ -60,6 +60,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\ColliderManagement.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\GameManagement.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\AchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\EquipmentSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\GUIPanel.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\HealthSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\LevelSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\ScoringSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\ShopSystem.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\Authors.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\Highscores.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\LoadGame.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\MenuPanel.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\MultiplayerGame.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\NewGame.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\QuitGame.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\SaveGame.cs" />
     <Compile Include="Assets\Scripts\ProjectManagement.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Noxiu/Documents/Project Warpaid/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
