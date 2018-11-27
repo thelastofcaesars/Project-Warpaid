@@ -78,7 +78,9 @@
     <Compile Include="Assets\Scripts\MenuPanel\NewGame.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\QuitGame.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\PlayerShip.cs" />
     <Compile Include="Assets\Scripts\ProjectManagement.cs" />
+    <Compile Include="Assets\Scripts\RotationTurret.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Noxiu/Documents/Project Warpaid/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
