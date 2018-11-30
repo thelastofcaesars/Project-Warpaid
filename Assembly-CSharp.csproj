@@ -74,14 +74,8 @@
     <Compile Include="Assets\Scripts\GUIPanel\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\ScoringSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\ShopSystem.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\Authors.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\Highscores.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\LoadGame.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\MenuPanel.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\MultiplayerGame.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\NewGame.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\QuitGame.cs" />
-    <Compile Include="Assets\Scripts\MenuPanel\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\MenuPanel\MenuPanelMan.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />
     <Compile Include="Assets\Scripts\Player\UsePlayerSO.cs" />

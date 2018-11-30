@@ -8,26 +8,29 @@ public class MenuPanel : MonoBehaviour
 {
     public GameObject highscoresPanel;
     public GameObject authorsPanel;
-
+    public static bool isMoreWindows = false;
     void Update()
     {
-        if(Highscores.goHighscoresShow)
+        if (isMoreWindows)
         {
-            Highscores.goHighscoresShow = false;
-            ShowHighscores();
-        }
-        else if (Highscores.isHighscoresShown && CrossPlatformInputManager.GetButtonDown("Cancel"))
-        {
-            ShowHighscores();
-        }
-        if (Authors.goAuthorsShow)
-        {
-            Authors.goAuthorsShow = false;
-            ShowAuthors();
-        }
-        else if (Authors.isAuthorsShown && CrossPlatformInputManager.GetButtonDown("Cancel"))
-        {
-            ShowAuthors();
+            if (Highscores.goHighscoresShow)
+            {
+                Highscores.goHighscoresShow = false;
+                ShowHighscores();
+            }
+            else if (Highscores.isHighscoresShown && CrossPlatformInputManager.GetButtonDown("Cancel"))
+            {
+                ShowHighscores();
+            }
+            if (Authors.goAuthorsShow)
+            {
+                Authors.goAuthorsShow = false;
+                ShowAuthors();
+            }
+            else if (Authors.isAuthorsShown && CrossPlatformInputManager.GetButtonDown("Cancel"))
+            {
+                ShowAuthors();
+            }
         }
     }
 
@@ -37,13 +40,13 @@ public class MenuPanel : MonoBehaviour
         {
             highscoresPanel.SetActive(true);
             Highscores.isHighscoresShown = true;
-            GameManagement.goMenuShow = true;
         }
         else
         {
             highscoresPanel.SetActive(false);
             Highscores.isHighscoresShown = false;
             GameManagement.goMenuShow = true;
+            isMoreWindows = false;
         }
     }
     public void ShowAuthors()
@@ -52,13 +55,13 @@ public class MenuPanel : MonoBehaviour
         {
             authorsPanel.SetActive(true);
             Authors.isAuthorsShown = true;
-            GameManagement.goMenuShow = true;
         }
         else
         {
             authorsPanel.SetActive(false);
             Authors.isAuthorsShown = false;
             GameManagement.goMenuShow = true;
+            isMoreWindows = false;
         }
     }
 }
