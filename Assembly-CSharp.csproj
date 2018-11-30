@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemies\EnemyManagement.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Enemies\UseEnemySO.cs" />
     <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\GUIPanel\EquipmentSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\GUIPanel.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\HealthSystem.cs" />
+    <Compile Include="Assets\Scripts\GUIPanel\HUDSystems.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\ScoringSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\ShopSystem.cs" />
@@ -80,6 +82,9 @@
     <Compile Include="Assets\Scripts\MenuPanel\NewGame.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\QuitGame.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />
+    <Compile Include="Assets\Scripts\Player\UsePlayerSO.cs" />
     <Compile Include="Assets\Scripts\ProjectManagement.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Noxiu/Documents/Project Warpaid/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

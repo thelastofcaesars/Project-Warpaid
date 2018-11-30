@@ -9,7 +9,7 @@ public class GameManagement : MonoBehaviour
     public static bool isMenuShown = true;
     void Update()
     {
-        if(Input.GetKeyDown("Fire1"))
+        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
             showMenuPanel();
         }
