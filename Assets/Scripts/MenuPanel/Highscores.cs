@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Highscores : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static bool isHighscoresShown = false;
+    public static bool goHighscoresShow = false;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        goHighscoresShow = true;
     }
 }

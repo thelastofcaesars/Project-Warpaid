@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Authors : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static bool isAuthorsShown = false;
+    public static bool goAuthorsShow = false;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        goAuthorsShow = true;
     }
 }

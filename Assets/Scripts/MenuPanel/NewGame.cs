@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class NewGame : MonoBehaviour
 {
+    
     void Update()
     {
-        
-    }
-    void MenuOff()
-    {
-        
+        GameManagement.goMenuShow = true;
+        GameManagement.isInGame = true;
     }
 }
