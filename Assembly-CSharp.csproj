@@ -60,11 +60,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BGScroller.cs" />
+    <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
+    <Compile Include="Assets\Scripts\DestroyByContact.cs" />
+    <Compile Include="Assets\Scripts\DestroyByTime.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyManagement.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EvasiveManeuver.cs" />
     <Compile Include="Assets\Scripts\Enemies\UseEnemySO.cs" />
     <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
     <Compile Include="Assets\Scripts\GameManagement\ColliderManagement.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\GameController.cs" />
     <Compile Include="Assets\Scripts\GameManagement\GameManagement.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\AchievementSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\EquipmentSystem.cs" />
@@ -76,10 +82,12 @@
     <Compile Include="Assets\Scripts\GUIPanel\ShopSystem.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\MenuPanel.cs" />
     <Compile Include="Assets\Scripts\MenuPanel\MenuPanelMan.cs" />
+    <Compile Include="Assets\Scripts\Mover.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />
     <Compile Include="Assets\Scripts\Player\UsePlayerSO.cs" />
     <Compile Include="Assets\Scripts\ProjectManagement.cs" />
+    <Compile Include="Assets\Scripts\RandomRotator.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Noxiu/Documents/Project Warpaid/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
