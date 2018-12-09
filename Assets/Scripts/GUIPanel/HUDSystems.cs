@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class HUDSystems : MonoBehaviour
 {
-    static public int theJumps = PlayerShip.S.theLifes;
+    static public int theJumps = PlayerShip.S.lifes;
 }

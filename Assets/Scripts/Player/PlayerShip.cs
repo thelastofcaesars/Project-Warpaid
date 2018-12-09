@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[System.Serializable]
+public class Boundary
+{
+    public float xMin, xMax, zMin, zMax;
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerShip : MonoBehaviour
 {
     static private PlayerShip _S;
-    public int theLifes;
     static public PlayerShip S
     {
         get
@@ -23,19 +28,22 @@ public class PlayerShip : MonoBehaviour
             _S = value;
         }
     }
+    private new AudioSource audio;
+    private Rigidbody rigid;
+    private float nextFire;
 
     [Header("Set in Inspector")]
-    public float shipSpeed = 10f;
-    public GameObject bulletPrefab;
+    public float shipSpeed = 1.0f;
+    public float tilt;
+    public int lifes;
 
-    public static bool jump = false;           // While hiting asteroid and still having jumps
-    public static bool invulnerable = false;   // If jumps, then can not be destroyed for 2 sec 
-    public Light spaceShipLight;         // Lights turn on while jumping
-    public float lightIt = 0;
+    public float bulletRate;
+    public GameObject shot;
+    public Transform[] shotSpawns;
 
-    Rigidbody rigid;
+    public Boundary boundary;
 
-
+    
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
     void Awake()
@@ -44,81 +52,53 @@ public class PlayerShip : MonoBehaviour
 
         // NOTE: We don't need to check whether or not rigid is null because of [RequireComponent()] above
         rigid = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+        {
+            Fire();
+        }
+    }
+    void FixedUpdate()
+    {
+        Move();
+    }
+    void Move()
+    {
         // Using Horizontal and Vertical axes to set velocity
         float aX = CrossPlatformInputManager.GetAxis("Horizontal");
-        float aY = CrossPlatformInputManager.GetAxis("Vertical");
+        float aZ = CrossPlatformInputManager.GetAxis("Vertical");
 
-        Vector3 vel = new Vector3(aX, aY);
+        Vector3 vel = new Vector3(aX, 0.0f, aZ);
         if (vel.magnitude > 1)
         {
             // Avoid speed multiplying by 1.414 when moving at a diagonal
             vel.Normalize();
         }
-
         rigid.velocity = vel * shipSpeed;
-
-        // Mouse input for firing
-        // Ends teleport
-        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
-        {
-            Fire();
-            invulnerable = false;
-        }
-
-        // Check if hited, then jump to another position
-        if (jump == true)
-        {
-            StartCoroutine(Jump());
-        }
+        rigid.position = new Vector3
+        (
+            Mathf.Clamp(rigid.position.x, boundary.xMin, boundary.xMax),
+            0.0f,
+            Mathf.Clamp(rigid.position.z, boundary.zMin, boundary.zMax)
+        );
+        rigid.rotation = Quaternion.Euler(0.0f, 0.0f, rigid.velocity.x * -tilt);
     }
     void Fire()
     {
-        // Get direction to the mouse
-        Vector3 mPos = Input.mousePosition;
-        mPos.z = -Camera.main.transform.position.z;
-        Vector3 mPos3D = Camera.main.ScreenToWorldPoint(mPos);
-
-        // Instantiate the Bullet and set its direction
-        GameObject go = Instantiate<GameObject>(bulletPrefab);
-        go.transform.position = transform.position;
-        go.transform.LookAt(mPos3D);
-    }
-
-    IEnumerator Jump()
-    {
-        HUDSystems.theJumps -= 1;
-        jump = false;
-        invulnerable = true;
-        enabled = false;
-
-        // Find a good location for the SpaceShip to spawn
-        // It's reverse to Asteroid's spawn
-        // In fact, it is not good at all, sometimes I can see it too late,
-        // so I think immunity and position 0,0 would be a good one
-        /*Vector3 pos;
-        pos = ScreenBounds.RANDOM_ON_SCREEN_LOC;
-        transform.position = pos;
-        */
-        transform.position = new Vector3(0, 0, 0);
-        enabled = true;
-
-        // Changing the color of light
-        spaceShipLight.enabled = true;
-        lightIt = 0f;
-        do
+        if (Time.time > nextFire)
         {
-            lightIt += 0.25f;
-            spaceShipLight.color = new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f));
-            spaceShipLight.range = Random.Range(0.75f, 2.0f);
-            yield return new WaitForSeconds(0.25f);
-        } while (lightIt != 2.0f && invulnerable == true);
-        spaceShipLight.enabled = false;
-
-        invulnerable = false;
+            // Instantiate the Bullet and set its direction
+            nextFire = Time.time + bulletRate;
+            foreach (var shotSpawn in shotSpawns)
+            {
+                Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            }
+            audio.Play();
+        }
     }
 
     static public float MAX_SPEED
