@@ -1,0 +1,5 @@
+*_2L.* filter=lfs diff=lfs merge=lfs -text
+*_2L.obj filter=lfs diff=lfs merge=lfs -text
+*_2L.png filter=lfs diff=lfs merge=lfs -text
+*_2L.fbx filter=lfs diff=lfs merge=lfs -text
+*.tga* filter=lfs diff=lfs merge=lfs -text

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManagement : MonoBehaviour
 {
     public GameObject shot;
-    public Transform shotSpawn;
+    public Transform[] shotSpawns;
     public float bulletTime;
     public float delay;
 
@@ -20,7 +20,10 @@ public class EnemyManagement : MonoBehaviour
     
     void Fire()
     {
-        Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        foreach (var shotSpawn in shotSpawns)
+        {
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
         audio.Play();
     }
 }
