@@ -28,9 +28,15 @@ Complete installation package will be future released and linked here
 
 ## Versioning
 
-### 0.0 - commit
+### -1.0 - commit dfda534
+Project before restart
+
+### 0.0 - commit 969a353
 Reseted history.
-Added gitignore, readme, license and lfs plugin to project.
+Added gitignore, readme and lfs plugin to project.
+
+### 0.1a - commit 62995f5
+Merged reset project to master. 
 
 ## How to Use?
 
