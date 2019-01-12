@@ -61,6 +61,11 @@ public class PlayerShip : MonoBehaviour
         {
             Fire();
         }
+        // Need to add tab UI to change actual skill and one more input axis
+        if (CrossPlatformInputManager.GetButtonDown("Fire2"))
+        {
+            SkillManagement.RotateAroundCenter();
+        }
     }
     void FixedUpdate()
     {
@@ -107,5 +112,9 @@ public class PlayerShip : MonoBehaviour
         {
             return S.shipSpeed;
         }
+    }
+    static public PlayerShip GetPlayerShip()
+    {
+        return S;
     }
 }

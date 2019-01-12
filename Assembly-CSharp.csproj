@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Mover.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />
+    <Compile Include="Assets\Scripts\Player\SkillManagement.cs" />
     <Compile Include="Assets\Scripts\Player\UsePlayerSO.cs" />
     <Compile Include="Assets\Scripts\ProjectManagement.cs" />
     <Compile Include="Assets\Scripts\RandomRotator.cs" />
