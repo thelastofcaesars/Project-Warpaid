@@ -30,10 +30,11 @@ public class PlayerShip : MonoBehaviour
     }
     private new AudioSource audio;
     private Rigidbody rigid;
-    private Animator anim;
 
+    private Animator anim;
     private int idleStateHash = Animator.StringToHash("Base Layer.Idle");
     public static bool canI = true;
+
     private float nextFire;
     [Header("Set in Inspector")]
     public float shipSpeed = 1.0f;
@@ -45,7 +46,7 @@ public class PlayerShip : MonoBehaviour
     public Transform[] shotSpawns;
 
     public Boundary boundary;
-    private static int rotateHash = Animator.StringToHash("Rotate");
+
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
     void Awake()
@@ -55,8 +56,7 @@ public class PlayerShip : MonoBehaviour
         // NOTE: We don't need to check whether or not rigid is null because of [RequireComponent()] above
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
-        anim = GetComponent<Animator>();
-        canI = true;
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -66,8 +66,11 @@ public class PlayerShip : MonoBehaviour
             Fire();
         }
 
-        Skill();
-        
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (CrossPlatformInputManager.GetButtonDown("Skill") && stateInfo.fullPathHash == idleStateHash)
+        {
+            Skill();
+        }
     }
     void FixedUpdate()
     {
@@ -75,17 +78,7 @@ public class PlayerShip : MonoBehaviour
     }
     void Skill()
     {
-    
-        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            canI = false;
-            Debug.Log(stateInfo.ToString());
-            IERotateAroundCenter(anim);
-          //  SkillManagement.RotateAroundCenter();
-            Debug.Log(anim.GetCurrentAnimatorStateInfo(0).ToString());
-        }
-
+        StartCoroutine(SkillManagement.IERotateAroundCenter(anim));
     }
     void Move()
     {
@@ -94,6 +87,7 @@ public class PlayerShip : MonoBehaviour
         float aZ = CrossPlatformInputManager.GetAxis("Vertical");
 
         Vector3 vel = new Vector3(aX, 0.0f, aZ);
+    
         if (vel.magnitude > 1)
         {
             // Avoid speed multiplying by 1.414 when moving at a diagonal
@@ -136,13 +130,5 @@ public class PlayerShip : MonoBehaviour
     static public PlayerShip GetPlayerShip()
     {
         return S;
-    }
-    public IEnumerator IERotateAroundCenter(Animator anim)
-    {
-        anim.GetComponent<Animator>().SetFloat(rotateHash, 1f);
-        Debug.Log("wtf" + anim.GetCurrentAnimatorStateInfo(0).ToString());
-        yield return new WaitForSeconds(2);
-        anim.GetComponent<Animator>().SetFloat(rotateHash, 0f);
-        PlayerShip.canI = true;
     }
 }
