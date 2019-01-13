@@ -19,36 +19,37 @@ public class MenuPanelMan : MonoBehaviour
     public static bool isSaveGameShown = false;
     public static bool goSaveGameShow = false;
 
+    /*
     public void Authors()
     {
         MenuPanel.isMoreWindows = true;
-        GameManagement.goMenuShow = true;
+        Warpaid.goMenuShow = true;
         goAuthorsShow = true;
     }
 
     public void Highscores()
     {
         MenuPanel.isMoreWindows = true;
-        GameManagement.goMenuShow = true;
+        Warpaid.goMenuShow = true;
         goHighscoresShow = true;
     }
 
     public void LoadGame()
     {
         MenuPanel.isMoreWindows = true;
-        GameManagement.goMenuShow = true;
+        Warpaid.goMenuShow = true;
         goLoadGameShow = true;
     }
     public void MultiplayerGame()
     {
         MenuPanel.isMoreWindows = true;
-        GameManagement.goMenuShow = true;
+        Warpaid.goMenuShow = true;
         goMultiplayerShow = true;
     }
     public void NewGame()
     {
-        GameManagement.goMenuShow = true;
-        GameManagement.isInGame = true;
+        Warpaid.goMenuShow = true;
+        Warpaid.isInGame = true;
     }
     public void QuitGame()
     {
@@ -57,7 +58,7 @@ public class MenuPanelMan : MonoBehaviour
     public void SaveGame()
     {
         MenuPanel.isMoreWindows = true;
-        GameManagement.goMenuShow = true;
+        Warpaid.goMenuShow = true;
         goSaveGameShow = true;
-    }
+    }*/
 }

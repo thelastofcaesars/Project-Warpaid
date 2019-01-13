@@ -15,7 +15,8 @@ public class MenuPanel : MonoBehaviour
 
     public static bool isMoreWindows = false;
 
-    void Update()
+    /*
+     * void Update()
     {
         //MenuPanel's management -> to optimize
         //Enums? Maybe switch
@@ -85,7 +86,7 @@ public class MenuPanel : MonoBehaviour
         {
             authorsPanel.SetActive(false);
             MenuPanelMan.isAuthorsShown = false;
-            GameManagement.goMenuShow = true;
+            Warpaid.goMenuShow = true;
             isMoreWindows = false;
         }
     }
@@ -101,7 +102,7 @@ public class MenuPanel : MonoBehaviour
         {
             highscorePanel.SetActive(false);
             MenuPanelMan.isHighscoresShown = false;
-            GameManagement.goMenuShow = true;
+            Warpaid.goMenuShow = true;
             isMoreWindows = false;
         }
     }
@@ -133,7 +134,7 @@ public class MenuPanel : MonoBehaviour
         {
             multiplayerPanel.SetActive(false);
             MenuPanelMan.isMultiplayerShown = false;
-            GameManagement.goMenuShow = true;
+            Warpaid.goMenuShow = true;
             isMoreWindows = false;
         }
     }
@@ -149,9 +150,10 @@ public class MenuPanel : MonoBehaviour
         {
             savegamePanel.SetActive(false);
             MenuPanelMan.isSaveGameShown = false;
-            GameManagement.goMenuShow = true;
+            Warpaid.goMenuShow = true;
             isMoreWindows = false;
         }
     }
     #endregion end of ShowPanel
+    */
 }

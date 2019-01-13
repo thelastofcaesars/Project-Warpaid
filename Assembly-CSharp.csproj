@@ -60,18 +60,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Additonal\ActiveOnlyDuringSomeGameStates.cs" />
+    <Compile Include="Assets\Scripts\Additonal\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Additonal\EnumFlagsAttributePropertyDrawer.cs" />
+    <Compile Include="Assets\Scripts\Additonal\OffScreenWrapper.cs" />
+    <Compile Include="Assets\Scripts\Additonal\Particle.cs" />
+    <Compile Include="Assets\Scripts\Additonal\ScaleSpriteToFillOrthographicCamera.cs" />
+    <Compile Include="Assets\Scripts\Additonal\ScreenBounds.cs" />
+    <Compile Include="Assets\Scripts\Additonal\TiltWithVelocity.cs" />
+    <Compile Include="Assets\Scripts\Additonal\Vector3Extensions.cs" />
     <Compile Include="Assets\Scripts\BGScroller.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\DestroyByContact.cs" />
     <Compile Include="Assets\Scripts\DestroyByTime.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyManagement.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Enemies\EvasiveManeuver.cs" />
-    <Compile Include="Assets\Scripts\Enemies\UseEnemySO.cs" />
     <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
     <Compile Include="Assets\Scripts\GameManagement\ColliderManagement.cs" />
     <Compile Include="Assets\Scripts\GameManagement\GameController.cs" />
-    <Compile Include="Assets\Scripts\GameManagement\GameManagement.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\Warpaid.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\AchievementSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\EquipmentSystem.cs" />
     <Compile Include="Assets\Scripts\GUIPanel\GUIPanel.cs" />
