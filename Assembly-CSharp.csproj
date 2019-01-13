@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\GUI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\GUI\ScoringSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\ShopSystem.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Mover.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />

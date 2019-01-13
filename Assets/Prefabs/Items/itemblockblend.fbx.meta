@@ -1,72 +1,27 @@
 fileFormatVersion: 2
-guid: 5180c540f229bfb4abcfbc1ea646a4a4
+guid: 36f0e032c3418ec4d8ea00074fc71085
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: BackWire
-    100002: Core
-    100004: Engines
-    100006: FrontWire
-    100008: LeftBackWire
-    100010: LeftCore
-    100012: LeftFrontWire
-    100014: RightBackWire
-    100016: RightCore
-    100018: RightFrontWire
-    100020: ShipBody
-    100022: //RootNode
-    100024: Towers
-    400000: BackWire
-    400002: Core
-    400004: Engines
-    400006: FrontWire
-    400008: LeftBackWire
-    400010: LeftCore
-    400012: LeftFrontWire
-    400014: RightBackWire
-    400016: RightCore
-    400018: RightFrontWire
-    400020: ShipBody
-    400022: //RootNode
-    400024: Towers
-    2100000: No Name
-    2300000: BackWire
-    2300002: Core
-    2300004: Engines
-    2300006: FrontWire
-    2300008: LeftBackWire
-    2300010: LeftCore
-    2300012: LeftFrontWire
-    2300014: RightBackWire
-    2300016: RightCore
-    2300018: RightFrontWire
-    2300020: ShipBody
-    2300022: Towers
-    3300000: BackWire
-    3300002: Core
-    3300004: Engines
-    3300006: FrontWire
-    3300008: LeftBackWire
-    3300010: LeftCore
-    3300012: LeftFrontWire
-    3300014: RightBackWire
-    3300016: RightCore
-    3300018: RightFrontWire
-    3300020: ShipBody
-    3300022: Towers
-    4300000: ShipBody
-    4300002: Engines
-    4300004: Towers
-    4300006: BackWire
-    4300008: Core
-    4300010: FrontWire
-    4300012: RightBackWire
-    4300014: RightCore
-    4300016: RightFrontWire
-    4300018: LeftBackWire
-    4300020: LeftCore
-    4300022: LeftFrontWire
-  externalObjects: {}
+    100000: //RootNode
+    100002: ItemImage
+    100004: ItemPocket
+    400000: //RootNode
+    400002: ItemImage
+    400004: ItemPocket
+    2100000: PocketMat
+    2300000: ItemImage
+    2300002: ItemPocket
+    3300000: ItemImage
+    3300002: ItemPocket
+    4300000: ItemPocket
+    4300002: ItemImage
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PocketMat
+    second: {fileID: 2100000, guid: 5a969b88154856a4c87d9bf97ac7f4ca, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

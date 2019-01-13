@@ -21,7 +21,7 @@ public class Warpaid : MonoBehaviour
 
 
     // Game Controller
-    public Text gameOverText;
+    static Text GAMEOVER_GT;
     public GameObject quitButton;
 
     //
@@ -112,9 +112,9 @@ public class Warpaid : MonoBehaviour
         // This strange use of _gameState and _paused as an intermediary in the following 
         //  lines is solely to stop the Warning from popping up in the Console telling you 
         //  that _gameState was assigned but not used.
-        _gameState = eGameState.mainMenu;
+        _gameState = eGameState.level;
         GAME_STATE = _gameState;
-        _paused = true;
+        _paused = false;
         PauseGame(_paused);
     }
 
@@ -134,8 +134,7 @@ public class Warpaid : MonoBehaviour
         ENEMIES = new List<Enemy>();
         AddScore(0);
 
-        gameOverText.text = "";
-        StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnWaves());
 
         // Loading data needed
     }

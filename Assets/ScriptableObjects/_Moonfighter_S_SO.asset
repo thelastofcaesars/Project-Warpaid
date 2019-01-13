@@ -26,5 +26,8 @@ MonoBehaviour:
   - {fileID: 5892827062751724577, guid: eaffb0ba4d816154d81047edb96099dd, type: 3}
   enemyParticlePrefabs:
   - {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713, type: 3}
-  enemyDropPrefabs: []
-  bullet: {fileID: 8749576901211336131, guid: 42944825e6ab96a4295171a33a0a8dc2, type: 3}
+  enemyDropPrefabs:
+  - {fileID: 7415200248562355086, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}
+  - {fileID: 1260139446493431313, guid: 7110864bee722744aa9ef5065be02732, type: 3}
+  enemyBullet: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275,
+    type: 3}
