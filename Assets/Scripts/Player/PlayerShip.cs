@@ -47,6 +47,9 @@ public class PlayerShip : MonoBehaviour
 
     public Boundary boundary;
 
+    public GameObject coreRotator;
+    public ParticleSystem[] particleSystems;
+
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
     void Awake()
@@ -57,6 +60,7 @@ public class PlayerShip : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
+
     }
 
     void Update()
@@ -85,7 +89,7 @@ public class PlayerShip : MonoBehaviour
         // Using Horizontal and Vertical axes to set velocity
         float aX = CrossPlatformInputManager.GetAxis("Horizontal");
         float aZ = CrossPlatformInputManager.GetAxis("Vertical");
-
+        
         Vector3 vel = new Vector3(aX, 0.0f, aZ);
     
         if (vel.magnitude > 1)
@@ -101,6 +105,12 @@ public class PlayerShip : MonoBehaviour
             Mathf.Clamp(rigid.position.z, boundary.zMin, boundary.zMax)
         );
         rigid.rotation = Quaternion.Euler(0.0f, 0.0f, rigid.velocity.x * -tilt);
+        coreRotator.transform.Rotate(new Vector3(0f, 0f, aZ));
+        foreach(ParticleSystem ps in particleSystems)
+        {
+            if (aZ > 0) ps.startSpeed = aZ * aZ * 0.5f;
+            else if (aZ <= 0) ps.startSpeed = 0.3f;
+        }
     }
     void Fire()
     {
