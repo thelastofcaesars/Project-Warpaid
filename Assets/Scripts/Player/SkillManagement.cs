@@ -2,47 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillManagement : MonoBehaviour
+public static class SkillManagement
 {
-    private static SkillManagement _S;
-
-    public static SkillManagement S
-    {
-        get
-        {
-            if (S == null)
-            {
-                Debug.LogWarning("SkillManagement:S - attempt to get value before it has been set!");
-            }
-            return S;
-        }
-        set
-        {
-            if (S != null)
-            {
-                Debug.LogWarning("SkillManagement:S - attempt to set value after it has been set!");
-            }
-            else
-            {
-                S = _S;
-            }
-        }
-    }
-
-    private void Awake()
-    {
-        _S = this;
-    }
+    private static int rotateHash = Animator.StringToHash("Rotate");
 
     public static void RotateAroundCenter()
     {
-        S.StartCoroutine(S.IERotateAroundCenter(PlayerShip.GetPlayerShip()));
+        IERotateAroundCenter(PlayerShip.GetAnimator());
     }
 
-    public IEnumerator IERotateAroundCenter(PlayerShip playerShip)
+    public static IEnumerator IERotateAroundCenter(Animator anim)
     {
-        playerShip.GetComponent<Animator>().SetBool("isRotating", true);
+        anim.GetComponent<Animator>().SetFloat(rotateHash, 1f);
+        Debug.Log("wtf" + anim.GetCurrentAnimatorStateInfo(0).ToString());
         yield return new WaitForSeconds(4);
-        playerShip.GetComponent<Animator>().SetBool("isRotating", false);
+        anim.GetComponent<Animator>().SetFloat(rotateHash, 0f);
+        PlayerShip.canI = true;
     }
 }

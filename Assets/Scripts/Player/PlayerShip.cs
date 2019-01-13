@@ -30,8 +30,11 @@ public class PlayerShip : MonoBehaviour
     }
     private new AudioSource audio;
     private Rigidbody rigid;
-    private float nextFire;
+    private Animator anim;
 
+    private int idleStateHash = Animator.StringToHash("Base Layer.Idle");
+    public static bool canI = true;
+    private float nextFire;
     [Header("Set in Inspector")]
     public float shipSpeed = 1.0f;
     public float tilt;
@@ -42,8 +45,7 @@ public class PlayerShip : MonoBehaviour
     public Transform[] shotSpawns;
 
     public Boundary boundary;
-
-    
+    private static int rotateHash = Animator.StringToHash("Rotate");
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
     void Awake()
@@ -53,6 +55,8 @@ public class PlayerShip : MonoBehaviour
         // NOTE: We don't need to check whether or not rigid is null because of [RequireComponent()] above
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
+        canI = true;
     }
 
     void Update()
@@ -61,15 +65,27 @@ public class PlayerShip : MonoBehaviour
         {
             Fire();
         }
-        // Need to add tab UI to change actual skill and one more input axis
-        if (CrossPlatformInputManager.GetButtonDown("Fire2"))
-        {
-            SkillManagement.RotateAroundCenter();
-        }
+
+        Skill();
+        
     }
     void FixedUpdate()
     {
         Move();
+    }
+    void Skill()
+    {
+    
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            canI = false;
+            Debug.Log(stateInfo.ToString());
+            IERotateAroundCenter(anim);
+          //  SkillManagement.RotateAroundCenter();
+            Debug.Log(anim.GetCurrentAnimatorStateInfo(0).ToString());
+        }
+
     }
     void Move()
     {
@@ -113,8 +129,20 @@ public class PlayerShip : MonoBehaviour
             return S.shipSpeed;
         }
     }
+    static public Animator GetAnimator()
+    {
+        return S.anim;
+    }
     static public PlayerShip GetPlayerShip()
     {
         return S;
+    }
+    public IEnumerator IERotateAroundCenter(Animator anim)
+    {
+        anim.GetComponent<Animator>().SetFloat(rotateHash, 1f);
+        Debug.Log("wtf" + anim.GetCurrentAnimatorStateInfo(0).ToString());
+        yield return new WaitForSeconds(2);
+        anim.GetComponent<Animator>().SetFloat(rotateHash, 0f);
+        PlayerShip.canI = true;
     }
 }

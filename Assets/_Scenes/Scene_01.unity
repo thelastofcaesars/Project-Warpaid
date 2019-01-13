@@ -543,6 +543,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &237955151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 237955152}
+  m_Layer: 0
+  m_Name: SkillManagement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &237955152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237955151}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.38051724, y: -0.16741991, z: 0.6263761}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1086517703}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &247781419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -949,6 +979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1815865219}
+  - {fileID: 237955152}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2715,6 +2746,7 @@ GameObject:
   - component: {fileID: 4059018375168838995}
   - component: {fileID: 4059018375165939059}
   - component: {fileID: 4059018375167070131}
+  - component: {fileID: 4059018375169266036}
   m_Layer: 0
   m_Name: ShipBody
   m_TagString: Untagged
@@ -2722,6 +2754,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &4059018375169266036
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059018375169266035}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 504b2d766ed1f6d489817691ab8a7097, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4059018375169266037
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,10 +2818,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4059018375168839005}
-  - component: {fileID: 4059018375169266049}
   - component: {fileID: 4059018375169266048}
-  - component: {fileID: 4059018375169266046}
   - component: {fileID: 4059018375169266050}
+  - component: {fileID: 4059018375169266046}
+  - component: {fileID: 4059018375169266049}
   - component: {fileID: 4059018375169266051}
   m_Layer: 0
   m_Name: LazeredShip
@@ -2791,6 +2842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7511aabaf8476624c81824b9b0db14b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabledToDoSomeAnimation: 0
   shipSpeed: 12
   tilt: 1.5
   lifes: 5
@@ -2961,7 +3013,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 00e0eccacf687b9439395615a599533a, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
