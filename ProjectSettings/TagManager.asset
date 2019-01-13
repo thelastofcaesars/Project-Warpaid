@@ -7,6 +7,7 @@ TagManager:
   - Boundary
   - Enemy
   - Asteroid
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -108,8 +108,9 @@ public class PlayerShip : MonoBehaviour
         coreRotator.transform.Rotate(new Vector3(0f, 0f, aZ));
         foreach(ParticleSystem ps in particleSystems)
         {
-            if (aZ > 0) ps.startSpeed = aZ * aZ * 0.5f;
-            else if (aZ <= 0) ps.startSpeed = 0.3f;
+            ParticleSystem.MainModule main = ps.main;
+            if (aZ > 0) main.startSpeed = aZ * aZ * 0.5f;
+            else if (aZ <= 0) main.startSpeed = 0.3f;
         }
     }
     void Fire()

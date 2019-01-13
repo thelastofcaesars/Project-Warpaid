@@ -19,6 +19,13 @@ public class Warpaid : MonoBehaviour
     static private eGameState _GAME_STATE = eGameState.mainMenu;
     static public bool GOT_HIGH_SCORE = false;
 
+
+    // Game Controller
+    public Text gameOverText;
+    public GameObject quitButton;
+
+    //
+
     static Text SCORE_GT;
     // This is an automatic property
     public static int SCORE { get; private set; }
@@ -95,11 +102,11 @@ public class Warpaid : MonoBehaviour
         //    // Anonymous delegates like this do create "closures" like "this" below, which 
         //    //  stores the value of this when the anonymous delegate was created. Closures
         //    //  can be slow, but in this case, it is so rarely used that it doesn't matter.
-        //    this._gameState = AsteraX.GAME_STATE;
+        //    this._gameState = Warpaid.GAME_STATE;
         //};
         //PAUSED_CHANGE_DELEGATE += delegate ()
         //{
-        //    this._paused = AsteraX.PAUSED;
+        //    this._paused = Warpaid.PAUSED;
         //};
 
         // This strange use of _gameState and _paused as an intermediary in the following 
@@ -120,12 +127,15 @@ public class Warpaid : MonoBehaviour
 
     void Start()
     {
-#if DEBUG_AsteraX_LogMethods
-        Debug.Log("AsteraX:Start()");
+#if DEBUG_Warpaid_LogMethods
+        Debug.Log("Warpaid:Start()");
 #endif
 
-        // ENEMIES = new List<Enemy>();
+        ENEMIES = new List<Enemy>();
         AddScore(0);
+
+        gameOverText.text = "";
+        StartCoroutine(SpawnWaves());
 
         // Loading data needed
     }
@@ -204,7 +214,7 @@ public class Warpaid : MonoBehaviour
     {
         if (GAME_STATE != eGameState.level)
         {
-            // If this is not in the middle of a level, don't do anything. RemoveAsteroid is called
+            // If this is not in the middle of a level, don't do anything. RemoveEnemy is called
             //  by Enemy:OnDestroy(), so this prevents removal from happening if the game is in
             //  any state other than level, which avoids modifying the ENEMIES List in the for 
             //  loop of ClearEnemies().
@@ -378,7 +388,7 @@ public class Warpaid : MonoBehaviour
         // lNum is 1-based where LEVEL_LIST is 0-based, so LEVEL_LIST[0] is lNum 1
         if (lNum < 1 || lNum > LEVEL_LIST.Count)
         {
-            Debug.LogError("AsteraX:GetLevelInfo() - Requested level number of " + lNum + " does not exist.");
+            Debug.LogError("Warpaid:GetLevelInfo() - Requested level number of " + lNum + " does not exist.");
             return new LevelInfo(-1, "NULL", 1, 1);
         }
         return (LEVEL_LIST[lNum - 1]);
@@ -413,5 +423,25 @@ public class Warpaid : MonoBehaviour
 
         SCORE_GT.text = SCORE.ToString("N0");
 
+    }
+    IEnumerator SpawnWaves()
+    {
+        yield return new WaitForSeconds(10);
+        while (true)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                GameObject enemy = EnemiesSO.enemyPrefabs[Random.Range(0, EnemiesSO.enemyPrefabs.Length)];
+                Vector3 spawnPosition = new Vector3(Random.Range(-14, 14), 0, 20);
+                Quaternion spawnRotation = Quaternion.identity;
+                Instantiate(enemy, spawnPosition, spawnRotation);
+                yield return new WaitForSeconds(1);
+            }
+            if (_GAME_STATE == eGameState.gameOver)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(10);
+        }
     }
 }

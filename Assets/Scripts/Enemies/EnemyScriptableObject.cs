@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/EnemySO", fileName = "EnemySO.asset")]
+[CreateAssetMenu(menuName = "Scriptable Objects/EnemySO", fileName = "EnemySO.asset", order = 1)]
 [System.Serializable]
 public class EnemyScriptableObject : ScriptableObject
 {
@@ -12,14 +12,14 @@ public class EnemyScriptableObject : ScriptableObject
         S = this; // Assign the Singleton as part of the constructor.
     }
 
-    public string objectName = "New Enemy";
-    public float enemyHealth;
-    public float enemyArmor;
-    public float enemyReflex;
-
-    public float minVel = 5;
-    public float maxVel = 10;
-    public float maxAngularVel = 10;
+    public string enemyName = "New Enemy";
+    public float enemyHealth = 100f;
+    public float enemyArmor = 0f;
+    public float enemyReflex = 10f;
+    
+    public float minVel = 5f;
+    public float maxVel = 10f;
+    public float maxAngularVel = 10f;
     public int enemyLevel = 2; 
     public float enemyScale = 0.25f;
 
@@ -28,6 +28,7 @@ public class EnemyScriptableObject : ScriptableObject
     public GameObject[] enemyPrefabs;
     public GameObject[] enemyParticlePrefabs;
     public GameObject[] enemyDropPrefabs;
+    public GameObject enemyBullet;
 
     public GameObject GetEnemyPrefab()
     {
@@ -45,5 +46,9 @@ public class EnemyScriptableObject : ScriptableObject
     {
         int ndx = Random.Range(0, enemyDropPrefabs.Length);
         return enemyDropPrefabs[ndx];
+    }
+    public GameObject GetEnemyBullet()
+    {
+        return enemyBullet;
     }
 }
