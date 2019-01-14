@@ -13,8 +13,10 @@ public class Warpaid : MonoBehaviour
     // Private Singleton-style instance. Accessed by static property S later in script
     static private Warpaid _S;
     static public List<LevelInfo> LEVEL_LIST;
-    static List<Enemy> ENEMIES;
+    static List<PlayerShip> PLAYERS;
+    static List<Enemy>  ENEMIES;
     static List<Bullet> BULLETS;
+    static List<Item> ITEMS;
     static private bool _PAUSED = false;
     static private eGameState _GAME_STATE = eGameState.mainMenu;
     static public bool GOT_HIGH_SCORE = false;
@@ -60,6 +62,8 @@ public class Warpaid : MonoBehaviour
     }
 
     [Header("Set in Inspector")]
+    [Tooltip("This sets the PlayerScriptableObject to be used throughout the game.")]
+    public PlayerScriptableObject playersSO;
     [Tooltip("This sets the EnemyScriptableObject to be used throughout the game.")]
     public EnemyScriptableObject enemiesSO;
 
@@ -131,10 +135,11 @@ public class Warpaid : MonoBehaviour
         Debug.Log("Warpaid:Start()");
 #endif
 
+        PLAYERS = new List<PlayerShip>();
         ENEMIES = new List<Enemy>();
         AddScore(0);
 
-        //StartCoroutine(SpawnWaves());
+        StartCoroutine(SpawnWaves());
 
         // Loading data needed
     }
@@ -245,7 +250,26 @@ public class Warpaid : MonoBehaviour
         }
         BULLETS.Remove(bullet);
     }
+    static public void AddItem(Item item)
+    {
+        if (ITEMS == null)
+        {
+            ITEMS = new List<Item>();
+        }
+        if (ITEMS.IndexOf(item) == -1)
+        {
+            ITEMS.Add(item);
+        }
+    }
 
+    static public void RemoveItem(Item item)
+    {
+        if (ITEMS == null)
+        {
+            return;
+        }
+        ITEMS.Remove(item);
+    }
 
 
     // ---------------- Static Section ---------------- //
@@ -279,6 +303,17 @@ public class Warpaid : MonoBehaviour
         }
     }
 
+    static public PlayerScriptableObject PlayersSO
+    {
+        get
+        {
+            if (S!= null)
+            {
+                return S.playersSO;
+            }
+            return null;
+        }
+    }
 
     static public EnemyScriptableObject EnemiesSO
     {
@@ -423,14 +458,26 @@ public class Warpaid : MonoBehaviour
         SCORE_GT.text = SCORE.ToString("N0");
 
     }
+
+    static public void InitDrop(float probability) // need to add drop from special one SO, this
+    {
+        if (Random.Range(0, 100) < probability)
+        {
+            if (EnemiesSO.enemyDropPrefabs.Length == 0)
+                return;
+            GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab());
+        }
+        return;
+    }
+
     IEnumerator SpawnWaves()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(3);
         while (true)
         {
             for (int i = 0; i < 10; i++)
             {
-                GameObject enemy = EnemiesSO.enemyPrefabs[Random.Range(0, EnemiesSO.enemyPrefabs.Length)];
+                GameObject enemy = EnemiesSO.GetEnemyPrefab();
                 Vector3 spawnPosition = new Vector3(Random.Range(-14, 14), 0, 20);
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(enemy, spawnPosition, spawnRotation);
@@ -440,7 +487,7 @@ public class Warpaid : MonoBehaviour
             {
                 break;
             }
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(3);
         }
     }
 }

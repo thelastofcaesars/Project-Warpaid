@@ -12,10 +12,12 @@ public class PlayerScriptableObject : ScriptableObject
         S = this; // Assign the Singleton as part of the constructor.
     }
     public string playerName = "New Player";
-    public int playerLifes = 2; 
-    public float playerHealth = 100f;
-    public float playerArmor = 0f;
+    public int playerLifes = 2;
+    public int playerArmors = 0;
+    
+    public float playerEnergy = 0f;
     public float playerReflex = 10f;
+    public float bulletDelta = 1f;
 
     public float minVel = 5f;
     public float maxVel = 10f;

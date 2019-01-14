@@ -33,22 +33,30 @@ public class PlayerShip : MonoBehaviour
 
     private Animator anim;
     private int idleStateHash = Animator.StringToHash("Base Layer.Idle");
-    public static bool canI = true;
 
-    private float nextFire;
+    // to private in future, in editor only
+    public string playerName = "Player";
+    public  int lifes = 2;
+    public  int armors = 0;
+    public float energy = 0f;
+    public float bulletRate = 1f;
+    public float nextFire = 0f;
+    public float playerReflex = 2f;
+    //
+
     [Header("Set in Inspector")]
     public float shipSpeed = 1.0f;
     public float tilt;
-    public int lifes;
 
-    public float bulletRate;
-    public GameObject shot;
+    static List <Item> LIFES;
+    static List <Item> ARMORS;
+
     public Transform[] shotSpawns;
 
     public Boundary boundary;
 
     public GameObject coreRotator;
-    public ParticleSystem[] particleSystems;
+    public ParticleSystem[] particleSystems; // to change get from pSO
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
@@ -60,7 +68,8 @@ public class PlayerShip : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
-
+        GetAllDataFromSO();
+        
     }
 
     void Update()
@@ -121,12 +130,69 @@ public class PlayerShip : MonoBehaviour
             nextFire = Time.time + bulletRate;
             foreach (var shotSpawn in shotSpawns)
             {
-                Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+                Instantiate(Warpaid.PlayersSO.playerBullet, shotSpawn.position, shotSpawn.rotation);
             }
             audio.Play();
         }
     }
 
+    void GetAllDataFromSO()
+    {
+        // changable data in-game
+        bulletRate = Warpaid.PlayersSO.bulletDelta;
+        playerReflex = Warpaid.PlayersSO.playerReflex;
+        lifes = Warpaid.PlayersSO.playerLifes;
+        armors = Warpaid.PlayersSO.playerArmors;
+        energy = Warpaid.PlayersSO.playerEnergy;
+
+        // innocent
+        playerName = Warpaid.PlayersSO.playerName;
+    }
+    #region Adding Items/Lifes
+    static public void AddLife(Item life)
+    {
+        if (LIFES == null)
+        {
+            LIFES = new List<Item>();
+        }
+        if (LIFES.IndexOf(life) == -1)
+        {
+            LIFES.Add(life);
+        }
+    }
+
+    static public void RemoveLife(Item life)
+    {
+        if (LIFES == null)
+        {
+            return;
+        }
+        LIFES.Remove(life);
+    }
+
+    static public void AddArmor(Item armor)
+    {
+        if (ARMORS == null)
+        {
+            ARMORS = new List<Item>();
+        }
+        if (ARMORS.IndexOf(armor) == -1)
+        {
+            ARMORS.Add(armor);
+        }
+    }
+
+    static public void RemoveArmor(Item armor)
+    {
+        if (ARMORS == null)
+        {
+            return;
+        }
+        ARMORS.Remove(armor);
+    }
+    #endregion
+
+#region Get
     static public float MAX_SPEED
     {
         get
@@ -134,12 +200,15 @@ public class PlayerShip : MonoBehaviour
             return S.shipSpeed;
         }
     }
+
     static public Animator GetAnimator()
     {
         return S.anim;
     }
+
     static public PlayerShip GetPlayerShip()
     {
         return S;
     }
+#endregion
 }
