@@ -19,6 +19,25 @@ public class Item : MonoBehaviour
         }
     }
 
+    [System.Flags]
+    public enum eItemType
+    {
+        // Decimal      // Binary
+        none = 0,       // 00000000
+        Heart = 1,   // 00000001
+        Armor = 2,   // 00000010
+        Cash = 4,      // 00000100
+        Points = 8,  // 00001000
+        Ammo = 16,  // 00010000
+        all = 0xFFFFFFF // 11111111111111111111111111111111
+    }
+
+    [EnumFlags]
+    public eItemType itemType = eItemType.none;
+    public string itemID = "0000";
+    public int value  = 100;
+
+    // Hidden in Inspector
     private float speed = 25f;
     private float rotationSpeed = 0.05f;
 
@@ -28,10 +47,18 @@ public class Item : MonoBehaviour
         transform.SetParent(ITEM_ANCHOR, true);
         transform.rotation = Quaternion.Euler(Time.time * speed, -90f, -90f);
     }
+    private void OnTriggerEnter(Collider coll)
+    {
+        if(coll.CompareTag("Player"))
+        {
+            PlayerShip.AddItem(this);
+            Destroy(gameObject);
+            return;
+        }
+    }
     void OnDestroy()
     {
         Warpaid.RemoveItem(this);
-        Destroy(gameObject);
     }
     void Update()
     {

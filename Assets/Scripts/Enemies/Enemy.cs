@@ -8,9 +8,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Set Dynamically")]
-    public int size = 2;
+    public int size = 1;
     public bool immune = false;
-    
+    public float speed = 5f;
+    public int score = 100;
     Rigidbody rigid; // protected
     OffScreenWrapper offScreenWrapper;
 
@@ -24,15 +25,14 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Warpaid.AddEnemy(this);
-
         transform.localScale = Vector3.one * Warpaid.EnemiesSO.enemyScale;
         InitEnemy();
-
     }
 
     private void OnDestroy()
     {
-        Warpaid.InitDrop(Warpaid.EnemiesSO.enemyLevel * Warpaid.EnemiesSO.enemyHealth);
+        Transform trans = transform;
+        Warpaid.InitDrop(Warpaid.EnemiesSO.enemyLevel * Warpaid.EnemiesSO.enemyHealth, trans);
         Warpaid.RemoveEnemy(this);
     }
 
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         rigid.isKinematic = false;
         // Snap this GameObject to the z=0 plane
         Vector3 pos = transform.position;
-        pos.z = 0;
+        pos.y= 0;
         transform.position = pos;
         // Initialize the velocity for this Enemy
         InitVelocity();
@@ -62,6 +62,7 @@ public class Enemy : MonoBehaviour
         // Multiply the unit length of vel by the correct speed (randomized) for this size of Asteroid
         vel = vel * Random.Range(Warpaid.EnemiesSO.minVel, Warpaid.EnemiesSO.maxVel) / (float)size;
         rigid.velocity = vel;
+        
     }
 
     Enemy normalEnemy

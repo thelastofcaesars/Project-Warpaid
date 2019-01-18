@@ -35,14 +35,29 @@ public class Bullet : MonoBehaviour {
 
     void Update()
     {
-        //Initializing particle //new
-        ParticleSystem particles = Instantiate<ParticleSystem>(Particle.GetParticlePrefab(bulletExhaustPrefab));
-        particles.transform.position = new Vector3(GetComponent<Rigidbody>().position.x, GetComponent<Rigidbody>().position.y, 0.0f);
-        particles.transform.SetParent(transform, true);
-        particles.Play();
-        //
-        //particles.GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity; //new
+        if (Particle.GetParticlePrefab(bulletExhaustPrefab) != null)
+        { 
+            //Initializing particle //new
+            ParticleSystem particles = Instantiate<ParticleSystem>(Particle.GetParticlePrefab(bulletExhaustPrefab));
+            particles.transform.position = new Vector3(GetComponent<Rigidbody>().position.x, GetComponent<Rigidbody>().position.y, 0.0f);
+            particles.transform.SetParent(transform, true);
+            particles.Play();
+            //
+            //particles.GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity; //new
+        }
     }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if (!coll.CompareTag("Enemy"))
+        {
+            return;
+        }
+        Warpaid.AddScore(coll.GetComponent<Enemy>().score);
+        Destroy(coll.gameObject);
+        Destroy(gameObject);
+    }
+
     void DestroyMe()
     {
         Destroy(gameObject);

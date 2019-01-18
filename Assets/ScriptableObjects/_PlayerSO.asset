@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: PlayerOne
   playerLifes: 2
-  playerHealth: 100
-  playerArmor: 0
+  playerArmors: 0
+  playerEnergy: 0
   playerReflex: 10
+  bulletDelta: 1
   minVel: 5
   maxVel: 10
   maxAngularVel: 10
@@ -26,5 +27,5 @@ MonoBehaviour:
   - {fileID: 3154570544167263761, guid: 1d7f31a95e616e542b8e4ba7a5d4c199, type: 3}
   playerParticlePrefabs:
   - {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb, type: 3}
-  playerBullet: {fileID: 5026509262712782233, guid: 0be704f17c396804c88f360585fc46d0,
+  playerBullet: {fileID: 6524468577049991104, guid: 0be704f17c396804c88f360585fc46d0,
     type: 3}

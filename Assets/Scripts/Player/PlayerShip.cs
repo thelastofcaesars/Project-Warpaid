@@ -36,8 +36,8 @@ public class PlayerShip : MonoBehaviour
 
     // to private in future, in editor only
     public string playerName = "Player";
-    public  int lifes = 2;
-    public  int armors = 0;
+    public int lifes = 2;
+    public int armors = 0;
     public float energy = 0f;
     public float bulletRate = 1f;
     public float nextFire = 0f;
@@ -48,8 +48,8 @@ public class PlayerShip : MonoBehaviour
     public float shipSpeed = 1.0f;
     public float tilt;
 
-    static List <Item> LIFES;
-    static List <Item> ARMORS;
+    static public List<Item> LIFES;
+    static public List<Item> ARMORS;
 
     public Transform[] shotSpawns;
 
@@ -60,6 +60,9 @@ public class PlayerShip : MonoBehaviour
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
+    public static int staticLifes= 2;
+    public static int staticArmors = 0;
+
     void Awake()
     {
         S = this;
@@ -68,8 +71,25 @@ public class PlayerShip : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
-        GetAllDataFromSO();
+        //GetAllDataFromSO();
         
+        //  | - Needed to change Item life = new Item()!
+        //  V 
+        for (int i = 0; i < lifes; i++)
+        {
+            Item life = new Item();
+            life.itemType = Item.eItemType.Heart;
+            life.itemID = "00H1";
+            AddItem(life);
+        }
+        for (int i = 0; i < armors; i++)
+        {
+            Item armor = new Item();
+            armor.itemType = Item.eItemType.Armor;
+            armor.itemID = "00A1";
+            AddItem(armor);
+        }
+       
     }
 
     void Update()
@@ -84,6 +104,8 @@ public class PlayerShip : MonoBehaviour
         {
             Skill();
         }
+        staticArmors = armors;
+        staticLifes = lifes;
     }
     void FixedUpdate()
     {
@@ -98,9 +120,9 @@ public class PlayerShip : MonoBehaviour
         // Using Horizontal and Vertical axes to set velocity
         float aX = CrossPlatformInputManager.GetAxis("Horizontal");
         float aZ = CrossPlatformInputManager.GetAxis("Vertical");
-        
+
         Vector3 vel = new Vector3(aX, 0.0f, aZ);
-    
+
         if (vel.magnitude > 1)
         {
             // Avoid speed multiplying by 1.414 when moving at a diagonal
@@ -115,7 +137,7 @@ public class PlayerShip : MonoBehaviour
         );
         rigid.rotation = Quaternion.Euler(0.0f, 0.0f, rigid.velocity.x * -tilt);
         coreRotator.transform.Rotate(new Vector3(0f, 0f, aZ));
-        foreach(ParticleSystem ps in particleSystems)
+        foreach (ParticleSystem ps in particleSystems)
         {
             ParticleSystem.MainModule main = ps.main;
             if (aZ > 0) main.startSpeed = aZ * aZ * 0.5f;
@@ -144,11 +166,50 @@ public class PlayerShip : MonoBehaviour
         lifes = Warpaid.PlayersSO.playerLifes;
         armors = Warpaid.PlayersSO.playerArmors;
         energy = Warpaid.PlayersSO.playerEnergy;
-
+        for (int i = 0; i < lifes; i++)
+        {
+            LIFES.Add(new Item());
+        }
+        for (int i = 0; i < armors; i++)
+        {
+            ARMORS.Add(new Item());
+        }
         // innocent
         playerName = Warpaid.PlayersSO.playerName;
     }
-    #region Adding Items/Lifes
+
+    #region Adding Items/Lifes etc.
+
+    // static metod to adding whatever you want to
+
+    static public void AddItem(Item item)
+    {
+        //Debug.Log("Item " + item + " ID " + item.itemID);
+        switch (item.itemType)
+        {
+            case Item.eItemType.Heart:
+                if (item.itemID == "00H1")
+                {
+                    AddLife(item);                 
+                }
+                else
+                {
+                    //  AddEnemyHeart(item);
+                }
+                break;
+            case Item.eItemType.Armor:
+                if (item.itemID == "00A1")
+                {
+                    AddArmor(item);
+                }
+                break;
+            case Item.eItemType.none:
+            case Item.eItemType.all:
+                Debug.LogWarning("Type of item has not been set!");
+                break;
+        }
+        HUDSystems.UpdateInventory();
+    }
     static public void AddLife(Item life)
     {
         if (LIFES == null)
@@ -157,7 +218,13 @@ public class PlayerShip : MonoBehaviour
         }
         if (LIFES.IndexOf(life) == -1)
         {
+            if(LIFES.Count == 3)
+            {
+                Warpaid.AddScore(life.value);
+                return;
+            }
             LIFES.Add(life);
+            S.lifes = LIFES.Count;
         }
     }
 
@@ -168,6 +235,8 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         LIFES.Remove(life);
+        S.lifes = LIFES.Count;
+        HUDSystems.UpdateInventory();
     }
 
     static public void AddArmor(Item armor)
@@ -178,7 +247,13 @@ public class PlayerShip : MonoBehaviour
         }
         if (ARMORS.IndexOf(armor) == -1)
         {
+            if (ARMORS.Count == 2)
+            {
+                Warpaid.AddScore(armor.value);
+                return;
+            }
             ARMORS.Add(armor);
+            S.armors = ARMORS.Count;
         }
     }
 
@@ -189,10 +264,13 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         ARMORS.Remove(armor);
+        S.armors = ARMORS.Count;
+        HUDSystems.UpdateInventory();
     }
+
     #endregion
 
-#region Get
+    #region Get
     static public float MAX_SPEED
     {
         get

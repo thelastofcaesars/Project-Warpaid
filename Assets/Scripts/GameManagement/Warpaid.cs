@@ -212,6 +212,7 @@ public class Warpaid : MonoBehaviour
         if (ENEMIES.IndexOf(enemy) == -1)
         {
             ENEMIES.Add(enemy);
+            enemy.score = EnemiesSO.pointsForEnemyLevel[1];
         }
     }
     static public void RemoveEnemy(Enemy enemy)
@@ -459,15 +460,18 @@ public class Warpaid : MonoBehaviour
 
     }
 
-    static public void InitDrop(float probability) // need to add drop from special one SO, this
+    static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this
     {
-        if (Random.Range(0, 100) < probability)
+        if (EnemiesSO.enemyDropPrefabs.Length == 0)
         {
-            if (EnemiesSO.enemyDropPrefabs.Length == 0)
-                return;
-            GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab());
+            Debug.LogWarning("There is no drop from this enemy!");
+            return;
         }
-        return;
+        if (Random.Range(0, 100) < probability)
+        {    
+            GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);
+            Debug.Log("Inited " + go.name);
+        }
     }
 
     IEnumerator SpawnWaves()
