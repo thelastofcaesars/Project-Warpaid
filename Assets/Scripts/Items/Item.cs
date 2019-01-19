@@ -89,3 +89,12 @@ public struct orb
     public bool Purple;
     public bool White;
 }
+public struct boost
+{
+    public float bulletTime;
+    public float speedBoost;
+    public float time;
+    public float energy;
+    public float freezeTime;
+}
+

@@ -27,19 +27,25 @@ public class HUDSystems : MonoBehaviour
     static Dictionary<string, Image> DICT_GUI_LIFES;
     static Dictionary<string, Image> DICT_GUI_LETTERS;
     static Dictionary<string, Image> DICT_GUI_ORBS;
+    static Dictionary<string, Image> DICT_GUI_BOOSTS;
     //
 
     public Image[] lifes;
     public Image[] armors;
     public Image[] letters;
     public Image[] orbs;
+    public Image[] boosts;
 
     static public int theLifes = 2;
     static public int theArmors = 0;
     static public int theLetters = 0;
     static public int theOrbs = 0;
+    static public int theBoosts = 3; // refri to add, energy etc;
+
     private snafu snafuSystem;
     private orb orbSystem;
+    private boost boostSystem;
+
 
     void Awake()
     {
@@ -55,12 +61,6 @@ public class HUDSystems : MonoBehaviour
         }
         */
         UpdateInventory();
-        /*
-        UpdateLife();
-        UpdateArmor();
-        UpdateSnafu();
-        UpdateOrbs();
-        */
     }
     static public void UpdateInventory()
     {
@@ -68,6 +68,7 @@ public class HUDSystems : MonoBehaviour
         S.UpdateArmor();
         S.UpdateSnafu();
         S.UpdateOrbs();
+        S.UpdateBoost();
     }
     void UpdateLife()
     {
@@ -187,6 +188,41 @@ public class HUDSystems : MonoBehaviour
             }
             orb.gameObject.SetActive(toEnable);
             // orb.enabled = toEnable;
+            i++;
+        }
+        // Debug.Log("HUDSystems:UpdateOrbs - Orbs updating " + theOrbs);
+    }
+    void UpdateBoost()
+    {
+        boostSystem = PlayerShip.GetPlayerBoosts();
+        float barSize = 0f;
+        int i = 0;
+        foreach (Image boost in boosts)
+        {
+            switch (i)
+            {
+                case 0:
+                    barSize = boostSystem.bulletTime;
+                    break;
+                case 1:
+                    barSize = boostSystem.speedBoost;
+                    break;
+                case 2:
+                    barSize = boostSystem.time;
+                    break;
+                case 3:
+                    barSize = boostSystem.energy;
+                    break;
+                case 4:
+                    barSize = boostSystem.freezeTime;
+                    break;
+                default:
+                    Debug.Log("HUDSystems:UpdateBoost - boost has not been set in good way!");
+                    break;
+            }
+            Debug.Log("boost anchor + " + barSize);
+            float Ay = boost.transform.GetComponent<RectTransform>().anchorMax.y;
+            boost.transform.GetComponent<RectTransform>().anchorMax = new Vector2(barSize, Ay);
             i++;
         }
         // Debug.Log("HUDSystems:UpdateOrbs - Orbs updating " + theOrbs);

@@ -42,6 +42,8 @@ public class PlayerShip : MonoBehaviour
     public float bulletRate = 1f;
     public float nextFire = 0f;
     public float playerReflex = 2f;
+    public float speedBoost = 1.5f;
+    public float freezeTime = 0f;
     //
 
     [Header("Set in Inspector")]
@@ -52,6 +54,7 @@ public class PlayerShip : MonoBehaviour
     static public List<Item> ARMORS;
     static public snafu snafuSystem;
     static public orb orbSystem;
+    static public boost boostSystem;
 
     public Transform[] shotSpawns;
 
@@ -355,13 +358,13 @@ public class PlayerShip : MonoBehaviour
 
             case "00LR":
                 snafuSystem.R = true;
-                //AddRefrigerator(item); // name in progress;
+                S.freezeTime += 0.1f;
                 break;
             case "00LT":
-                //AddShipTime(item); // name in progress
+                S.playerReflex += 0.05f;
                 break;
             case "00LB":
-                //AddBulletTime(item); // name in progress
+                S.bulletRate += 0.05f;
                 break;
             default:
                 Debug.Log("Playership:AddLetter - ID of item has not been set");
@@ -488,6 +491,16 @@ public class PlayerShip : MonoBehaviour
     static public PlayerShip GetPlayerShip()
     {
         return S;
+    }
+
+    static public boost GetPlayerBoosts()
+    {
+        boostSystem.bulletTime = S.bulletRate;
+        boostSystem.speedBoost = S.speedBoost;
+        boostSystem.time = S.playerReflex; // to change
+        boostSystem.energy = S.energy;
+        boostSystem.freezeTime = S.freezeTime;
+        return boostSystem;
     }
     #endregion
 }
