@@ -27,10 +27,12 @@ MonoBehaviour:
   enemyParticlePrefabs:
   - {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713, type: 3}
   enemyDropPrefabs:
-  - {fileID: 1798525601829859535, guid: 7110864bee722744aa9ef5065be02732, type: 3}
-  - {fileID: 3141766332539618625, guid: 09dfb7137116c4d47ad8d8ab04afa7be, type: 3}
-  - {fileID: 8594824331121687324, guid: 6ed62d6d79ff60446be9de5497d8989b, type: 3}
-  - {fileID: 7318723840973825161, guid: f73820d7d9482d3468f16dfa72565a0c, type: 3}
-  - {fileID: 9150220005899339729, guid: 92eaa5e1c277e004f92cf94acc3894da, type: 3}
+  - {fileID: 2778849948812040782, guid: fc5de3695eda89849999eab49a89925b, type: 3}
+  - {fileID: 687178271658238176, guid: dc573fec3fe9e6541823d7aee0c918b5, type: 3}
+  - {fileID: 3663772210337057493, guid: 5b9c2a365e907f941a6c416b4b83d211, type: 3}
+  - {fileID: 4025625198876706765, guid: 0e5d136ca13ee0145bc7ba3867d57e49, type: 3}
+  - {fileID: 3583179631564064134, guid: eba951d5a7c3782408bef9fb867079cc, type: 3}
+  - {fileID: 1048508006687996557, guid: 56f8755850644f1449de0d6a7d73f303, type: 3}
+  - {fileID: 5360764719567432456, guid: f74b38ec18d696640a906fd0a5512df4, type: 3}
   enemyBullet: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275,
     type: 3}

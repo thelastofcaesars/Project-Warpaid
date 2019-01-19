@@ -51,6 +51,8 @@ public class PlayerShip : MonoBehaviour
     static public List<Item> LIFES;
     static public List<Item> ARMORS;
     static public snafu snafuSystem;
+    static public orb orbSystem;
+
     public Transform[] shotSpawns;
 
     public Boundary boundary;
@@ -194,7 +196,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 else
                 {
-                    //  AddEnemyHeart(item);
+                    AddOrb(item);
                 }
                 break;
 
@@ -224,6 +226,105 @@ public class PlayerShip : MonoBehaviour
             case Item.eItemType.none:
             case Item.eItemType.all:
                 Debug.LogWarning("Type of item has not been set!");
+                break;
+        }
+        HUDSystems.UpdateInventory();
+    }
+    // maybe one bool to change nor?
+
+    static public void AddOrb(Item orb)
+    {
+        switch (orb.itemID)
+        {
+            // orbs
+            case "00HA":
+                if (!orbSystem.Red)
+                    orbSystem.Red = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            case "00HB":
+                if (!orbSystem.Orange)
+                    orbSystem.Orange = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            case "00HC":
+                if (!orbSystem.Yellow)
+                    orbSystem.Yellow = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            case "00HD":
+                if (!orbSystem.Green)
+                    orbSystem.Green = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            case "00HE":
+                if (!orbSystem.Blue)
+                    orbSystem.Blue = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            case "00HF":
+                if (!orbSystem.Purple)
+                    orbSystem.Purple = true;
+                else
+                    Warpaid.AddScore(orb.value);
+                break;
+            case "00HH":
+                if (!orbSystem.White)
+                    orbSystem.White = true;
+                else
+                {
+                    Warpaid.AddScore(orb.value);
+                }
+                break;
+            default:
+                Debug.Log("Playership:AddOrb - ID of item has not been set");
+                break;
+        }
+    }
+
+    static public void RemoveOrb(Item orb)
+    {
+        switch (orb.itemID)
+        {
+            // orbs
+            case "00HA":
+                orbSystem.Red = false;
+                break;
+            case "00HB":
+                orbSystem.Orange = false;
+                break;
+            case "00HC":
+                orbSystem.Yellow = false;
+                break;
+            case "00HD":
+                orbSystem.Green = false;
+                break;
+            case "00HE":
+                orbSystem.Blue = false;
+                break;
+            case "00HF":
+                orbSystem.Purple = false;
+                break;
+            case "00HH":
+                orbSystem.White = false;
+                break;
+            default:
+                Debug.Log("Playership:AddOrb - ID of item has not been set");
                 break;
         }
         HUDSystems.UpdateInventory();
@@ -262,6 +363,9 @@ public class PlayerShip : MonoBehaviour
             case "00LB":
                 //AddBulletTime(item); // name in progress
                 break;
+            default:
+                Debug.Log("Playership:AddLetter - ID of item has not been set");
+                break;
         }
     }
 
@@ -297,6 +401,9 @@ public class PlayerShip : MonoBehaviour
                 break;
             case "00LB":
                 //RemoveBulletTime(item); // name in progress
+                break;
+            default:
+                Debug.Log("Playership:AddLetter - ID of item has not been set");
                 break;
         }
         HUDSystems.UpdateInventory();

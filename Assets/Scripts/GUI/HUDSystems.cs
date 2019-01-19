@@ -26,15 +26,20 @@ public class HUDSystems : MonoBehaviour
     static Dictionary<string, Image> DICT_GUI_ARMORS;
     static Dictionary<string, Image> DICT_GUI_LIFES;
     static Dictionary<string, Image> DICT_GUI_LETTERS;
+    static Dictionary<string, Image> DICT_GUI_ORBS;
     //
 
     public Image[] lifes;
     public Image[] armors;
     public Image[] letters;
+    public Image[] orbs;
+
     static public int theLifes = 2;
     static public int theArmors = 0;
     static public int theLetters = 0;
+    static public int theOrbs = 0;
     private snafu snafuSystem;
+    private orb orbSystem;
 
     void Awake()
     {
@@ -49,16 +54,20 @@ public class HUDSystems : MonoBehaviour
             DICT_GUI_LIFES.Add(armor.name, armor);
         }
         */
-        //UpdateInventory();
+        UpdateInventory();
+        /*
         UpdateLife();
         UpdateArmor();
         UpdateSnafu();
+        UpdateOrbs();
+        */
     }
     static public void UpdateInventory()
     {
         S.UpdateLife();
         S.UpdateArmor();
         S.UpdateSnafu();
+        S.UpdateOrbs();
     }
     void UpdateLife()
     {
@@ -82,7 +91,7 @@ public class HUDSystems : MonoBehaviour
                 toEnable = false;
             }
         }
-        // Debug.Log("HUDSystems:Update Life - Life updating " + theLifes);
+        // Debug.Log("HUDSystems:UpdateLife - Life updating " + theLifes);
     }
     void UpdateArmor()
     {
@@ -106,7 +115,7 @@ public class HUDSystems : MonoBehaviour
                 toEnable = false;
             }
         }
-        // Debug.Log("HUDSystems:Update Armor - Armor updating " + theArmors);
+        // Debug.Log("HUDSystems:UpdateArmor - Armor updating " + theArmors);
     }
     void UpdateSnafu()
     {
@@ -132,11 +141,54 @@ public class HUDSystems : MonoBehaviour
                 case 4:
                     toEnable = snafuSystem.U;
                     break;
+                default:
+                    Debug.Log("HUDSystems:UpdateSnafu - letter has not been set in good way!");
+                    break;
             }
             letter.gameObject.SetActive(toEnable);
             // letter.enabled = toEnable;
             i++;
         }
-        // Debug.Log("HUDSystems:Update Snafu - Snafu updating " + theLetters);
+        // Debug.Log("HUDSystems:UpdateSnafu - Snafu updating " + theLetters);
+    }
+    void UpdateOrbs()
+    {
+        orbSystem = PlayerShip.orbSystem;
+        bool toEnable = true;
+        int i = 0;
+        foreach (Image orb in orbs)
+        {
+            switch (i)
+            {
+                case 0:
+                    toEnable = orbSystem.Red;
+                    break;
+                case 1:
+                    toEnable = orbSystem.Orange;
+                    break;
+                case 2:
+                    toEnable = orbSystem.Yellow;
+                    break;
+                case 3:
+                    toEnable = orbSystem.Green;
+                    break;
+                case 4:
+                    toEnable = orbSystem.Blue;
+                    break;
+                case 5:
+                    toEnable = orbSystem.Purple;
+                    break;
+                case 6:
+                    toEnable = orbSystem.White;
+                    break;
+                default:
+                    Debug.Log("HUDSystems:UpdateOrbs - orb has not been set in good way!");
+                    break;
+            }
+            orb.gameObject.SetActive(toEnable);
+            // orb.enabled = toEnable;
+            i++;
+        }
+        // Debug.Log("HUDSystems:UpdateOrbs - Orbs updating " + theOrbs);
     }
 }

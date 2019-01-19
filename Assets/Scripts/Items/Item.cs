@@ -79,3 +79,13 @@ public struct snafu
     public bool U;
     public bool R;
 };
+public struct orb
+{
+    public bool Red;
+    public bool Orange;
+    public bool Yellow;
+    public bool Green;
+    public bool Blue;
+    public bool Purple;
+    public bool White;
+}
