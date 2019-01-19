@@ -19,7 +19,7 @@ MonoBehaviour:
   minVel: 5
   maxVel: 10
   maxAngularVel: 10
-  enemyLevel: 2
+  enemyLevel: 1
   enemyScale: 0.25
   pointsForEnemyLevel: 0000000090010000c800000064000000
   enemyPrefabs:
@@ -29,5 +29,11 @@ MonoBehaviour:
   enemyDropPrefabs:
   - {fileID: 7415200248562355086, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}
   - {fileID: 1260139446493431313, guid: 7110864bee722744aa9ef5065be02732, type: 3}
+  - {fileID: 7462293951504325380, guid: 1a8708d1b1e183a40b5f8f4b9eab287c, type: 3}
+  - {fileID: 6675964216761028986, guid: 208a5b57cdf7e6b4b9c99caeef3bf43c, type: 3}
+  - {fileID: 7263988110390546803, guid: 6ed62d6d79ff60446be9de5497d8989b, type: 3}
+  - {fileID: 7013538838909531372, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
+  - {fileID: 1329894589793043054, guid: c38014714b6164e47873bb8588d098e5, type: 3}
+  - {fileID: 770430166221304906, guid: 7859fa723a5a3d14a89cdc351ffde59e, type: 3}
   enemyBullet: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275,
     type: 3}

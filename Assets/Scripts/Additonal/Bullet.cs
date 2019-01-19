@@ -53,6 +53,7 @@ public class Bullet : MonoBehaviour {
         {
             return;
         }
+        // sometimes work, sometimes erros reference has not been set wtf
         Warpaid.AddScore(coll.GetComponent<Enemy>().score);
         Destroy(coll.gameObject);
         Destroy(gameObject);

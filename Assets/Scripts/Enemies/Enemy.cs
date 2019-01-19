@@ -31,8 +31,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        Transform trans = transform;
-        Warpaid.InitDrop(Warpaid.EnemiesSO.enemyLevel * Warpaid.EnemiesSO.enemyHealth, trans);
+        Warpaid.InitDrop(score, transform);
         Warpaid.RemoveEnemy(this);
     }
 

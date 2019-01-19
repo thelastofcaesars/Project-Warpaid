@@ -138,7 +138,7 @@ public class Warpaid : MonoBehaviour
         PLAYERS = new List<PlayerShip>();
         ENEMIES = new List<Enemy>();
         AddScore(0);
-
+        GameObject player = Instantiate(playersSO.playerPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
         // Loading data needed

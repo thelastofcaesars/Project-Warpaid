@@ -22,15 +22,19 @@ public class HUDSystems : MonoBehaviour
         }
     }
 
-
     // Wanted in future
     static Dictionary<string, Image> DICT_GUI_ARMORS;
     static Dictionary<string, Image> DICT_GUI_LIFES;
+    static Dictionary<string, Image> DICT_GUI_LETTERS;
     //
+
     public Image[] lifes;
     public Image[] armors;
+    public Image[] letters;
     static public int theLifes = 2;
     static public int theArmors = 0;
+    static public int theLetters = 0;
+    private snafu snafuSystem;
 
     void Awake()
     {
@@ -48,11 +52,13 @@ public class HUDSystems : MonoBehaviour
         //UpdateInventory();
         UpdateLife();
         UpdateArmor();
+        UpdateSnafu();
     }
     static public void UpdateInventory()
     {
         S.UpdateLife();
         S.UpdateArmor();
+        S.UpdateSnafu();
     }
     void UpdateLife()
     {
@@ -101,5 +107,36 @@ public class HUDSystems : MonoBehaviour
             }
         }
         // Debug.Log("HUDSystems:Update Armor - Armor updating " + theArmors);
+    }
+    void UpdateSnafu()
+    {
+        snafuSystem = PlayerShip.snafuSystem;
+        bool toEnable = true;
+        int i = 0;
+        foreach (Image letter in letters)
+        {
+            switch (i)
+            {
+                case 0:
+                    toEnable = snafuSystem.S;
+                    break;
+                case 1:
+                    toEnable = snafuSystem.N;
+                    break;
+                case 2:
+                    toEnable = snafuSystem.A;
+                    break;
+                case 3:
+                    toEnable = snafuSystem.F;
+                    break;
+                case 4:
+                    toEnable = snafuSystem.U;
+                    break;
+            }
+            letter.gameObject.SetActive(toEnable);
+            // letter.enabled = toEnable;
+            i++;
+        }
+        // Debug.Log("HUDSystems:Update Snafu - Snafu updating " + theLetters);
     }
 }

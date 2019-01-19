@@ -50,7 +50,7 @@ public class PlayerShip : MonoBehaviour
 
     static public List<Item> LIFES;
     static public List<Item> ARMORS;
-
+    static public snafu snafuSystem;
     public Transform[] shotSpawns;
 
     public Boundary boundary;
@@ -203,6 +203,9 @@ public class PlayerShip : MonoBehaviour
                     AddArmor(item);
                 }
                 break;
+            case Item.eItemType.Letter:
+                AddLetter(item);
+                break;
             case Item.eItemType.none:
             case Item.eItemType.all:
                 Debug.LogWarning("Type of item has not been set!");
@@ -210,6 +213,79 @@ public class PlayerShip : MonoBehaviour
         }
         HUDSystems.UpdateInventory();
     }
+
+    static public void AddLetter(Item letter)
+    {
+        switch (letter.itemID)
+        {
+            // snafu
+            case "00LS":
+                snafuSystem.S = true;
+                break;
+            case "00LN":
+                snafuSystem.N = true;
+                break;
+            case "00LA":
+                snafuSystem.A = true;
+                break;
+            case "00LF":
+                snafuSystem.F = true;
+                break;
+            case "00LU":
+                snafuSystem.U = true;
+                break;
+            
+            // other letters, bullet time etc.
+
+            case "00LR":
+                snafuSystem.R = true;
+                //AddRefrigerator(item); // name in progress;
+                break;
+            case "00LT":
+                //AddShipTime(item); // name in progress
+                break;
+            case "00LB":
+                //AddBulletTime(item); // name in progress
+                break;
+        }
+    }
+
+    static public void RemoveLetter(Item letter)
+    {
+        switch (letter.itemID)
+        {
+            // snafu
+            case "00LS":
+                snafuSystem.S = false;
+                break;
+            case "00LN":
+                snafuSystem.N = false;
+                break;
+            case "00LA":
+                snafuSystem.A = false;
+                break;
+            case "00LF":
+                snafuSystem.F = false;
+                break;
+            case "00LU":
+                snafuSystem.U = false;
+                break;
+
+            // other letters, bullet time etc.
+
+            case "00LR":
+                snafuSystem.R = false;
+                //RemoveRefrigerator(item); // name in progress;
+                break;
+            case "00LT":
+                //RemoveShipTime(item); // name in progress
+                break;
+            case "00LB":
+                //RemoveBulletTime(item); // name in progress
+                break;
+        }
+    }
+
     static public void AddLife(Item life)
     {
         if (LIFES == null)
@@ -288,5 +364,5 @@ public class PlayerShip : MonoBehaviour
     {
         return S;
     }
-#endregion
+    #endregion
 }

@@ -29,8 +29,10 @@ public class Item : MonoBehaviour
         Cash = 4,      // 00000100
         Points = 8,  // 00001000
         Ammo = 16,  // 00010000
+        Letter = 32, // 00100000
         all = 0xFFFFFFF // 11111111111111111111111111111111
     }
+
 
     [EnumFlags]
     public eItemType itemType = eItemType.none;
@@ -70,3 +72,12 @@ public class Item : MonoBehaviour
         return ITEM_ANCHOR;
     }
 }
+public struct snafu
+{
+    public bool S;
+    public bool N;
+    public bool A;
+    public bool F;
+    public bool U;
+    public bool R;
+};
