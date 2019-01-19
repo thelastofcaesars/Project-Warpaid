@@ -24,13 +24,13 @@ public class Warpaid : MonoBehaviour
 
     // Game Controller
     static Text GAMEOVER_GT;
-    public GameObject quitButton;
-
-    //
-
+    //static Text RESTART_GT;
+    static Text CASH_GT;
     static Text SCORE_GT;
+    public GameObject quitButton;
     // This is an automatic property
     public static int SCORE { get; private set; }
+    public static int CASH { get; private set; } // next step is cash for 2 players
 
     const float DELAY_BEFORE_RELOADING_SCENE = 4;
 
@@ -138,6 +138,7 @@ public class Warpaid : MonoBehaviour
         PLAYERS = new List<PlayerShip>();
         ENEMIES = new List<Enemy>();
         AddScore(0);
+        AddCash(0);
         GameObject player = Instantiate(playersSO.playerPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
@@ -457,6 +458,30 @@ public class Warpaid : MonoBehaviour
         }
 
         SCORE_GT.text = SCORE.ToString("N0");
+
+    }
+
+    static public void AddCash(int num)
+    {
+        // Find the ScoreGT Text field only once.
+        if (CASH_GT == null)
+        {
+            GameObject go = GameObject.Find("CashGT");
+            if (go != null)
+            {
+                CASH_GT = go.GetComponent<Text>();
+            }
+            else
+            {
+                Debug.LogError("Warpaid:AddCash() - Could not find a GameObject named CashGT.");
+                return;
+            }
+            CASH = 0;
+        }
+        // CASH holds the definitive cash for the player.
+        CASH += num;
+
+        CASH_GT.text = "$" + CASH.ToString();
 
     }
 

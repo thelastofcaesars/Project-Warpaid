@@ -197,15 +197,30 @@ public class PlayerShip : MonoBehaviour
                     //  AddEnemyHeart(item);
                 }
                 break;
+
             case Item.eItemType.Armor:
                 if (item.itemID == "00A1")
                 {
                     AddArmor(item);
                 }
                 break;
+
+            case Item.eItemType.Cash:
+                Debug.Log("Added cash: " + item.value);
+                Warpaid.AddCash(item.value);
+                break;
+
+            case Item.eItemType.Points:
+                Debug.Log("Added points: " + item.value);
+                Warpaid.AddScore(item.value);
+                // need to create text-value particle;-> method
+                // GameObject particle = Instantiate(Particle.GetParticlePrefab(pa0))
+                break;
+
             case Item.eItemType.Letter:
                 AddLetter(item);
-                break;
+                break;   
+
             case Item.eItemType.none:
             case Item.eItemType.all:
                 Debug.LogWarning("Type of item has not been set!");
@@ -284,6 +299,7 @@ public class PlayerShip : MonoBehaviour
                 //RemoveBulletTime(item); // name in progress
                 break;
         }
+        HUDSystems.UpdateInventory();
     }
 
     static public void AddLife(Item life)
@@ -297,6 +313,7 @@ public class PlayerShip : MonoBehaviour
             if(LIFES.Count == 3)
             {
                 Warpaid.AddScore(life.value);
+                // need to create particle with value; another method you know
                 return;
             }
             LIFES.Add(life);
@@ -326,6 +343,7 @@ public class PlayerShip : MonoBehaviour
             if (ARMORS.Count == 2)
             {
                 Warpaid.AddScore(armor.value);
+                // need to create particle with value; another method you know
                 return;
             }
             ARMORS.Add(armor);

@@ -42,12 +42,11 @@ public class Item : MonoBehaviour
     // Hidden in Inspector
     private float speed = 25f;
     private float rotationSpeed = 0.05f;
-
     void Start()
     {
         Warpaid.AddItem(this);
         transform.SetParent(ITEM_ANCHOR, true);
-        transform.rotation = Quaternion.Euler(Time.time * speed, -90f, -90f);
+        transform.rotation = Quaternion.Euler(0f, 0f, Time.time * speed);
     }
     private void OnTriggerEnter(Collider coll)
     {
@@ -55,7 +54,6 @@ public class Item : MonoBehaviour
         {
             PlayerShip.AddItem(this);
             Destroy(gameObject);
-            return;
         }
     }
     void OnDestroy()
@@ -64,7 +62,7 @@ public class Item : MonoBehaviour
     }
     void Update()
     {
-        transform.rotation = Quaternion.Euler(Time.time * speed, -90f, -90f);
+        transform.rotation = Quaternion.Euler(0f, 0f, Time.time * speed);
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, transform.position.z -rotationSpeed), rotationSpeed);
     }
     static public Transform GetTransform()
