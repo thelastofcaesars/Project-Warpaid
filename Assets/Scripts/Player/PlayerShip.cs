@@ -39,7 +39,8 @@ public class PlayerShip : MonoBehaviour
     public int lifes = 2;
     public int armors = 0;
     public float energy = 0f;
-    public float bulletRate = 1f;
+    public float bulletRate = 2f;
+    public float bulletTime = 0.1f;
     public float nextFire = 0f;
     public float playerReflex = 2f;
     public float speedBoost = 1.5f;
@@ -364,7 +365,15 @@ public class PlayerShip : MonoBehaviour
                 S.playerReflex += 0.05f;
                 break;
             case "00LB":
-                S.bulletRate += 0.05f;
+                S.bulletTime += 0.05f;
+                break;
+            case "00LV":
+                S.speedBoost += 0.05f;
+                break;
+            case "00LE": //adding some energy ?/!?
+                break;
+            case "00L?":
+                RandomEffect();
                 break;
             default:
                 Debug.Log("Playership:AddLetter - ID of item has not been set");
@@ -495,7 +504,12 @@ public class PlayerShip : MonoBehaviour
 
     static public boost GetPlayerBoosts()
     {
-        boostSystem.bulletTime = S.bulletRate;
+        if (S == null)
+        {
+            Debug.Log("PlayerShip:GetPlayerBoosts - attempt to get S value before it has been set!");
+            return GetPlayerBoosts();
+        }
+        boostSystem.bulletTime = S.bulletTime;
         boostSystem.speedBoost = S.speedBoost;
         boostSystem.time = S.playerReflex; // to change
         boostSystem.energy = S.energy;
@@ -503,4 +517,9 @@ public class PlayerShip : MonoBehaviour
         return boostSystem;
     }
     #endregion
+
+    static public void RandomEffect()
+    {
+        Debug.Log("Some random effect to add");
+    }
 }
