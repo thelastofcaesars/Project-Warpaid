@@ -38,13 +38,15 @@ public class PlayerShip : MonoBehaviour
     public string playerName = "Player";
     public int lifes = 2;
     public int armors = 0;
-    public float energy = 0f;
-    public float bulletRate = 2f;
-    public float bulletTime = 0.1f;
+
+    public float bulletRate = 1.1f;
     public float nextFire = 0f;
-    public float playerReflex = 2f;
-    public float speedBoost = 1.5f;
+    // boosts
+    public float bulletTime = 0.1f;
+    public float reflex = 0.1f;
+    public float speedBoost = 0.05f;
     public float freezeTime = 0f;
+    public float energy = 0f;
     //
 
     [Header("Set in Inspector")]
@@ -66,7 +68,7 @@ public class PlayerShip : MonoBehaviour
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
-    public static int staticLifes= 2;
+    public static int staticLifes = 2;
     public static int staticArmors = 0;
 
     void Awake()
@@ -77,25 +79,8 @@ public class PlayerShip : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
-        //GetAllDataFromSO();
-        
-        //  | - Needed to change Item life = new Item()!
-        //  V 
-        for (int i = 0; i < lifes; i++)
-        {
-            Item life = new Item();
-            life.itemType = Item.eItemType.Heart;
-            life.itemID = "00H1";
-            AddItem(life);
-        }
-        for (int i = 0; i < armors; i++)
-        {
-            Item armor = new Item();
-            armor.itemType = Item.eItemType.Armor;
-            armor.itemID = "00A1";
-            AddItem(armor);
-        }
-       
+        GetAllDataFromSO();
+
     }
 
     void Update()
@@ -155,7 +140,7 @@ public class PlayerShip : MonoBehaviour
         if (Time.time > nextFire)
         {
             // Instantiate the Bullet and set its direction
-            nextFire = Time.time + bulletRate;
+            nextFire = Time.time + bulletRate - bulletTime;
             foreach (var shotSpawn in shotSpawns)
             {
                 Instantiate(Warpaid.PlayersSO.playerBullet, shotSpawn.position, shotSpawn.rotation);
@@ -167,21 +152,35 @@ public class PlayerShip : MonoBehaviour
     void GetAllDataFromSO()
     {
         // changable data in-game
-        bulletRate = Warpaid.PlayersSO.bulletDelta;
-        playerReflex = Warpaid.PlayersSO.playerReflex;
         lifes = Warpaid.PlayersSO.playerLifes;
         armors = Warpaid.PlayersSO.playerArmors;
-        energy = Warpaid.PlayersSO.playerEnergy;
+        bulletRate = Warpaid.PlayersSO.bulletDelta;
+        reflex = Warpaid.PlayersSO.reflex;
+        speedBoost = Warpaid.PlayersSO.speedBoost;
+        energy = Warpaid.PlayersSO.energy;
+
+        //  | - Needed to change Item life = new Item()!
         for (int i = 0; i < lifes; i++)
         {
-            LIFES.Add(new Item());
+            Item life = new Item
+            {
+                itemType = Item.eItemType.Heart,
+                itemID = "00H1"
+            };
+            AddLife(life);
         }
         for (int i = 0; i < armors; i++)
         {
-            ARMORS.Add(new Item());
+            Item armor = new Item
+            {
+                itemType = Item.eItemType.Armor,
+                itemID = "00A1"
+            };
+            AddLife(armor);
         }
+
         // innocent
-        playerName = Warpaid.PlayersSO.playerName;
+        transform.name = playerName = Warpaid.PlayersSO.playerName;
     }
 
     #region Adding Items/Lifes etc.
@@ -238,6 +237,7 @@ public class PlayerShip : MonoBehaviour
 
     static public void AddOrb(Item orb)
     {
+        bool addScore = false;
         switch (orb.itemID)
         {
             // orbs
@@ -246,7 +246,7 @@ public class PlayerShip : MonoBehaviour
                     orbSystem.Red = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             case "00HB":
@@ -254,7 +254,7 @@ public class PlayerShip : MonoBehaviour
                     orbSystem.Orange = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             case "00HC":
@@ -262,7 +262,7 @@ public class PlayerShip : MonoBehaviour
                     orbSystem.Yellow = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             case "00HD":
@@ -270,7 +270,7 @@ public class PlayerShip : MonoBehaviour
                     orbSystem.Green = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             case "00HE":
@@ -278,26 +278,31 @@ public class PlayerShip : MonoBehaviour
                     orbSystem.Blue = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             case "00HF":
                 if (!orbSystem.Purple)
                     orbSystem.Purple = true;
                 else
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 break;
             case "00HH":
                 if (!orbSystem.White)
                     orbSystem.White = true;
                 else
                 {
-                    Warpaid.AddScore(orb.value);
+                    addScore = true;
                 }
                 break;
             default:
                 Debug.Log("Playership:AddOrb - ID of item has not been set");
                 break;
+        }
+        if (addScore)
+        {
+            Warpaid.AddScore(orb.value);
+            RandomEffect();
         }
     }
 
@@ -336,41 +341,119 @@ public class PlayerShip : MonoBehaviour
 
     static public void AddLetter(Item letter)
     {
+        bool addScore = false;
         switch (letter.itemID)
         {
             // snafu
             case "00LS":
-                snafuSystem.S = true;
+                if (!snafuSystem.S)
+                {
+                    snafuSystem.S = true;
+                }
+                else
+                {
+                    addScore = true;
+                }
                 break;
             case "00LN":
-                snafuSystem.N = true;
+                if (!snafuSystem.N)
+                {
+                    snafuSystem.N = true;
+                }
+                else
+                {
+                    addScore = true;
+                }
                 break;
             case "00LA":
-                snafuSystem.A = true;
+                if (!snafuSystem.A)
+                {
+                    snafuSystem.A = true;
+                }
+                else
+                {
+                    addScore = true;
+                }
                 break;
             case "00LF":
-                snafuSystem.F = true;
+                if (!snafuSystem.F)
+                {
+                    snafuSystem.U = true;
+                }
+                else
+                {
+                    addScore = true;
+                }
                 break;
             case "00LU":
-                snafuSystem.U = true;
+                if (!snafuSystem.U)
+                {
+                    snafuSystem.U = true;
+                }
+                else
+                {
+                    addScore = true;
+                }
                 break;
-            
+
             // other letters, bullet time etc.
 
             case "00LR":
                 snafuSystem.R = true;
-                S.freezeTime += 0.1f;
+                if (!(S.freezeTime >= 1f))
+                {
+                    S.freezeTime += 0.1f;
+                }
+                else
+                {
+                    S.freezeTime = 1f;
+                    addScore = true;
+                }
                 break;
             case "00LT":
-                S.playerReflex += 0.05f;
+                if (!(S.reflex >= 1f))
+                {
+                    S.reflex += 0.05f;
+                }
+                else
+                {
+                    S.reflex = 1f;
+                    addScore = true;
+                }
                 break;
             case "00LB":
-                S.bulletTime += 0.05f;
+                if (!(S.bulletTime >= 1f))
+                {
+                    S.bulletTime += 0.05f;
+                }
+                else
+                {
+                    S.bulletTime = 1f;
+                    addScore = true;
+                }
                 break;
             case "00LV":
-                S.speedBoost += 0.05f;
+                if (!(S.speedBoost >= 1f))
+                {
+                    S.speedBoost += 0.05f;
+                }
+                else
+                {
+                    S.speedBoost = 1f;
+                    addScore = true;
+                }
                 break;
-            case "00LE": //adding some energy ?/!?
+            case "00LE":
+                if (!(S.energy >= 1f))
+                {
+                    S.energy += 0.2f;
+                }
+                else
+                {
+                    S.energy = 1f;
+                    addScore = true;
+                }
+                //adding some energy ?/!?
                 break;
             case "00L?":
                 RandomEffect();
@@ -378,6 +461,11 @@ public class PlayerShip : MonoBehaviour
             default:
                 Debug.Log("Playership:AddLetter - ID of item has not been set");
                 break;
+        }
+        if(addScore)
+        {
+            Warpaid.AddScore(letter.value);
+            RandomEffect();
         }
     }
 
@@ -432,7 +520,7 @@ public class PlayerShip : MonoBehaviour
             if(LIFES.Count == 3)
             {
                 Warpaid.AddScore(life.value);
-                // need to create particle with value; another method you know
+                RandomEffect();
                 return;
             }
             LIFES.Add(life);
@@ -462,7 +550,7 @@ public class PlayerShip : MonoBehaviour
             if (ARMORS.Count == 2)
             {
                 Warpaid.AddScore(armor.value);
-                // need to create particle with value; another method you know
+                RandomEffect();
                 return;
             }
             ARMORS.Add(armor);
@@ -507,11 +595,11 @@ public class PlayerShip : MonoBehaviour
         if (S == null)
         {
             Debug.Log("PlayerShip:GetPlayerBoosts - attempt to get S value before it has been set!");
-            return GetPlayerBoosts();
+            return boostSystem; // GetPlayerBoosts();
         }
         boostSystem.bulletTime = S.bulletTime;
         boostSystem.speedBoost = S.speedBoost;
-        boostSystem.time = S.playerReflex; // to change
+        boostSystem.reflex = S.reflex; // to change
         boostSystem.energy = S.energy;
         boostSystem.freezeTime = S.freezeTime;
         return boostSystem;

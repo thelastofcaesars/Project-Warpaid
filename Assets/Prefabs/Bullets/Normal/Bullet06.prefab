@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7819950080448702925}
   m_Layer: 0
   m_Name: Bullet06
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 1078829090433936417}
   - component: {fileID: 2556057905634015221}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

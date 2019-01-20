@@ -19,6 +19,8 @@ public class Item : MonoBehaviour
         }
     }
 
+
+
     [System.Flags]
     public enum eItemType
     {
@@ -41,7 +43,8 @@ public class Item : MonoBehaviour
 
     // Hidden in Inspector
     private float speed = 25f;
-    private float rotationSpeed = 0.05f;
+    private readonly float rotationSpeed = 0.05f;
+
     void Start()
     {
         Warpaid.AddItem(this);
@@ -54,6 +57,14 @@ public class Item : MonoBehaviour
         {
             PlayerShip.AddItem(this);
             Destroy(gameObject);
+        }
+    }
+    private void OnTriggerExit(Collider coll)
+    {
+        if(coll.CompareTag("Boundary"))
+        {
+            Destroy(gameObject);
+            Debug.Log("WTF!");
         }
     }
     void OnDestroy()
@@ -92,8 +103,8 @@ public struct orb
 public struct boost
 {
     public float bulletTime;
+    public float reflex;
     public float speedBoost;
-    public float time;
     public float energy;
     public float freezeTime;
 }

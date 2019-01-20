@@ -187,7 +187,6 @@ public class HUDSystems : MonoBehaviour
                     break;
             }
             orb.gameObject.SetActive(toEnable);
-            // orb.enabled = toEnable;
             i++;
         }
         // Debug.Log("HUDSystems:UpdateOrbs - Orbs updating " + theOrbs);
@@ -205,10 +204,10 @@ public class HUDSystems : MonoBehaviour
                     barSize = boostSystem.bulletTime;
                     break;
                 case 1:
-                    barSize = boostSystem.speedBoost;
+                    barSize = boostSystem.reflex;
                     break;
                 case 2:
-                    barSize = boostSystem.time;
+                    barSize = boostSystem.speedBoost;
                     break;
                 case 3:
                     barSize = boostSystem.energy;
@@ -220,11 +219,11 @@ public class HUDSystems : MonoBehaviour
                     Debug.Log("HUDSystems:UpdateBoost - boost has not been set in good way!");
                     break;
             }
-            Debug.Log("boost anchor + " + barSize);
+            // Debug.Log("boost anchor + " + barSize);
             float Ay = boost.transform.GetComponent<RectTransform>().anchorMax.y;
             boost.transform.GetComponent<RectTransform>().anchorMax = new Vector2(barSize, Ay);
             i++;
         }
-        // Debug.Log("HUDSystems:UpdateOrbs - Orbs updating " + theOrbs);
+        // Debug.Log("HUDSystems:UpdateBoost - Boosts updating");
     }
 }

@@ -139,7 +139,7 @@ public class Warpaid : MonoBehaviour
         ENEMIES = new List<Enemy>();
         AddScore(0);
         AddCash(0);
-        GameObject player = Instantiate(playersSO.playerPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
+        GameObject player = Instantiate(playersSO.partPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
         // Loading data needed
@@ -487,9 +487,14 @@ public class Warpaid : MonoBehaviour
 
     static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this
     {
-        if (EnemiesSO.enemyDropPrefabs.Length == 0)
+        if(S == null)
         {
-            Debug.LogWarning("There is no drop from this enemy!");
+            Debug.Log("Warpaid:InitDrop - attempt to get value before it has been set!");
+            return;
+        }
+        if (S.enemiesSO.enemyDropPrefabs.Length == 0)
+        {
+            Debug.Log("There is no drop from this enemy!");
             return;
         }
         if (Random.Range(0, 100) < probability)

@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Asteroid
   - Item
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -12,12 +12,21 @@ public class Enemy : MonoBehaviour
     public bool immune = false;
     public float speed = 5f;
     public int score = 100;
+
+    public GameObject shot;
+    public Transform[] shotSpawns;
+    public float bulletTime;
+    public float delay;
+
+    private new AudioSource audio;
     Rigidbody rigid; // protected
+
     OffScreenWrapper offScreenWrapper;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
         offScreenWrapper = GetComponent<OffScreenWrapper>();
     }
 
@@ -27,11 +36,21 @@ public class Enemy : MonoBehaviour
         Warpaid.AddEnemy(this);
         transform.localScale = Vector3.one * Warpaid.EnemiesSO.enemyScale;
         InitEnemy();
+        //To do: Management, Movement and Firing;
+        InvokeRepeating("Fire", delay, bulletTime);
+    }
+
+    void Fire()
+    {
+        foreach (var shotSpawn in shotSpawns)
+        {
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
+        audio.Play();
     }
 
     private void OnDestroy()
     {
-        Warpaid.InitDrop(score, transform);
         Warpaid.RemoveEnemy(this);
     }
 
@@ -80,34 +99,29 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision coll)
-    {
-        // If this is the child of another Asteroid, pass this collision up the chain
-        if (normalEnemy)
-        {
-            normalEnemy.OnCollisionEnter(coll);
-            return;
-        }
-
+    void OnTriggerEnter(Collider coll)
+    {    
         if (immune)
         {
             return;
         }
-
         GameObject otherGO = coll.gameObject;
-
+        Debug.Log(otherGO.name + "WTF");
         if (otherGO.tag == "Bullet" || otherGO.transform.root.gameObject.tag == "Player")
         {
             if (otherGO.tag == "Bullet")
             {
                 Destroy(otherGO);
-                // Adding points
+                Warpaid.InitDrop(score, transform);
+                Debug.Log("Adding points? " + score);
+                Warpaid.AddScore(score);
             }
-            InstantiateDrop();
             InstantiateParticleSystem();
+            
             Destroy(gameObject);
         }
     }
+
 
     void InstantiateParticleSystem()
     {
@@ -125,7 +139,7 @@ public class Enemy : MonoBehaviour
 
     void InstantiateDrop()
     {
-        GameObject dropGO = Instantiate<GameObject>(Warpaid.EnemiesSO.GetEnemyDropPrefab(), transform.position, Quaternion.identity);
+         Warpaid.InitDrop(score, transform);
     }
 
     private void Update()

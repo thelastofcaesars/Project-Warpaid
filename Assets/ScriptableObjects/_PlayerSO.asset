@@ -15,17 +15,20 @@ MonoBehaviour:
   playerName: PlayerOne
   playerLifes: 2
   playerArmors: 0
-  playerEnergy: 0
-  playerReflex: 10
   bulletDelta: 1
+  bulletTime: 0.1
+  reflex: 0.1
+  speedBoost: 0.05
+  freezeTime: 0
+  energy: 0
   minVel: 5
   maxVel: 10
   maxAngularVel: 10
-  playerLevel: 1
-  playerScale: 0.25
-  playerPrefabs:
+  scale: 0.25
+  level: 1
+  partPrefabs:
   - {fileID: 7431906174298277082, guid: 7d786af361412874bbfb5fef25a298c9, type: 3}
-  playerParticlePrefabs:
+  particlePrefabs:
   - {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb, type: 3}
   playerBullet: {fileID: 6524468577049991104, guid: 0be704f17c396804c88f360585fc46d0,
     type: 3}

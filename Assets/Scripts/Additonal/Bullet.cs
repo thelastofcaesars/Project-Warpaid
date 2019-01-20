@@ -52,16 +52,9 @@ public class Bullet : MonoBehaviour {
         if (!coll.CompareTag("Enemy"))
         {
             return;
-        }
-        // sometimes work, sometimes erros reference has not been set wtf
-        Warpaid.AddScore(coll.GetComponent<Enemy>().score);
-        Destroy(coll.gameObject);
-        Destroy(gameObject);
-    }
-
-    void DestroyMe()
-    {
-        Destroy(gameObject);
+        }  
+        //Destroy(coll.gameObject);
+        //Destroy(gameObject);
     }
     
 }
