@@ -64,7 +64,6 @@ public class Item : MonoBehaviour
         if(coll.CompareTag("Boundary"))
         {
             Destroy(gameObject);
-            Debug.Log("WTF!");
         }
     }
     void OnDestroy()

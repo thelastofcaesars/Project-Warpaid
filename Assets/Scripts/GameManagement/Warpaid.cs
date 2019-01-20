@@ -28,6 +28,9 @@ public class Warpaid : MonoBehaviour
     static Text CASH_GT;
     static Text SCORE_GT;
     public GameObject quitButton;
+    public int paddingCash = 6; // needed for displaying cash
+    public int paddingLevels = 5; // needed for displaying level // need to add a method for it
+
     // This is an automatic property
     public static int SCORE { get; private set; }
     public static int CASH { get; private set; } // next step is cash for 2 players
@@ -480,8 +483,7 @@ public class Warpaid : MonoBehaviour
         }
         // CASH holds the definitive cash for the player.
         CASH += num;
-
-        CASH_GT.text = "$" + CASH.ToString();
+        CASH_GT.text = "$" + CASH.ToString().PadLeft(S.paddingCash).Replace(' ', '0');
 
     }
 

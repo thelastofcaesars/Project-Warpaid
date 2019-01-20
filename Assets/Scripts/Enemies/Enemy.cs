@@ -106,14 +106,12 @@ public class Enemy : MonoBehaviour
             return;
         }
         GameObject otherGO = coll.gameObject;
-        Debug.Log(otherGO.name + "WTF");
         if (otherGO.tag == "Bullet" || otherGO.transform.root.gameObject.tag == "Player")
         {
             if (otherGO.tag == "Bullet")
             {
                 Destroy(otherGO);
                 Warpaid.InitDrop(score, transform);
-                Debug.Log("Adding points? " + score);
                 Warpaid.AddScore(score);
             }
             InstantiateParticleSystem();
