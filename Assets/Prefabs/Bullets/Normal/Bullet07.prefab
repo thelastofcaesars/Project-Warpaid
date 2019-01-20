@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 8488577095447994640}
   - component: {fileID: 7600760445887904699}
   - component: {fileID: 4970679941712846959}
-  - component: {fileID: 1129712330592690079}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Mesh
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,20 +77,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &1129712330592690079
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4075860367282696197}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5026509262712782233
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +89,7 @@ GameObject:
   - component: {fileID: 4824628128838444461}
   - component: {fileID: 899515105291646430}
   - component: {fileID: 1986564092742639373}
+  - component: {fileID: 2605771683382789143}
   m_Layer: 0
   m_Name: Bullet07
   m_TagString: Enemy
@@ -167,6 +153,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22ca37f351bfb74b8fd99eb167b84ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 0}
-  playerExplosion: {fileID: 100008, guid: 89dffef7625c24f4e8e0cd631f3639eb, type: 3}
-  scoreValue: 0
+--- !u!136 &2605771683382789143
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026509262712782233}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

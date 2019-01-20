@@ -70,12 +70,11 @@ GameObject:
   m_Component:
   - component: {fileID: 351773206140320076}
   - component: {fileID: 7810341197214709585}
-  - component: {fileID: 7434445370432561138}
-  - component: {fileID: 1369838185278086055}
-  - component: {fileID: 1363231794596966251}
-  - component: {fileID: 3015292041841137565}
-  - component: {fileID: 2540220859804523869}
+  - component: {fileID: 3538698892696546768}
   - component: {fileID: 2728325826558714619}
+  - component: {fileID: 1108890561366268603}
+  - component: {fileID: 2540220859804523869}
+  - component: {fileID: 4992947531493935205}
   m_Layer: 0
   m_Name: Moonfighter
   m_TagString: Enemy
@@ -117,91 +116,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &7434445370432561138
-MeshCollider:
+--- !u!135 &3538698892696546768
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5892827062751724577}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: b950ba0d3119e6f43893a2d5d426945c, type: 3}
---- !u!114 &1369838185278086055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892827062751724577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe6d3394a14f97458328acc1ce08496, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: -5
---- !u!114 &1363231794596966251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892827062751724577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22ca37f351bfb74b8fd99eb167b84ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713,
-    type: 3}
-  playerExplosion: {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb,
-    type: 3}
-  scoreValue: 70
---- !u!114 &3015292041841137565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892827062751724577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e2b685c7ea7fa4ca56aef90a300345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shot: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275, type: 3}
-  shotSpawns:
-  - {fileID: 6969168769354755369}
-  bulletTime: 1
-  delay: 1.5
---- !u!114 &2540220859804523869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5892827062751724577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88209389c71ef6242b1df8ce519511e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dodge: 4
-  smoothing: 7.5
-  tilt: 10
-  speed: -5
-  startWait: {x: 0.5, y: 1}
-  maneuverTime: {x: 1, y: 2}
-  maneuverWait: {x: 1, y: 2}
-  boundary:
-    xMin: -15
-    xMax: 15
-    zMin: -10
-    zMax: 20
+  serializedVersion: 2
+  m_Radius: 1.43
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &2728325826558714619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -298,6 +225,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1108890561366268603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892827062751724577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6841e837869a6084b97169fd8990420d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 1
+  immune: 0
+  speed: 5
+  score: 100
+  shot: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275, type: 3}
+  shotSpawns:
+  - {fileID: 6969168769354755369}
+  bulletTime: 2
+  delay: 1
+--- !u!114 &2540220859804523869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892827062751724577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88209389c71ef6242b1df8ce519511e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodge: 4
+  smoothing: 7.5
+  tilt: 10
+  speed: -5
+  startWait: {x: 0.5, y: 1}
+  maneuverTime: {x: 1, y: 2}
+  maneuverWait: {x: 1, y: 2}
+  boundary:
+    xMin: -15
+    xMax: 15
+    zMin: -5
+    zMax: 20
+--- !u!114 &4992947531493935205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892827062751724577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9075d9fb0583ff4e8dfa36a50d890f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6315255197411889458
 GameObject:
   m_ObjectHideFlags: 0

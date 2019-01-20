@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afce29479a1ab429719407b409e65f, type: 3}
+  m_Name: _Moonfighter_M_SO
+  m_EditorClassIdentifier: 
+  enemyName: Moonfighter_Mothership
+  enemyHealth: 500
+  enemyArmor: 200
+  enemyReflex: 20
+  minVel: 5
+  maxVel: 10
+  maxAngularVel: 10
+  enemyLevel: 3
+  enemyScale: 0.5
+  pointsForEnemyLevel: 0000000090010000c800000064000000
+  enemyPrefabs:
+  - {fileID: 5892827062751724577, guid: eaffb0ba4d816154d81047edb96099dd, type: 3}
+  enemyParticlePrefabs:
+  - {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713, type: 3}
+  enemyDropPrefabs:
+  - {fileID: 7415200248562355086, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}
+  - {fileID: 1260139446493431313, guid: 7110864bee722744aa9ef5065be02732, type: 3}
+  enemyBullet: {fileID: 0}

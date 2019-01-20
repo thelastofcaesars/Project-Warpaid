@@ -8,15 +8,25 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Set Dynamically")]
-    public int size = 2;
+    public int size = 1;
     public bool immune = false;
-    
+    public float speed = 5f;
+    public int score = 100;
+
+    public GameObject shot;
+    public Transform[] shotSpawns;
+    public float bulletTime;
+    public float delay;
+
+    private new AudioSource audio;
     Rigidbody rigid; // protected
+
     OffScreenWrapper offScreenWrapper;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
         offScreenWrapper = GetComponent<OffScreenWrapper>();
     }
 
@@ -24,10 +34,19 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Warpaid.AddEnemy(this);
-
         transform.localScale = Vector3.one * Warpaid.EnemiesSO.enemyScale;
         InitEnemy();
+        //To do: Management, Movement and Firing;
+        InvokeRepeating("Fire", delay, bulletTime);
+    }
 
+    void Fire()
+    {
+        foreach (var shotSpawn in shotSpawns)
+        {
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
+        audio.Play();
     }
 
     private void OnDestroy()
@@ -41,7 +60,7 @@ public class Enemy : MonoBehaviour
         rigid.isKinematic = false;
         // Snap this GameObject to the z=0 plane
         Vector3 pos = transform.position;
-        pos.z = 0;
+        pos.y= 0;
         transform.position = pos;
         // Initialize the velocity for this Enemy
         InitVelocity();
@@ -61,6 +80,7 @@ public class Enemy : MonoBehaviour
         // Multiply the unit length of vel by the correct speed (randomized) for this size of Asteroid
         vel = vel * Random.Range(Warpaid.EnemiesSO.minVel, Warpaid.EnemiesSO.maxVel) / (float)size;
         rigid.velocity = vel;
+        
     }
 
     Enemy normalEnemy
@@ -79,34 +99,27 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision coll)
-    {
-        // If this is the child of another Asteroid, pass this collision up the chain
-        if (normalEnemy)
-        {
-            normalEnemy.OnCollisionEnter(coll);
-            return;
-        }
-
+    void OnTriggerEnter(Collider coll)
+    {    
         if (immune)
         {
             return;
         }
-
         GameObject otherGO = coll.gameObject;
-
         if (otherGO.tag == "Bullet" || otherGO.transform.root.gameObject.tag == "Player")
         {
             if (otherGO.tag == "Bullet")
             {
                 Destroy(otherGO);
-                // Adding points
+                Warpaid.InitDrop(score, transform);
+                Warpaid.AddScore(score);
             }
-            InstantiateDrop();
             InstantiateParticleSystem();
+            
             Destroy(gameObject);
         }
     }
+
 
     void InstantiateParticleSystem()
     {
@@ -124,7 +137,7 @@ public class Enemy : MonoBehaviour
 
     void InstantiateDrop()
     {
-        GameObject dropGO = Instantiate<GameObject>(Warpaid.EnemiesSO.GetEnemyDropPrefab(), transform.position, Quaternion.identity);
+         Warpaid.InitDrop(score, transform);
     }
 
     private void Update()

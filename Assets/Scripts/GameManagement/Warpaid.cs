@@ -13,15 +13,27 @@ public class Warpaid : MonoBehaviour
     // Private Singleton-style instance. Accessed by static property S later in script
     static private Warpaid _S;
     static public List<LevelInfo> LEVEL_LIST;
-    static List<Enemy> ENEMIES;
+    static List<PlayerShip> PLAYERS;
+    static List<Enemy>  ENEMIES;
     static List<Bullet> BULLETS;
+    static List<Item> ITEMS;
     static private bool _PAUSED = false;
     static private eGameState _GAME_STATE = eGameState.mainMenu;
     static public bool GOT_HIGH_SCORE = false;
 
+
+    // Game Controller
+    static Text GAMEOVER_GT;
+    //static Text RESTART_GT;
+    static Text CASH_GT;
     static Text SCORE_GT;
+    public GameObject quitButton;
+    public int paddingCash = 6; // needed for displaying cash
+    public int paddingLevels = 5; // needed for displaying level // need to add a method for it
+
     // This is an automatic property
     public static int SCORE { get; private set; }
+    public static int CASH { get; private set; } // next step is cash for 2 players
 
     const float DELAY_BEFORE_RELOADING_SCENE = 4;
 
@@ -53,6 +65,8 @@ public class Warpaid : MonoBehaviour
     }
 
     [Header("Set in Inspector")]
+    [Tooltip("This sets the PlayerScriptableObject to be used throughout the game.")]
+    public PlayerScriptableObject playersSO;
     [Tooltip("This sets the EnemyScriptableObject to be used throughout the game.")]
     public EnemyScriptableObject enemiesSO;
 
@@ -95,19 +109,19 @@ public class Warpaid : MonoBehaviour
         //    // Anonymous delegates like this do create "closures" like "this" below, which 
         //    //  stores the value of this when the anonymous delegate was created. Closures
         //    //  can be slow, but in this case, it is so rarely used that it doesn't matter.
-        //    this._gameState = AsteraX.GAME_STATE;
+        //    this._gameState = Warpaid.GAME_STATE;
         //};
         //PAUSED_CHANGE_DELEGATE += delegate ()
         //{
-        //    this._paused = AsteraX.PAUSED;
+        //    this._paused = Warpaid.PAUSED;
         //};
 
         // This strange use of _gameState and _paused as an intermediary in the following 
         //  lines is solely to stop the Warning from popping up in the Console telling you 
         //  that _gameState was assigned but not used.
-        _gameState = eGameState.mainMenu;
+        _gameState = eGameState.level;
         GAME_STATE = _gameState;
-        _paused = true;
+        _paused = false;
         PauseGame(_paused);
     }
 
@@ -120,12 +134,16 @@ public class Warpaid : MonoBehaviour
 
     void Start()
     {
-#if DEBUG_AsteraX_LogMethods
-        Debug.Log("AsteraX:Start()");
+#if DEBUG_Warpaid_LogMethods
+        Debug.Log("Warpaid:Start()");
 #endif
 
-        // ENEMIES = new List<Enemy>();
+        PLAYERS = new List<PlayerShip>();
+        ENEMIES = new List<Enemy>();
         AddScore(0);
+        AddCash(0);
+        GameObject player = Instantiate(playersSO.partPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
+        StartCoroutine(SpawnWaves());
 
         // Loading data needed
     }
@@ -198,13 +216,14 @@ public class Warpaid : MonoBehaviour
         if (ENEMIES.IndexOf(enemy) == -1)
         {
             ENEMIES.Add(enemy);
+            enemy.score = EnemiesSO.pointsForEnemyLevel[1];
         }
     }
     static public void RemoveEnemy(Enemy enemy)
     {
         if (GAME_STATE != eGameState.level)
         {
-            // If this is not in the middle of a level, don't do anything. RemoveAsteroid is called
+            // If this is not in the middle of a level, don't do anything. RemoveEnemy is called
             //  by Enemy:OnDestroy(), so this prevents removal from happening if the game is in
             //  any state other than level, which avoids modifying the ENEMIES List in the for 
             //  loop of ClearEnemies().
@@ -236,7 +255,26 @@ public class Warpaid : MonoBehaviour
         }
         BULLETS.Remove(bullet);
     }
+    static public void AddItem(Item item)
+    {
+        if (ITEMS == null)
+        {
+            ITEMS = new List<Item>();
+        }
+        if (ITEMS.IndexOf(item) == -1)
+        {
+            ITEMS.Add(item);
+        }
+    }
 
+    static public void RemoveItem(Item item)
+    {
+        if (ITEMS == null)
+        {
+            return;
+        }
+        ITEMS.Remove(item);
+    }
 
 
     // ---------------- Static Section ---------------- //
@@ -270,6 +308,17 @@ public class Warpaid : MonoBehaviour
         }
     }
 
+    static public PlayerScriptableObject PlayersSO
+    {
+        get
+        {
+            if (S!= null)
+            {
+                return S.playersSO;
+            }
+            return null;
+        }
+    }
 
     static public EnemyScriptableObject EnemiesSO
     {
@@ -378,7 +427,7 @@ public class Warpaid : MonoBehaviour
         // lNum is 1-based where LEVEL_LIST is 0-based, so LEVEL_LIST[0] is lNum 1
         if (lNum < 1 || lNum > LEVEL_LIST.Count)
         {
-            Debug.LogError("AsteraX:GetLevelInfo() - Requested level number of " + lNum + " does not exist.");
+            Debug.LogError("Warpaid:GetLevelInfo() - Requested level number of " + lNum + " does not exist.");
             return new LevelInfo(-1, "NULL", 1, 1);
         }
         return (LEVEL_LIST[lNum - 1]);
@@ -413,5 +462,68 @@ public class Warpaid : MonoBehaviour
 
         SCORE_GT.text = SCORE.ToString("N0");
 
+    }
+
+    static public void AddCash(int num)
+    {
+        // Find the ScoreGT Text field only once.
+        if (CASH_GT == null)
+        {
+            GameObject go = GameObject.Find("CashGT");
+            if (go != null)
+            {
+                CASH_GT = go.GetComponent<Text>();
+            }
+            else
+            {
+                Debug.LogError("Warpaid:AddCash() - Could not find a GameObject named CashGT.");
+                return;
+            }
+            CASH = 0;
+        }
+        // CASH holds the definitive cash for the player.
+        CASH += num;
+        CASH_GT.text = "$" + CASH.ToString().PadLeft(S.paddingCash).Replace(' ', '0');
+
+    }
+
+    static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this
+    {
+        if(S == null)
+        {
+            Debug.Log("Warpaid:InitDrop - attempt to get value before it has been set!");
+            return;
+        }
+        if (S.enemiesSO.enemyDropPrefabs.Length == 0)
+        {
+            Debug.Log("There is no drop from this enemy!");
+            return;
+        }
+        if (Random.Range(0, 100) < probability)
+        {    
+            GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);
+            Debug.Log("Inited " + go.name);
+        }
+    }
+
+    IEnumerator SpawnWaves()
+    {
+        yield return new WaitForSeconds(3);
+        while (true)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                GameObject enemy = EnemiesSO.GetEnemyPrefab();
+                Vector3 spawnPosition = new Vector3(Random.Range(-14, 14), 0, 20);
+                Quaternion spawnRotation = Quaternion.identity;
+                Instantiate(enemy, spawnPosition, spawnRotation);
+                yield return new WaitForSeconds(1);
+            }
+            if (_GAME_STATE == eGameState.gameOver)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(3);
+        }
     }
 }

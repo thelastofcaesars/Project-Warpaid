@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.25, g: 0.6558826, b: 1, a: 1}
   m_Intensity: 1.5
-  m_Range: 1
+  m_Range: 0.75
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -4845,14 +4845,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6997134999855588413}
-  - component: {fileID: 6997134999855588412}
   - component: {fileID: 728682088254681232}
   - component: {fileID: 5743922240080549886}
-  - component: {fileID: 2847246338156694147}
+  - component: {fileID: 6997134999855588412}
   - component: {fileID: 1976405383273690318}
   m_Layer: 0
   m_Name: ElectroShotX
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4872,19 +4871,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6997134999855588412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6997134999855588411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe6d3394a14f97458328acc1ce08496, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
 --- !u!54 &728682088254681232
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4914,7 +4900,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2847246338156694147
+--- !u!114 &6997134999855588412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4923,10 +4909,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6997134999855588411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d33eb3b813ffb438f09d42c36da367, type: 3}
+  m_Script: {fileID: 11500000, guid: efe6d3394a14f97458328acc1ce08496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 3
+  speed: 15
 --- !u!114 &1976405383273690318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4939,11 +4925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22ca37f351bfb74b8fd99eb167b84ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713,
-    type: 3}
-  playerExplosion: {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb,
-    type: 3}
-  scoreValue: 0
 --- !u!1 &6997134999861069740
 GameObject:
   m_ObjectHideFlags: 0
