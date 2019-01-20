@@ -4,35 +4,39 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public static void Authors()
+    public void Authors()
     {
         ;
     }
 
-    public static void Highscores()
+    public void Highscores()
     {
         ;
     }
 
-    public static void LoadGame()
+    public void LoadGame()
     {
         ;
     }
-    public static void MultiplayerGame()
+    public void MultiplayerGame()
     {
         ;
     }
-    public static void NewGame()
+    public void NewGame()
     {
         ;
     }
-    public static void QuitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
-    public static void SaveGame()
+    public void SaveGame()
     {
         ;
+    }
+    public void RestartGame()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     

@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\DestroyByContact.cs" />
     <Compile Include="Assets\Scripts\DestroyByTime.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Enemies\EnemyManagement.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Enemies\EvasiveManeuver.cs" />
     <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Assets\Scripts\GUI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\GUI\ScoringSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\ShopSystem.cs" />
+    <Compile Include="Assets\Scripts\Items\DropScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Mover.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />

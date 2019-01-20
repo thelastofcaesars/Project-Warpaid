@@ -23,6 +23,7 @@ public class Warpaid : MonoBehaviour
 
 
     // Game Controller
+    public static Text PARTICLE_GT;
     static Text GAMEOVER_GT;
     //static Text RESTART_GT;
     static Text CASH_GT;
@@ -30,6 +31,7 @@ public class Warpaid : MonoBehaviour
     public GameObject quitButton;
     public int paddingCash = 6; // needed for displaying cash
     public int paddingLevels = 5; // needed for displaying level // need to add a method for it
+    public GameObject textParticle; // in future all data from SO jo pienso
 
     // This is an automatic property
     public static int SCORE { get; private set; }
@@ -69,6 +71,8 @@ public class Warpaid : MonoBehaviour
     public PlayerScriptableObject playersSO;
     [Tooltip("This sets the EnemyScriptableObject to be used throughout the game.")]
     public EnemyScriptableObject enemiesSO;
+    [Tooltip("This sets the DropScriptableObject to be used throughout the game.")]
+    public DropScriptableObject dropSO;
 
     // [Header("This will be set by Remote Settings")]
     // public string levelProgression = "1:3/2,2:4/2,3:3/3,4:4/3,5:5/3,6:3/4,7:4/4,8:5/4,9:6/4,10:3/5";
@@ -142,6 +146,7 @@ public class Warpaid : MonoBehaviour
         ENEMIES = new List<Enemy>();
         AddScore(0);
         AddCash(0);
+        PARTICLE_GT = GameObject.Find("ParticleGT").gameObject.GetComponent<Text>();
         GameObject player = Instantiate(playersSO.partPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
@@ -331,6 +336,17 @@ public class Warpaid : MonoBehaviour
             return null;
         }
     }
+    static public DropScriptableObject DropSO
+    {
+        get
+        {
+            if (S != null)
+            {
+                return S.dropSO;
+            }
+            return null;
+        }
+    }
 
     static public bool PAUSED
     {
@@ -502,7 +518,7 @@ public class Warpaid : MonoBehaviour
         if (Random.Range(0, 100) < probability)
         {    
             GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);
-            Debug.Log("Inited " + go.name);
+            // Debug.Log("Inited " + go.name);
         }
     }
 
@@ -525,5 +541,10 @@ public class Warpaid : MonoBehaviour
             }
             yield return new WaitForSeconds(3);
         }
+    }
+
+    static public GameObject GetTextParticle()
+    {
+        return S.textParticle;
     }
 }

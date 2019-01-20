@@ -77,11 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22ca37f351bfb74b8fd99eb167b84ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713,
-    type: 3}
-  playerExplosion: {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb,
-    type: 3}
-  scoreValue: 0
 --- !u!198 &8749576901029354522
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4827,7 +4822,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8749576901211336128}
   - component: {fileID: 3175125670963488567}
-  - component: {fileID: 8749576901211336143}
   - component: {fileID: 8749576901211336129}
   - component: {fileID: 8749576901211336130}
   m_Layer: 0
@@ -4865,23 +4859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
---- !u!114 &8749576901211336143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8749576901211336131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22ca37f351bfb74b8fd99eb167b84ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713,
-    type: 3}
-  playerExplosion: {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb,
-    type: 3}
-  scoreValue: 0
 --- !u!198 &8749576901211336129
 ParticleSystem:
   m_ObjectHideFlags: 0

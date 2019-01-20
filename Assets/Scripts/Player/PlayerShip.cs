@@ -47,6 +47,10 @@ public class PlayerShip : MonoBehaviour
     public float speedBoost = 0.05f;
     public float freezeTime = 0f;
     public float energy = 0f;
+    // standard position
+    private Vector3 standardPos;
+    private bool invulnearbility;
+    private float size = 1;
     //
 
     [Header("Set in Inspector")]
@@ -64,7 +68,8 @@ public class PlayerShip : MonoBehaviour
     public Boundary boundary;
 
     public GameObject coreRotator;
-    public ParticleSystem[] particleSystems; // to change get from pSO
+    public ParticleSystem[] rotatorsParticles; // to change get from pSO
+    private GameObject[] particleSystems;
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
@@ -81,7 +86,8 @@ public class PlayerShip : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         GetAllDataFromSO();
 
-    }
+        standardPos = transform.position;
+     }
 
     void Update()
     {
@@ -98,9 +104,78 @@ public class PlayerShip : MonoBehaviour
         staticArmors = armors;
         staticLifes = lifes;
     }
+
     void FixedUpdate()
     {
         Move();
+    }
+
+    private void OnTriggerEnter(Collider coll)
+    {
+        GameObject collGO = coll.gameObject;
+        if (collGO.CompareTag("Enemy"))
+        {
+            if (!invulnearbility)
+            {
+                CheckLifeStatus();
+            }
+            Destroy(collGO);
+        }
+    }
+
+    void CheckLifeStatus()
+    {
+        Item item = new Item();
+
+        if(armors > 0)
+        {
+            item.itemType = Item.eItemType.Armor;
+            item.itemID = "00A1";
+            RemoveArmor(item);
+            InstantiateParticleSystem(4); //armorParticle
+            StartCoroutine(GetInvulnerability(2f));
+        }
+        else if(lifes >= 0)
+        {
+            item.itemType = Item.eItemType.Heart;
+            item.itemID = "00H1";
+            RemoveLife(item);
+            InitShipRespawn();
+            StartCoroutine(GetInvulnerability(3f));
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+    void InitShipRespawn()
+    {
+        InstantiateParticleSystem(3); //deathParticle
+        transform.position = standardPos;
+        InstantiateParticleSystem(2); //respawnParticle
+    }
+    void InstantiateParticleSystem(int ndx)
+    {
+        if (particleSystems.Length < ndx)
+            return;
+        GameObject particleGO = Instantiate<GameObject>(particleSystems[ndx], transform.position, Quaternion.identity);
+        ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule main = particleSys.main;
+        main.startLifetimeMultiplier = size * 0.5f;
+        ParticleSystem.EmissionModule emitter = particleSys.emission;
+        ParticleSystem.Burst burst = emitter.GetBurst(0);
+        ParticleSystem.MinMaxCurve burstCount = burst.count;
+        burstCount.constant = burstCount.constant * size;
+        burst.count = burstCount;
+        emitter.SetBurst(0, burst);
+        Destroy(particleGO, 4f);
+    }
+    IEnumerator GetInvulnerability(float sec)
+    {
+        invulnearbility = true;
+        yield return new WaitForSeconds(sec);
+        invulnearbility = false;
     }
     void Skill()
     {
@@ -119,7 +194,7 @@ public class PlayerShip : MonoBehaviour
             // Avoid speed multiplying by 1.414 when moving at a diagonal
             vel.Normalize();
         }
-        rigid.velocity = vel * shipSpeed;
+        rigid.velocity = vel * shipSpeed * (1 + speedBoost);
         rigid.position = new Vector3
         (
             Mathf.Clamp(rigid.position.x, boundary.xMin, boundary.xMax),
@@ -128,7 +203,7 @@ public class PlayerShip : MonoBehaviour
         );
         rigid.rotation = Quaternion.Euler(0.0f, 0.0f, rigid.velocity.x * -tilt);
         coreRotator.transform.Rotate(new Vector3(0f, 0f, aZ));
-        foreach (ParticleSystem ps in particleSystems)
+        foreach (ParticleSystem ps in rotatorsParticles)
         {
             ParticleSystem.MainModule main = ps.main;
             if (aZ > 0) main.startSpeed = aZ * aZ * 0.5f;
@@ -159,6 +234,7 @@ public class PlayerShip : MonoBehaviour
         speedBoost = Warpaid.PlayersSO.speedBoost;
         energy = Warpaid.PlayersSO.energy;
 
+        particleSystems = Warpaid.PlayersSO.particlePrefabs;
         //  | - Needed to change Item life = new Item()!
         for (int i = 0; i < lifes; i++)
         {
@@ -211,15 +287,14 @@ public class PlayerShip : MonoBehaviour
                 break;
 
             case Item.eItemType.Cash:
-                Debug.Log("Added cash: " + item.value);
+                // Debug.Log("Added cash: " + item.value);
                 Warpaid.AddCash(item.value);
                 break;
 
             case Item.eItemType.Points:
-                Debug.Log("Added points: " + item.value);
+                // Debug.Log("Added points: " + item.value);
                 Warpaid.AddScore(item.value);
-                // need to create text-value particle;-> method
-                // GameObject particle = Instantiate(Particle.GetParticlePrefab(pa0))
+                TextEffect(item.value, item.transform);
                 break;
 
             case Item.eItemType.Letter:
@@ -287,7 +362,7 @@ public class PlayerShip : MonoBehaviour
                 else
                     addScore = true;
                 break;
-            case "00HH":
+            case "00HG":
                 if (!orbSystem.White)
                     orbSystem.White = true;
                 else
@@ -296,13 +371,13 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("Playership:AddOrb - ID of item has not been set");
+                Debug.Log("Playership:AddOrb - ID of item has not been set. ID: " + orb.itemID);
                 break;
         }
         if (addScore)
         {
             Warpaid.AddScore(orb.value);
-            RandomEffect();
+            TextEffect(orb.value, orb.transform);
         }
     }
 
@@ -465,7 +540,7 @@ public class PlayerShip : MonoBehaviour
         if(addScore)
         {
             Warpaid.AddScore(letter.value);
-            RandomEffect();
+            TextEffect(letter.value, letter.transform);
         }
     }
 
@@ -520,7 +595,7 @@ public class PlayerShip : MonoBehaviour
             if(LIFES.Count == 3)
             {
                 Warpaid.AddScore(life.value);
-                RandomEffect();
+                TextEffect(life.value, life.transform);
                 return;
             }
             LIFES.Add(life);
@@ -550,7 +625,7 @@ public class PlayerShip : MonoBehaviour
             if (ARMORS.Count == 2)
             {
                 Warpaid.AddScore(armor.value);
-                RandomEffect();
+                TextEffect(armor.value, armor.transform);
                 return;
             }
             ARMORS.Add(armor);
@@ -606,8 +681,17 @@ public class PlayerShip : MonoBehaviour
     }
     #endregion
 
+    static public void TextEffect(float num, Transform trans)
+    {
+        if (Warpaid.GetTextParticle() == null)
+            return;
+        GameObject particleGO = Instantiate<GameObject>(Warpaid.GetTextParticle(), S.transform.position, Quaternion.identity);
+        ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
+        Warpaid.PARTICLE_GT.text = num.ToString("N0");
+        Destroy(particleGO, 2f);
+    }
     static public void RandomEffect()
     {
-        Debug.Log("Some random effect to add");
+        Debug.Log("Here is some random effect");
     }
 }

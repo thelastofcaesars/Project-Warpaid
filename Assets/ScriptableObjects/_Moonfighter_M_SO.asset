@@ -20,13 +20,13 @@ MonoBehaviour:
   maxVel: 10
   maxAngularVel: 10
   enemyLevel: 3
-  enemyScale: 0.5
-  pointsForEnemyLevel: 0000000090010000c800000064000000
+  enemyScale: 2
+  dropKind: mother
+  pointsForEnemyLevel: 000000002003000090010000c8000000
   enemyPrefabs:
   - {fileID: 5892827062751724577, guid: eaffb0ba4d816154d81047edb96099dd, type: 3}
   enemyParticlePrefabs:
   - {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713, type: 3}
-  enemyDropPrefabs:
-  - {fileID: 7415200248562355086, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}
-  - {fileID: 1260139446493431313, guid: 7110864bee722744aa9ef5065be02732, type: 3}
-  enemyBullet: {fileID: 0}
+  enemyDropPrefabs: []
+  enemyBullet: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275,
+    type: 3}

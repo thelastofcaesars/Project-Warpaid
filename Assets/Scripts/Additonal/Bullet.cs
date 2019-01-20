@@ -53,8 +53,7 @@ public class Bullet : MonoBehaviour {
         {
             return;
         }  
-        //Destroy(coll.gameObject);
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
     
 }
