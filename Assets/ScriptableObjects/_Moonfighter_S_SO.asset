@@ -21,7 +21,7 @@ MonoBehaviour:
   maxAngularVel: 10
   enemyLevel: 1
   enemyScale: 0.25
-  dropKind: custom
+  dropKind: drop
   pointsForEnemyLevel: 0000000090010000c800000064000000
   enemyPrefabs:
   - {fileID: 5892827062751724577, guid: eaffb0ba4d816154d81047edb96099dd, type: 3}

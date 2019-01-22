@@ -87,7 +87,6 @@ public struct snafu
     public bool A;
     public bool F;
     public bool U;
-    public bool R;
 };
 public struct orb
 {

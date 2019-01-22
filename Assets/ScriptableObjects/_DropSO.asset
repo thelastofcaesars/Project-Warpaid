@@ -15,6 +15,12 @@ MonoBehaviour:
   packageName: All Drop Package
   dropPrefabs:
   - {fileID: 3108628794144600517, guid: 3105f9921be8b00429aa72fc282dde91, type: 3}
+  - {fileID: 1116783907294113483, guid: 1a8708d1b1e183a40b5f8f4b9eab287c, type: 3}
+  - {fileID: 5407006381834586169, guid: 208a5b57cdf7e6b4b9c99caeef3bf43c, type: 3}
+  - {fileID: 8594824331121687324, guid: 6ed62d6d79ff60446be9de5497d8989b, type: 3}
+  - {fileID: 6854562418513547838, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
+  - {fileID: 7070092198443973357, guid: c38014714b6164e47873bb8588d098e5, type: 3}
+  - {fileID: 6854562418513547838, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
   allDropPrefabs:
   - {fileID: 3108628794144600517, guid: 3105f9921be8b00429aa72fc282dde91, type: 3}
   customDropPrefabs:

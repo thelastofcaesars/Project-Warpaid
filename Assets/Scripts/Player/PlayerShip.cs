@@ -70,6 +70,7 @@ public class PlayerShip : MonoBehaviour
     public GameObject coreRotator;
     public ParticleSystem[] rotatorsParticles; // to change get from pSO
     private GameObject[] particleSystems;
+    private bool snafuSystemCompletion = false;
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
@@ -424,6 +425,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.S)
                 {
                     snafuSystem.S = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -434,6 +436,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.N)
                 {
                     snafuSystem.N = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -444,6 +447,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.A)
                 {
                     snafuSystem.A = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -453,7 +457,8 @@ public class PlayerShip : MonoBehaviour
             case "00LF":
                 if (!snafuSystem.F)
                 {
-                    snafuSystem.U = true;
+                    snafuSystem.F = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -464,6 +469,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.U)
                 {
                     snafuSystem.U = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -474,7 +480,6 @@ public class PlayerShip : MonoBehaviour
             // other letters, bullet time etc.
 
             case "00LR":
-                snafuSystem.R = true;
                 if (!(S.freezeTime >= 1f))
                 {
                     S.freezeTime += 0.1f;
@@ -568,7 +573,6 @@ public class PlayerShip : MonoBehaviour
             // other letters, bullet time etc.
 
             case "00LR":
-                snafuSystem.R = false;
                 //RemoveRefrigerator(item); // name in progress;
                 break;
             case "00LT":
@@ -694,4 +698,45 @@ public class PlayerShip : MonoBehaviour
     {
         Debug.Log("Here is some random effect");
     }
+
+    public void SnafuComplete()
+    {
+        if(!snafuSystemCompletion)
+        {
+            if(snafuSystem.S && snafuSystem.N && snafuSystem.A && snafuSystem.F && snafuSystem.U)
+            {
+                snafuSystemCompletion = true;
+                AchievementManager.AchievementStep(Achievement.eStepType.snafuCompleted, 1);
+                if (LIFES.Count < 3)
+                {
+                    Item life = new Item();
+                    life.itemType = Item.eItemType.Heart;
+                    life.itemID = "00H1";
+
+                    AddLife(life);
+                    snafuSystemCompletion = false;
+                }
+                else StartCoroutine(WaitForSnafu());
+            }
+        }
+    }
+
+    IEnumerator WaitForSnafu()
+    {
+        while(snafuSystemCompletion)
+        {
+            if (LIFES.Count < 3)
+            {
+                Item life = new Item();
+                life.itemType = Item.eItemType.Heart;
+                life.itemID = "00H1";
+
+                AddLife(life);
+                snafuSystemCompletion = false;
+            }
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
 }

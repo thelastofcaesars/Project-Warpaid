@@ -249,6 +249,9 @@ public class Warpaid : MonoBehaviour
         if (BULLETS.IndexOf(bullet) == -1)
         {
             BULLETS.Add(bullet);
+
+            // Notify the AchievementManager that this has happened
+            AchievementManager.AchievementStep(Achievement.eStepType.bulletFired, 1);
         }
     }
 
@@ -269,6 +272,9 @@ public class Warpaid : MonoBehaviour
         if (ITEMS.IndexOf(item) == -1)
         {
             ITEMS.Add(item);
+
+            // Notify the AchievementManager that something has happened
+            AchievementManager.NotifyAchievementManager(item);
         }
     }
 
@@ -474,10 +480,16 @@ public class Warpaid : MonoBehaviour
         {
             // We just got the high score
             GOT_HIGH_SCORE = true;
+
+            // Announce it using the AchievementPopUp
+            AchievementPopUp.ShowPopUp("High Score!", "You've achieved a new high score.");
         }
 
         SCORE_GT.text = SCORE.ToString("N0");
 
+
+        // Notify the AchievementManager that this has happened       
+        AchievementManager.AchievementStep(Achievement.eStepType.scoreAttained, SCORE);
     }
 
     static public void AddCash(int num)
@@ -499,8 +511,11 @@ public class Warpaid : MonoBehaviour
         }
         // CASH holds the definitive cash for the player.
         CASH += num;
+
         CASH_GT.text = "$" + CASH.ToString().PadLeft(S.paddingCash).Replace(' ', '0');
 
+        // Notify the AchievementManager that this has happened       
+        //AchievementManager.AchievementStep(Achievement.eStepType.moneyCollected, CASH);
     }
 
     static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this

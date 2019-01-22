@@ -79,7 +79,8 @@
     <Compile Include="Assets\Scripts\GameManagement\CollectionSystem.cs" />
     <Compile Include="Assets\Scripts\GameManagement\ColliderManagement.cs" />
     <Compile Include="Assets\Scripts\GameManagement\Warpaid.cs" />
-    <Compile Include="Assets\Scripts\GUI\AchievementSystem.cs" />
+    <Compile Include="Assets\Scripts\GUI\AchievementManager.cs" />
+    <Compile Include="Assets\Scripts\GUI\AchievementPopUp.cs" />
     <Compile Include="Assets\Scripts\GUI\EquipmentSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\HealthSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\HUDSystems.cs" />
