@@ -171,9 +171,9 @@ public class Warpaid : MonoBehaviour
     }
 
 
-    public void PauseGameToggle()
+    public static void PauseGameByKey()
     {
-        PauseGame(!PAUSED);
+        S.PauseGame(!PAUSED);
     }
 
     public void PauseGame(bool toPaused)

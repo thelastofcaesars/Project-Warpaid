@@ -104,6 +104,11 @@ public class PlayerShip : MonoBehaviour
         {
             Skill();
         }
+
+        if (CrossPlatformInputManager.GetButtonDown("PauseGame"))
+        {
+            Warpaid.PauseGameByKey();
+        }
     }
 
     void FixedUpdate()

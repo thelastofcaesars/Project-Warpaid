@@ -25,7 +25,7 @@ public static class SaveGameManager
     {
         LOCK = false;
         mainFilePath = Application.dataPath + "/Warpaid.save"; // need to change to persistentDataPath when publicize 
-        filePath = Application.dataPath + "PlayerOne.save"; // need to change to persistentDataPath when publicize 
+        filePath = Application.dataPath + "/PlayerOne.save"; // need to change to persistentDataPath when publicize 
 
 #if DEBUG_VerboseConsoleLogging
         Debug.Log("SaveGameManager:Awake() – Path: " + filePath);
