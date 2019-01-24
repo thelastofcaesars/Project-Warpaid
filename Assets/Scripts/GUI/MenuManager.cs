@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    [Tooltip("Index for new and restarted game scene")]
+    public int firstSceneIndex = 1;
+
     public void Authors()
     {
         ;
@@ -16,7 +19,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadGame()
     {
-        ;
+        SaveGameManager.Load();
     }
     public void MultiplayerGame()
     {
@@ -24,7 +27,9 @@ public class MenuManager : MonoBehaviour
     }
     public void NewGame()
     {
-        ;
+        SaveGameManager.DeleteSave();
+        // start new game();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(firstSceneIndex);
     }
     public void QuitGame()
     {
@@ -32,11 +37,13 @@ public class MenuManager : MonoBehaviour
     }
     public void SaveGame()
     {
-        ;
+
+        // need to create reminder button here save/cancel ("hey, this is early-access now, so it has only one available slot for saving and loading")
+        SaveGameManager.Save();
     }
     public void RestartGame()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     

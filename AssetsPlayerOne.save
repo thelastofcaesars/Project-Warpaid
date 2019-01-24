@@ -1,0 +1,114 @@
+{
+    "playerName": "PlayerOne",
+    "stepRecords": [
+        {
+            "type": 6,
+            "cumulative": true,
+            "_num": 1
+        },
+        {
+            "type": 7,
+            "cumulative": true,
+            "_num": 13
+        },
+        {
+            "type": 1,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 8,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 9,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 10,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 11,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 13,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 14,
+            "cumulative": true,
+            "_num": 0
+        },
+        {
+            "type": 5,
+            "cumulative": false,
+            "_num": 8200
+        }
+    ],
+    "achievements": [
+        {
+            "name": "SNAFU",
+            "description": "Situation Normal, All Fu**ed Up",
+            "stepType": 6,
+            "stepCount": 1,
+            "_complete": true
+        },
+        {
+            "name": "Brrr...",
+            "description": "Rrrefrigeratorrr",
+            "stepType": 9,
+            "stepCount": 1,
+            "_complete": false
+        },
+        {
+            "name": "DO NOT BELIEVE EVERYTHING YOU READ!",
+            "description": "You seriously think it's inspiring?!?",
+            "stepType": 11,
+            "stepCount": 1,
+            "_complete": false
+        },
+        {
+            "name": "WASTE OF MONEY, BRAIN AND TIME",
+            "description": "I have not spent more time than you in this game!",
+            "stepType": 12,
+            "stepCount": 1000,
+            "_complete": false
+        },
+        {
+            "name": "SCRIBE",
+            "description": "# letters has been collected",
+            "stepType": 7,
+            "stepCount": 10,
+            "_complete": true
+        },
+        {
+            "name": "CODE 'F76'",
+            "description": "3...2...1...Banned",
+            "stepType": 14,
+            "stepCount": 1,
+            "_complete": false
+        },
+        {
+            "name": "LITTLE ALCHEMIC",
+            "description": "Used # boost!",
+            "stepType": 8,
+            "stepCount": 1,
+            "_complete": false
+        },
+        {
+            "name": "SO CLOSE!",
+            "description": "Death Is Beyond Your Reach!",
+            "stepType": 10,
+            "stepCount": 1,
+            "_complete": false
+        }
+    ],
+    "highScore": 10000
+}

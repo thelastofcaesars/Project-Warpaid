@@ -12,6 +12,9 @@ public class Warpaid : MonoBehaviour
 
     // Private Singleton-style instance. Accessed by static property S later in script
     static private Warpaid _S;
+
+    private SaveFileList saveFileList = new SaveFileList();
+
     static public List<LevelInfo> LEVEL_LIST;
     static List<PlayerShip> PLAYERS;
     static List<Enemy>  ENEMIES;
@@ -28,7 +31,6 @@ public class Warpaid : MonoBehaviour
     //static Text RESTART_GT;
     static Text CASH_GT;
     static Text SCORE_GT;
-    public GameObject quitButton;
     public int paddingCash = 6; // needed for displaying cash
     public int paddingLevels = 5; // needed for displaying level // need to add a method for it
     public GameObject textParticle; // in future all data from SO jo pienso
@@ -144,13 +146,16 @@ public class Warpaid : MonoBehaviour
 
         PLAYERS = new List<PlayerShip>();
         ENEMIES = new List<Enemy>();
-        AddScore(0);
-        AddCash(0);
         PARTICLE_GT = GameObject.Find("ParticleGT").gameObject.GetComponent<Text>();
         GameObject player = Instantiate(playersSO.partPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
         // Loading data needed
+        SaveGameManager.Load();
+
+        // Update score, cash etc for properly display
+        AddScore(0);
+        AddCash(0);
     }
 
     public static string sceneName = "Scene_01";
@@ -483,6 +488,9 @@ public class Warpaid : MonoBehaviour
 
             // Announce it using the AchievementPopUp
             AchievementPopUp.ShowPopUp("High Score!", "You've achieved a new high score.");
+
+            // save this fact
+            SaveGameManager.Save();
         }
 
         SCORE_GT.text = SCORE.ToString("N0");
@@ -515,7 +523,7 @@ public class Warpaid : MonoBehaviour
         CASH_GT.text = "$" + CASH.ToString().PadLeft(S.paddingCash).Replace(' ', '0');
 
         // Notify the AchievementManager that this has happened       
-        //AchievementManager.AchievementStep(Achievement.eStepType.moneyCollected, CASH);
+        AchievementManager.AchievementStep(Achievement.eStepType.moneyCollected, CASH);
     }
 
     static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this
@@ -561,5 +569,10 @@ public class Warpaid : MonoBehaviour
     static public GameObject GetTextParticle()
     {
         return S.textParticle;
+    }
+    
+    static public SaveFileList GetSaveFileList()
+    {
+        return S.saveFileList;
     }
 }

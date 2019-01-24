@@ -88,7 +88,9 @@ public class PlayerShip : MonoBehaviour
         GetAllDataFromSO();
 
         standardPos = transform.position;
-     }
+        staticArmors = armors;
+        staticLifes = lifes;
+    }
 
     void Update()
     {
@@ -102,8 +104,6 @@ public class PlayerShip : MonoBehaviour
         {
             Skill();
         }
-        staticArmors = armors;
-        staticLifes = lifes;
     }
 
     void FixedUpdate()
@@ -126,6 +126,9 @@ public class PlayerShip : MonoBehaviour
 
     void CheckLifeStatus()
     {
+        staticArmors = armors;
+        staticLifes = lifes;
+
         Item item = new Item();
 
         if(armors > 0)
@@ -603,7 +606,7 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             LIFES.Add(life);
-            S.lifes = LIFES.Count;
+            staticLifes = S.lifes = LIFES.Count;  // look over here in future
         }
     }
 
@@ -614,7 +617,7 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         LIFES.Remove(life);
-        S.lifes = LIFES.Count;
+        staticLifes = S.lifes = LIFES.Count;  // look over here in future
         HUDSystems.UpdateInventory();
     }
 
@@ -633,7 +636,7 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             ARMORS.Add(armor);
-            S.armors = ARMORS.Count;
+            staticArmors = S.armors = ARMORS.Count; // look over here in future
         }
     }
 
@@ -644,7 +647,7 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         ARMORS.Remove(armor);
-        S.armors = ARMORS.Count;
+        staticArmors = S.armors = ARMORS.Count; // look over here in future
         HUDSystems.UpdateInventory();
     }
 

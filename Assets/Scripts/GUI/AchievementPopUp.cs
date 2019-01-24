@@ -134,7 +134,7 @@ public class AchievementPopUp : MonoBehaviour
     }
 
 
-    static public void ShowPopUp(string achievementName, string achievementDescription = "")
+    static public void ShowPopUp(string achievementName = "", string achievementDescription = "")
     {
         S.PopUp(achievementName, achievementDescription);
     }

@@ -90,6 +90,7 @@ public class AchievementManager : MonoBehaviour
                         // Tell Unity Analytics that the Achievement has been completed
 
                         // Also save the game any time we complete an Achievement
+                        SaveGameManager.Save();
 
                     }
                 }
@@ -146,7 +147,7 @@ public class AchievementManager : MonoBehaviour
         // S.UnlockPartsAfterLoadingGame();
     }
 
-    /*
+    
     // Note: The Awake() on this script must run before the SaveGameManager.Awake().
     internal static void LoadDataFromSaveFile(SaveFile saveFile)
     {
@@ -162,6 +163,8 @@ public class AchievementManager : MonoBehaviour
         // Handle Achievements
         foreach (Achievement achSF in saveFile.achievements)
         {
+            // need to implement faster solution in future like that ^ one
+
             // This nested loop is not an efficient way to do this, but the number of 
             //  Achievements is so small that it will work fine. I could have made
             //  a Dictionary<string,Achievement> for Achievements as I did with 
@@ -177,8 +180,8 @@ public class AchievementManager : MonoBehaviour
         }
 
         // Unlock the various parts based on loaded Achievement progress
-        S.UnlockPartsAfterLoadingGame();
-    }*/
+        //S.UnlockPartsAfterLoadingGame();
+    }
 
     static public void NotifyAchievementManager(Item item)
     {
