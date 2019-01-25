@@ -54,7 +54,13 @@ public class AchievementPopUp : MonoBehaviour
             StartCoroutine(WaitYourTurn());
         }
     }
-
+    public void PlayAudio()
+    {
+        if(!gameObject.GetComponent<AudioSource>().isPlaying)
+            gameObject.GetComponent<AudioSource>().Play();
+        else
+            gameObject.GetComponent<AudioSource>().Stop();
+    }
 
     IEnumerator WaitYourTurn()
     {
@@ -77,6 +83,9 @@ public class AchievementPopUp : MonoBehaviour
         float step = (moveSpeed / (offscreenPosition - startPosition).magnitude * Time.fixedDeltaTime);
         float t = 0;
         float u;
+
+        PlayAudio();
+
         while (t <= 1.0f)
         {
             t += step;

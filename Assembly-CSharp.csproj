@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Mover.cs" />
     <Compile Include="Assets\Scripts\GUI\AchievementManager.cs" />
     <Compile Include="Assets\Scripts\GUI\AchievementPopUp.cs" />
+    <Compile Include="Assets\Scripts\GUI\ButtonControl.cs" />
     <Compile Include="Assets\Scripts\GUI\EquipmentSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\HealthSystem.cs" />
     <Compile Include="Assets\Scripts\GUI\HUDSystems.cs" />
