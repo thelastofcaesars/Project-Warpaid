@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa22ce992a6290f489cd65d39c395898, type: 3}
+  m_Name: _DropSO
+  m_EditorClassIdentifier: 
+  packageName: All Drop Package
+  dropPrefabs:
+  - {fileID: 3108628794144600517, guid: 3105f9921be8b00429aa72fc282dde91, type: 3}
+  - {fileID: 1116783907294113483, guid: 1a8708d1b1e183a40b5f8f4b9eab287c, type: 3}
+  - {fileID: 5407006381834586169, guid: 208a5b57cdf7e6b4b9c99caeef3bf43c, type: 3}
+  - {fileID: 8594824331121687324, guid: 6ed62d6d79ff60446be9de5497d8989b, type: 3}
+  - {fileID: 6854562418513547838, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
+  - {fileID: 7070092198443973357, guid: c38014714b6164e47873bb8588d098e5, type: 3}
+  - {fileID: 6854562418513547838, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
+  allDropPrefabs:
+  - {fileID: 3108628794144600517, guid: 3105f9921be8b00429aa72fc282dde91, type: 3}
+  customDropPrefabs:
+  - {fileID: 1116783907294113483, guid: 1a8708d1b1e183a40b5f8f4b9eab287c, type: 3}
+  - {fileID: 5407006381834586169, guid: 208a5b57cdf7e6b4b9c99caeef3bf43c, type: 3}
+  - {fileID: 8594824331121687324, guid: 6ed62d6d79ff60446be9de5497d8989b, type: 3}
+  - {fileID: 6854562418513547838, guid: 3860b53b33b798841bbddcb5a3f002a3, type: 3}
+  - {fileID: 7070092198443973357, guid: c38014714b6164e47873bb8588d098e5, type: 3}
+  - {fileID: 648327771145628379, guid: 8bef85b8908707e43a4740afb8ae0db7, type: 3}
+  - {fileID: 5675033168266708908, guid: 2f8730dcedac1ff4787367a54830d924, type: 3}
+  - {fileID: 4897951141921422848, guid: e202aab9b48ea954689a85126b4a2495, type: 3}
+  - {fileID: 7682613173837842010, guid: 7859fa723a5a3d14a89cdc351ffde59e, type: 3}
+  - {fileID: 2148753728990615336, guid: 4a1e487531ba42e4c8a7f91f193e073b, type: 3}
+  - {fileID: 7751344253193511774, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}
+  - {fileID: 1798525601829859535, guid: 7110864bee722744aa9ef5065be02732, type: 3}
+  - {fileID: 6689210012778828826, guid: e93715d8482a30147a0ea7ada2a3debf, type: 3}
+  - {fileID: 8053708465007429905, guid: a84275f000a20544387a7c37db514b48, type: 3}
+  - {fileID: 8461851645742316645, guid: 4eea08056ca4c284e88f2205ba16abfb, type: 3}
+  - {fileID: 5782232262678259695, guid: b1fa4815e14847548856c8d8216108fe, type: 3}
+  - {fileID: 3141766332539618625, guid: 09dfb7137116c4d47ad8d8ab04afa7be, type: 3}
+  - {fileID: 9150220005899339729, guid: 92eaa5e1c277e004f92cf94acc3894da, type: 3}
+  - {fileID: 5894449852862174307, guid: 3475b3c21f145f74e87c2d0202e6443e, type: 3}
+  - {fileID: 8042380517540054020, guid: 03bbf5a2ec82a01409b78391116e3ebf, type: 3}
+  - {fileID: 6106081762294459781, guid: 7aebdf348e621794785a01d79c039b54, type: 3}
+  - {fileID: 7318723840973825161, guid: f73820d7d9482d3468f16dfa72565a0c, type: 3}
+  - {fileID: 4918347404988084143, guid: 13db6460c8428344e9938e5a99ea3b21, type: 3}
+  - {fileID: 3989261897897706344, guid: bdb8c3036f94f6f4380acb81b753268c, type: 3}
+  motherDropPrefabs:
+  - {fileID: 1048508006687996557, guid: 56f8755850644f1449de0d6a7d73f303, type: 3}
+  - {fileID: 3663772210337057493, guid: 5b9c2a365e907f941a6c416b4b83d211, type: 3}
+  - {fileID: 5360764719567432456, guid: f74b38ec18d696640a906fd0a5512df4, type: 3}
+  - {fileID: 4025625198876706765, guid: 0e5d136ca13ee0145bc7ba3867d57e49, type: 3}
+  - {fileID: 2778849948812040782, guid: fc5de3695eda89849999eab49a89925b, type: 3}
+  - {fileID: 3583179631564064134, guid: eba951d5a7c3782408bef9fb867079cc, type: 3}
+  bossDropPrefabs:
+  - {fileID: 6449995279084249822, guid: 70edcf0c604bef148ba5ff776549bd18, type: 3}

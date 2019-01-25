@@ -1,0 +1,2 @@
+C:\Users\Noxiu\Documents\Project Warpaid\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Noxiu\Documents\Project Warpaid\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

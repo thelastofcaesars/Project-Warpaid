@@ -21,16 +21,17 @@ MonoBehaviour:
   maxAngularVel: 10
   enemyLevel: 1
   enemyScale: 0.25
+  dropKind: custom
   pointsForEnemyLevel: 0000000090010000c800000064000000
   enemyPrefabs:
   - {fileID: 5892827062751724577, guid: eaffb0ba4d816154d81047edb96099dd, type: 3}
   enemyParticlePrefabs:
   - {fileID: 1237960001231403142, guid: ba9fa34910f63ad49a4dace50bc1d713, type: 3}
   enemyDropPrefabs:
-  - {fileID: 648327771145628379, guid: 8bef85b8908707e43a4740afb8ae0db7, type: 3}
-  - {fileID: 7682613173837842010, guid: 7859fa723a5a3d14a89cdc351ffde59e, type: 3}
-  - {fileID: 5675033168266708908, guid: 2f8730dcedac1ff4787367a54830d924, type: 3}
-  - {fileID: 4897951141921422848, guid: e202aab9b48ea954689a85126b4a2495, type: 3}
-  - {fileID: 2148753728990615336, guid: 4a1e487531ba42e4c8a7f91f193e073b, type: 3}
+  - {fileID: 2778849948812040782, guid: fc5de3695eda89849999eab49a89925b, type: 3}
+  - {fileID: 4025625198876706765, guid: 0e5d136ca13ee0145bc7ba3867d57e49, type: 3}
+  - {fileID: 3583179631564064134, guid: eba951d5a7c3782408bef9fb867079cc, type: 3}
+  - {fileID: 1048508006687996557, guid: 56f8755850644f1449de0d6a7d73f303, type: 3}
+  - {fileID: 1116783907294113483, guid: 1a8708d1b1e183a40b5f8f4b9eab287c, type: 3}
   enemyBullet: {fileID: 6997134999855588411, guid: bff687b06778025409bfaebb69324275,
     type: 3}

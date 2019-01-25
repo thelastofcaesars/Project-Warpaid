@@ -22,6 +22,7 @@ public class HUDSystems : MonoBehaviour
         }
     }
 
+    /*
     // Wanted in future
     static Dictionary<string, Image> DICT_GUI_ARMORS;
     static Dictionary<string, Image> DICT_GUI_LIFES;
@@ -29,6 +30,7 @@ public class HUDSystems : MonoBehaviour
     static Dictionary<string, Image> DICT_GUI_ORBS;
     static Dictionary<string, Image> DICT_GUI_BOOSTS;
     //
+    */
 
     public Image[] lifes;
     public Image[] armors;
@@ -75,7 +77,7 @@ public class HUDSystems : MonoBehaviour
         if (PlayerShip.LIFES != null)
             theLifes = PlayerShip.LIFES.Count;
         else
-            theLifes = 2;
+            theLifes = 0;
 
         string str = "Heart" + theLifes.ToString();
         // or string str = lifes[theLifes - 1].name;

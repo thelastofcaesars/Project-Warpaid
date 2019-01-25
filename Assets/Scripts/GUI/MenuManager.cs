@@ -4,35 +4,46 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public static void Authors()
+    [Tooltip("Index for new and restarted game scene")]
+    public int firstSceneIndex = 1;
+
+    public void Authors()
     {
         ;
     }
 
-    public static void Highscores()
+    public void Highscores()
     {
         ;
     }
 
-    public static void LoadGame()
+    public void LoadGame()
+    {
+        SaveGameManager.Load();
+    }
+    public void MultiplayerGame()
     {
         ;
     }
-    public static void MultiplayerGame()
+    public void NewGame()
     {
-        ;
+        SaveGameManager.DeleteSave();
+        // start new game();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(firstSceneIndex);
     }
-    public static void NewGame()
-    {
-        ;
-    }
-    public static void QuitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
-    public static void SaveGame()
+    public void SaveGame()
     {
-        ;
+
+        // need to create reminder button here save/cancel ("hey, this is early-access now, so it has only one available slot for saving and loading")
+        SaveGameManager.Save();
+    }
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     

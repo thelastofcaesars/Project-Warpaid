@@ -30,5 +30,8 @@ MonoBehaviour:
   - {fileID: 7431906174298277082, guid: 7d786af361412874bbfb5fef25a298c9, type: 3}
   particlePrefabs:
   - {fileID: 7421842144716680878, guid: 89dffef7625c24f4e8e0cd631f3639eb, type: 3}
+  - {fileID: 5385302513268301580, guid: 993cecafa87c5db46b5846b3a81044aa, type: 3}
+  - {fileID: 3153106612083119155, guid: 3698645e05f288548ba05f91ba25745e, type: 3}
+  - {fileID: 4439249999181428282, guid: 7fe77982d29aa014984547f0a1259463, type: 3}
   playerBullet: {fileID: 6524468577049991104, guid: 0be704f17c396804c88f360585fc46d0,
     type: 3}

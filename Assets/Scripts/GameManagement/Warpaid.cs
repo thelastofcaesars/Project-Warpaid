@@ -12,6 +12,9 @@ public class Warpaid : MonoBehaviour
 
     // Private Singleton-style instance. Accessed by static property S later in script
     static private Warpaid _S;
+
+    private SaveFileList saveFileList = new SaveFileList();
+
     static public List<LevelInfo> LEVEL_LIST;
     static List<PlayerShip> PLAYERS;
     static List<Enemy>  ENEMIES;
@@ -23,13 +26,14 @@ public class Warpaid : MonoBehaviour
 
 
     // Game Controller
+    public static Text PARTICLE_GT;
     static Text GAMEOVER_GT;
     //static Text RESTART_GT;
     static Text CASH_GT;
     static Text SCORE_GT;
-    public GameObject quitButton;
     public int paddingCash = 6; // needed for displaying cash
     public int paddingLevels = 5; // needed for displaying level // need to add a method for it
+    public GameObject textParticle; // in future all data from SO jo pienso
 
     // This is an automatic property
     public static int SCORE { get; private set; }
@@ -69,6 +73,8 @@ public class Warpaid : MonoBehaviour
     public PlayerScriptableObject playersSO;
     [Tooltip("This sets the EnemyScriptableObject to be used throughout the game.")]
     public EnemyScriptableObject enemiesSO;
+    [Tooltip("This sets the DropScriptableObject to be used throughout the game.")]
+    public DropScriptableObject dropSO;
 
     // [Header("This will be set by Remote Settings")]
     // public string levelProgression = "1:3/2,2:4/2,3:3/3,4:4/3,5:5/3,6:3/4,7:4/4,8:5/4,9:6/4,10:3/5";
@@ -140,12 +146,17 @@ public class Warpaid : MonoBehaviour
 
         PLAYERS = new List<PlayerShip>();
         ENEMIES = new List<Enemy>();
-        AddScore(0);
-        AddCash(0);
+        PARTICLE_GT = GameObject.Find("ParticleGT").gameObject.GetComponent<Text>();
         GameObject player = Instantiate(playersSO.partPrefabs[0], new Vector3(0, 0, 0), new Quaternion(0,0,0,0));
         StartCoroutine(SpawnWaves());
 
         // Loading data needed
+        SaveGameManager.Load();
+
+        // Update score, cash etc for properly display
+        AddScore(0);
+        AddCash(0);
+        HUDSystems.UpdateInventory();
     }
 
     public static string sceneName = "Scene_01";
@@ -161,9 +172,9 @@ public class Warpaid : MonoBehaviour
     }
 
 
-    public void PauseGameToggle()
+    public static void PauseGameByKey()
     {
-        PauseGame(!PAUSED);
+        S.PauseGame(!PAUSED);
     }
 
     public void PauseGame(bool toPaused)
@@ -244,6 +255,9 @@ public class Warpaid : MonoBehaviour
         if (BULLETS.IndexOf(bullet) == -1)
         {
             BULLETS.Add(bullet);
+
+            // Notify the AchievementManager that this has happened
+            AchievementManager.AchievementStep(Achievement.eStepType.bulletFired, 1);
         }
     }
 
@@ -255,6 +269,7 @@ public class Warpaid : MonoBehaviour
         }
         BULLETS.Remove(bullet);
     }
+
     static public void AddItem(Item item)
     {
         if (ITEMS == null)
@@ -327,6 +342,17 @@ public class Warpaid : MonoBehaviour
             if (S != null)
             {
                 return S.enemiesSO;
+            }
+            return null;
+        }
+    }
+    static public DropScriptableObject DropSO
+    {
+        get
+        {
+            if (S != null)
+            {
+                return S.dropSO;
             }
             return null;
         }
@@ -458,10 +484,19 @@ public class Warpaid : MonoBehaviour
         {
             // We just got the high score
             GOT_HIGH_SCORE = true;
+
+            // Announce it using the AchievementPopUp
+            AchievementPopUp.ShowPopUp("High Score!", "You've achieved a new high score.");
+
+            // save this fact
+            SaveGameManager.Save();
         }
 
         SCORE_GT.text = SCORE.ToString("N0");
 
+
+        // Notify the AchievementManager that this has happened       
+        AchievementManager.AchievementStep(Achievement.eStepType.scoreAttained, SCORE);
     }
 
     static public void AddCash(int num)
@@ -483,8 +518,11 @@ public class Warpaid : MonoBehaviour
         }
         // CASH holds the definitive cash for the player.
         CASH += num;
+
         CASH_GT.text = "$" + CASH.ToString().PadLeft(S.paddingCash).Replace(' ', '0');
 
+        // Notify the AchievementManager that this has happened       
+        AchievementManager.AchievementStep(Achievement.eStepType.moneyCollected, CASH);
     }
 
     static public void InitDrop(float probability, Transform trans) // need to add drop from special one SO, this
@@ -502,7 +540,7 @@ public class Warpaid : MonoBehaviour
         if (Random.Range(0, 100) < probability)
         {    
             GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);
-            Debug.Log("Inited " + go.name);
+            // Debug.Log("Inited " + go.name);
         }
     }
 
@@ -525,5 +563,15 @@ public class Warpaid : MonoBehaviour
             }
             yield return new WaitForSeconds(3);
         }
+    }
+
+    static public GameObject GetTextParticle()
+    {
+        return S.textParticle;
+    }
+    
+    static public SaveFileList GetSaveFileList()
+    {
+        return S.saveFileList;
     }
 }

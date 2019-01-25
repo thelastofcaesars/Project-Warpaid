@@ -23,6 +23,7 @@ public class EnemyScriptableObject : ScriptableObject
     public int enemyLevel = 2; 
     public float enemyScale = 0.25f;
 
+    public string dropKind = "none";
     public int[] pointsForEnemyLevel = { 0, 400, 200, 100 };
 
     public GameObject[] enemyPrefabs;
@@ -42,10 +43,14 @@ public class EnemyScriptableObject : ScriptableObject
         return enemyParticlePrefabs[ndx];
     }
 
-    public GameObject GetEnemyDropPrefab()
+    /*public GameObject GetEnemyDropPrefab()
     {
         int ndx = Random.Range(0, enemyDropPrefabs.Length);
         return enemyDropPrefabs[ndx];
+    }*/
+    public GameObject GetEnemyDropPrefab()
+    {
+        return Warpaid.DropSO.GetDropPrefab(dropKind);
     }
     public GameObject GetEnemyBullet()
     {

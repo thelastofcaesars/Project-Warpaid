@@ -1240,7 +1240,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7c362641b45a3604d82096de70e4bfbc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 970a7a163c0ceeb459dc39fe1fb3e784, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1341,10 +1341,13 @@ MonoBehaviour:
   playerName: Player
   lifes: 2
   armors: 0
-  energy: 0
   bulletRate: 0.15
   nextFire: 0
-  playerReflex: 2
+  bulletTime: 0.1
+  reflex: 0.1
+  speedBoost: 0.05
+  freezeTime: 0
+  energy: 0
   shipSpeed: 12
   tilt: 1.5
   shotSpawns:
@@ -1358,7 +1361,7 @@ MonoBehaviour:
     zMin: -1.5
     zMax: 0.5
   coreRotator: {fileID: 6879223136347614247}
-  particleSystems:
+  rotatorsParticles:
   - {fileID: 7431906174392398527}
   - {fileID: 7431906174899347443}
   - {fileID: 7431906174859532444}

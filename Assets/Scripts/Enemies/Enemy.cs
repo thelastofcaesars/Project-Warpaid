@@ -110,7 +110,7 @@ public class Enemy : MonoBehaviour
         {
             if (otherGO.tag == "Bullet")
             {
-                Destroy(otherGO);
+                // Destroy(otherGO); everyobjectdestroysitself
                 Warpaid.InitDrop(score, transform);
                 Warpaid.AddScore(score);
             }

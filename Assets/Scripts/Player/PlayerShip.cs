@@ -47,6 +47,10 @@ public class PlayerShip : MonoBehaviour
     public float speedBoost = 0.05f;
     public float freezeTime = 0f;
     public float energy = 0f;
+    // standard position
+    private Vector3 standardPos;
+    private bool invulnearbility;
+    private float size = 1;
     //
 
     [Header("Set in Inspector")]
@@ -64,12 +68,12 @@ public class PlayerShip : MonoBehaviour
     public Boundary boundary;
 
     public GameObject coreRotator;
-    public ParticleSystem[] particleSystems; // to change get from pSO
+    public ParticleSystem[] rotatorsParticles; // to change get from pSO
+    private GameObject[] particleSystems;
+    private bool snafuSystemCompletion = false;
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
-    public static int staticLifes = 2;
-    public static int staticArmors = 0;
 
     void Awake()
     {
@@ -81,6 +85,8 @@ public class PlayerShip : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         GetAllDataFromSO();
 
+        standardPos = transform.position;
+        HUDSystems.UpdateInventory();
     }
 
     void Update()
@@ -95,12 +101,84 @@ public class PlayerShip : MonoBehaviour
         {
             Skill();
         }
-        staticArmors = armors;
-        staticLifes = lifes;
+
+        if (CrossPlatformInputManager.GetButtonDown("PauseGame"))
+        {
+            Warpaid.PauseGameByKey();
+        }
     }
+
     void FixedUpdate()
     {
         Move();
+    }
+
+    private void OnTriggerEnter(Collider coll)
+    {
+        GameObject collGO = coll.gameObject;
+        if (collGO.CompareTag("Enemy"))
+        {
+            if (!invulnearbility)
+            {
+                CheckLifeStatus();
+            }
+            Destroy(collGO);
+        }
+    }
+
+    void CheckLifeStatus()
+    {
+        Item item = new Item();
+
+        if(armors > 0)
+        {
+            item.itemType = Item.eItemType.Armor;
+            item.itemID = "00A1";
+            RemoveArmor(item);
+            InstantiateParticleSystem(4); //armorParticle
+            StartCoroutine(GetInvulnerability(2f));
+        }
+        else if(lifes >= 0)
+        {
+            item.itemType = Item.eItemType.Heart;
+            item.itemID = "00H1";
+            RemoveLife(item);
+            InitShipRespawn();
+            StartCoroutine(GetInvulnerability(3f));
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+    void InitShipRespawn()
+    {
+        InstantiateParticleSystem(3); //deathParticle
+        transform.position = standardPos;
+        InstantiateParticleSystem(2); //respawnParticle
+    }
+    void InstantiateParticleSystem(int ndx)
+    {
+        if (particleSystems.Length <= ndx)
+            return;
+        GameObject particleGO = Instantiate<GameObject>(particleSystems[ndx], transform.position, Quaternion.identity);
+        ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule main = particleSys.main;
+        main.startLifetimeMultiplier = size * 0.5f;
+        ParticleSystem.EmissionModule emitter = particleSys.emission;
+        ParticleSystem.Burst burst = emitter.GetBurst(0);
+        ParticleSystem.MinMaxCurve burstCount = burst.count;
+        burstCount.constant = burstCount.constant * size;
+        burst.count = burstCount;
+        emitter.SetBurst(0, burst);
+        Destroy(particleGO, 4f);
+    }
+    IEnumerator GetInvulnerability(float sec)
+    {
+        invulnearbility = true;
+        yield return new WaitForSeconds(sec);
+        invulnearbility = false;
     }
     void Skill()
     {
@@ -119,7 +197,7 @@ public class PlayerShip : MonoBehaviour
             // Avoid speed multiplying by 1.414 when moving at a diagonal
             vel.Normalize();
         }
-        rigid.velocity = vel * shipSpeed;
+        rigid.velocity = vel * shipSpeed * (1 + speedBoost);
         rigid.position = new Vector3
         (
             Mathf.Clamp(rigid.position.x, boundary.xMin, boundary.xMax),
@@ -128,7 +206,7 @@ public class PlayerShip : MonoBehaviour
         );
         rigid.rotation = Quaternion.Euler(0.0f, 0.0f, rigid.velocity.x * -tilt);
         coreRotator.transform.Rotate(new Vector3(0f, 0f, aZ));
-        foreach (ParticleSystem ps in particleSystems)
+        foreach (ParticleSystem ps in rotatorsParticles)
         {
             ParticleSystem.MainModule main = ps.main;
             if (aZ > 0) main.startSpeed = aZ * aZ * 0.5f;
@@ -159,6 +237,7 @@ public class PlayerShip : MonoBehaviour
         speedBoost = Warpaid.PlayersSO.speedBoost;
         energy = Warpaid.PlayersSO.energy;
 
+        particleSystems = Warpaid.PlayersSO.particlePrefabs;
         //  | - Needed to change Item life = new Item()!
         for (int i = 0; i < lifes; i++)
         {
@@ -211,19 +290,20 @@ public class PlayerShip : MonoBehaviour
                 break;
 
             case Item.eItemType.Cash:
-                Debug.Log("Added cash: " + item.value);
+                // Debug.Log("Added cash: " + item.value);
                 Warpaid.AddCash(item.value);
                 break;
 
             case Item.eItemType.Points:
-                Debug.Log("Added points: " + item.value);
+                // Debug.Log("Added points: " + item.value);
                 Warpaid.AddScore(item.value);
-                // need to create text-value particle;-> method
-                // GameObject particle = Instantiate(Particle.GetParticlePrefab(pa0))
+                TextEffect(item.value, item.transform);
                 break;
 
             case Item.eItemType.Letter:
                 AddLetter(item);
+                // Notify the AchievementManager that something has happened
+                AchievementManager.NotifyAchievementManager(item);
                 break;   
 
             case Item.eItemType.none:
@@ -287,7 +367,7 @@ public class PlayerShip : MonoBehaviour
                 else
                     addScore = true;
                 break;
-            case "00HH":
+            case "00HG":
                 if (!orbSystem.White)
                     orbSystem.White = true;
                 else
@@ -296,13 +376,13 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("Playership:AddOrb - ID of item has not been set");
+                Debug.Log("Playership:AddOrb - ID of item has not been set. ID: " + orb.itemID);
                 break;
         }
         if (addScore)
         {
             Warpaid.AddScore(orb.value);
-            RandomEffect();
+            TextEffect(orb.value, orb.transform);
         }
     }
 
@@ -349,6 +429,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.S)
                 {
                     snafuSystem.S = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -359,6 +440,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.N)
                 {
                     snafuSystem.N = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -369,6 +451,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.A)
                 {
                     snafuSystem.A = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -378,7 +461,8 @@ public class PlayerShip : MonoBehaviour
             case "00LF":
                 if (!snafuSystem.F)
                 {
-                    snafuSystem.U = true;
+                    snafuSystem.F = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -389,6 +473,7 @@ public class PlayerShip : MonoBehaviour
                 if (!snafuSystem.U)
                 {
                     snafuSystem.U = true;
+                    S.SnafuComplete();
                 }
                 else
                 {
@@ -399,8 +484,7 @@ public class PlayerShip : MonoBehaviour
             // other letters, bullet time etc.
 
             case "00LR":
-                snafuSystem.R = true;
-                if (!(S.freezeTime >= 1f))
+                if (S.freezeTime < 1f)
                 {
                     S.freezeTime += 0.1f;
                 }
@@ -411,7 +495,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LT":
-                if (!(S.reflex >= 1f))
+                if (S.reflex < 1f)
                 {
                     S.reflex += 0.05f;
                 }
@@ -422,7 +506,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LB":
-                if (!(S.bulletTime >= 1f))
+                if (S.bulletTime < 1f)
                 {
                     S.bulletTime += 0.05f;
                 }
@@ -433,7 +517,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LV":
-                if (!(S.speedBoost >= 1f))
+                if (S.speedBoost < 1f)
                 {
                     S.speedBoost += 0.05f;
                 }
@@ -444,7 +528,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LE":
-                if (!(S.energy >= 1f))
+                if (S.energy < 1f)
                 {
                     S.energy += 0.2f;
                 }
@@ -465,7 +549,7 @@ public class PlayerShip : MonoBehaviour
         if(addScore)
         {
             Warpaid.AddScore(letter.value);
-            RandomEffect();
+            TextEffect(letter.value, letter.transform);
         }
     }
 
@@ -493,7 +577,6 @@ public class PlayerShip : MonoBehaviour
             // other letters, bullet time etc.
 
             case "00LR":
-                snafuSystem.R = false;
                 //RemoveRefrigerator(item); // name in progress;
                 break;
             case "00LT":
@@ -520,11 +603,11 @@ public class PlayerShip : MonoBehaviour
             if(LIFES.Count == 3)
             {
                 Warpaid.AddScore(life.value);
-                RandomEffect();
+                TextEffect(life.value, life.transform);
                 return;
             }
             LIFES.Add(life);
-            S.lifes = LIFES.Count;
+            S.lifes = LIFES.Count;  // look over here in future
         }
     }
 
@@ -535,7 +618,8 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         LIFES.Remove(life);
-        S.lifes = LIFES.Count;
+        S.lifes = LIFES.Count;  // look over here in future
+        Debug.Log("lifes" +S.lifes);
         HUDSystems.UpdateInventory();
     }
 
@@ -550,11 +634,11 @@ public class PlayerShip : MonoBehaviour
             if (ARMORS.Count == 2)
             {
                 Warpaid.AddScore(armor.value);
-                RandomEffect();
+                TextEffect(armor.value, armor.transform);
                 return;
             }
             ARMORS.Add(armor);
-            S.armors = ARMORS.Count;
+            S.armors = ARMORS.Count; // look over here in future
         }
     }
 
@@ -565,7 +649,8 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         ARMORS.Remove(armor);
-        S.armors = ARMORS.Count;
+        S.armors = ARMORS.Count; // look over here in future
+        Debug.Log(S.armors);
         HUDSystems.UpdateInventory();
     }
 
@@ -606,8 +691,62 @@ public class PlayerShip : MonoBehaviour
     }
     #endregion
 
+    static public void TextEffect(float num, Transform trans)
+    {
+        if (Warpaid.GetTextParticle() == null)
+            return;
+        GameObject particleGO = Instantiate<GameObject>(Warpaid.GetTextParticle(), S.transform.position, Quaternion.identity);
+        ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
+        Warpaid.PARTICLE_GT.text = num.ToString("N0");
+        Destroy(particleGO, 2f);
+    }
     static public void RandomEffect()
     {
-        Debug.Log("Some random effect to add");
+        Debug.Log("Here is some random effect");
     }
+
+    public void SnafuComplete()
+    {
+        if(!snafuSystemCompletion)
+        {
+            if(snafuSystem.S && snafuSystem.N && snafuSystem.A && snafuSystem.F && snafuSystem.U)
+            {
+                snafuSystemCompletion = true;
+                AchievementManager.AchievementStep(Achievement.eStepType.snafuCompleted, 1);
+                if (LIFES.Count < 3)
+                {
+                    Item life = new Item();
+                    life.itemType = Item.eItemType.Heart;
+                    life.itemID = "00H1";
+
+                    AddLife(life);
+                    snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
+                    snafuSystemCompletion = false;
+                    HUDSystems.UpdateInventory();
+                }
+                else StartCoroutine(WaitForSnafu());
+            }
+        }
+    }
+
+    IEnumerator WaitForSnafu()
+    {
+        while(snafuSystemCompletion)
+        {
+            if (LIFES.Count < 3)
+            {
+                Item life = new Item();
+                life.itemType = Item.eItemType.Heart;
+                life.itemID = "00H1";
+
+                AddLife(life);
+                snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
+                snafuSystemCompletion = false;
+                HUDSystems.UpdateInventory();
+            }
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
 }

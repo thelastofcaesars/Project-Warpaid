@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  itemID: 00HH
+  itemID: 00HG
   value: 5000
 --- !u!1 &687178271658238178
 GameObject:
