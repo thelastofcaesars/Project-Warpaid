@@ -74,8 +74,6 @@ public class PlayerShip : MonoBehaviour
 
     //To do: Management, Movement, Firing, Equipment and Customizing;
 
-    public static int staticLifes = 2;
-    public static int staticArmors = 0;
 
     void Awake()
     {
@@ -88,8 +86,7 @@ public class PlayerShip : MonoBehaviour
         GetAllDataFromSO();
 
         standardPos = transform.position;
-        staticArmors = armors;
-        staticLifes = lifes;
+        HUDSystems.UpdateInventory();
     }
 
     void Update()
@@ -131,9 +128,6 @@ public class PlayerShip : MonoBehaviour
 
     void CheckLifeStatus()
     {
-        staticArmors = armors;
-        staticLifes = lifes;
-
         Item item = new Item();
 
         if(armors > 0)
@@ -166,7 +160,7 @@ public class PlayerShip : MonoBehaviour
     }
     void InstantiateParticleSystem(int ndx)
     {
-        if (particleSystems.Length < ndx)
+        if (particleSystems.Length <= ndx)
             return;
         GameObject particleGO = Instantiate<GameObject>(particleSystems[ndx], transform.position, Quaternion.identity);
         ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
@@ -308,6 +302,8 @@ public class PlayerShip : MonoBehaviour
 
             case Item.eItemType.Letter:
                 AddLetter(item);
+                // Notify the AchievementManager that something has happened
+                AchievementManager.NotifyAchievementManager(item);
                 break;   
 
             case Item.eItemType.none:
@@ -488,7 +484,7 @@ public class PlayerShip : MonoBehaviour
             // other letters, bullet time etc.
 
             case "00LR":
-                if (!(S.freezeTime >= 1f))
+                if (S.freezeTime < 1f)
                 {
                     S.freezeTime += 0.1f;
                 }
@@ -499,7 +495,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LT":
-                if (!(S.reflex >= 1f))
+                if (S.reflex < 1f)
                 {
                     S.reflex += 0.05f;
                 }
@@ -510,7 +506,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LB":
-                if (!(S.bulletTime >= 1f))
+                if (S.bulletTime < 1f)
                 {
                     S.bulletTime += 0.05f;
                 }
@@ -521,7 +517,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LV":
-                if (!(S.speedBoost >= 1f))
+                if (S.speedBoost < 1f)
                 {
                     S.speedBoost += 0.05f;
                 }
@@ -532,7 +528,7 @@ public class PlayerShip : MonoBehaviour
                 }
                 break;
             case "00LE":
-                if (!(S.energy >= 1f))
+                if (S.energy < 1f)
                 {
                     S.energy += 0.2f;
                 }
@@ -611,7 +607,7 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             LIFES.Add(life);
-            staticLifes = S.lifes = LIFES.Count;  // look over here in future
+            S.lifes = LIFES.Count;  // look over here in future
         }
     }
 
@@ -622,7 +618,8 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         LIFES.Remove(life);
-        staticLifes = S.lifes = LIFES.Count;  // look over here in future
+        S.lifes = LIFES.Count;  // look over here in future
+        Debug.Log("lifes" +S.lifes);
         HUDSystems.UpdateInventory();
     }
 
@@ -641,7 +638,7 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             ARMORS.Add(armor);
-            staticArmors = S.armors = ARMORS.Count; // look over here in future
+            S.armors = ARMORS.Count; // look over here in future
         }
     }
 
@@ -652,7 +649,8 @@ public class PlayerShip : MonoBehaviour
             return;
         }
         ARMORS.Remove(armor);
-        staticArmors = S.armors = ARMORS.Count; // look over here in future
+        S.armors = ARMORS.Count; // look over here in future
+        Debug.Log(S.armors);
         HUDSystems.UpdateInventory();
     }
 
@@ -722,7 +720,9 @@ public class PlayerShip : MonoBehaviour
                     life.itemID = "00H1";
 
                     AddLife(life);
+                    snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
                     snafuSystemCompletion = false;
+                    HUDSystems.UpdateInventory();
                 }
                 else StartCoroutine(WaitForSnafu());
             }
@@ -740,7 +740,9 @@ public class PlayerShip : MonoBehaviour
                 life.itemID = "00H1";
 
                 AddLife(life);
+                snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
                 snafuSystemCompletion = false;
+                HUDSystems.UpdateInventory();
             }
 
             yield return new WaitForSeconds(2);

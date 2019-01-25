@@ -531,11 +531,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 236f284756c154e48888e927b3bd66a9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d541119dae693f041a25887e443f1d63, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -695,11 +695,14 @@ MonoBehaviour:
   - type: 13
     cumulative: 1
     _num: 0
-  - type: 14
+  - type: 12
     cumulative: 1
     _num: 0
   - type: 5
     cumulative: 0
+    _num: 0
+  - type: 15
+    cumulative: 1
     _num: 0
   achievements:
   - name: SNAFU
@@ -741,6 +744,11 @@ MonoBehaviour:
     description: Death Is Beyond Your Reach!
     stepType: 10
     stepCount: 1
+    _complete: 0
+  - name: NEW PRETENDENT!
+    description: '# Points Attained!'
+    stepType: 5
+    stepCount: 100000
     _complete: 0
 --- !u!1 &209457906
 GameObject:

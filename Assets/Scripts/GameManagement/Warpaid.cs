@@ -156,6 +156,7 @@ public class Warpaid : MonoBehaviour
         // Update score, cash etc for properly display
         AddScore(0);
         AddCash(0);
+        HUDSystems.UpdateInventory();
     }
 
     public static string sceneName = "Scene_01";
@@ -268,6 +269,7 @@ public class Warpaid : MonoBehaviour
         }
         BULLETS.Remove(bullet);
     }
+
     static public void AddItem(Item item)
     {
         if (ITEMS == null)
@@ -277,9 +279,6 @@ public class Warpaid : MonoBehaviour
         if (ITEMS.IndexOf(item) == -1)
         {
             ITEMS.Add(item);
-
-            // Notify the AchievementManager that something has happened
-            AchievementManager.NotifyAchievementManager(item);
         }
     }
 
