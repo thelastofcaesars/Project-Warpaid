@@ -41,6 +41,7 @@ public class PlayerShip : MonoBehaviour
 
     public float bulletRate = 1.1f;
     public float nextFire = 0f;
+    public bool autoFire = false;
     // boosts
     public float bulletTime = 0.1f;
     public float reflex = 0.1f;
@@ -91,7 +92,7 @@ public class PlayerShip : MonoBehaviour
 
     void Update()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Fire1") && !Warpaid.PAUSED)
+        if ((CrossPlatformInputManager.GetButtonDown("Fire1") || (CrossPlatformInputManager.GetButton("Fire1") && autoFire)) && !Warpaid.PAUSED )
         {
             invulnearbility = false;
             Fire();
@@ -117,7 +118,7 @@ public class PlayerShip : MonoBehaviour
     private void OnTriggerEnter(Collider coll)
     {
         GameObject collGO = coll.gameObject;
-        if (collGO.CompareTag("Enemy"))
+        if (collGO.CompareTag("Enemy") || collGO.CompareTag("EnemyBullet"))
         {
             if (!invulnearbility)
             {
@@ -261,6 +262,8 @@ public class PlayerShip : MonoBehaviour
         S.speedBoost = playerInfo.speedBoost;
         S.freezeTime = playerInfo.freezeTime;
         S.energy = playerInfo.energy;
+        S.autoFire = playerInfo.autoFire;
+
         for (int i = 0; i < S.lifes; i++)
         {
             AddLife(DropScriptableObject.GetInventoryItem_SM("life").GetComponent<Item>());
@@ -760,8 +763,8 @@ public class PlayerInfo
     public float speedBoost = 0.05f;
     public float freezeTime = 0f;
     public float energy = 0f;
-
-    public PlayerInfo(int lifes, int armors, float bulletRate, float bulletTime, float reflex, float speedBoost, float freezeTime, float energy)
+    public bool autoFire;
+    public PlayerInfo(int lifes, int armors, float bulletRate, float bulletTime, float reflex, float speedBoost, float freezeTime, float energy, bool autoFire)
     {
         this.lifes = lifes;
         this.armors = armors;
@@ -771,5 +774,6 @@ public class PlayerInfo
         this.speedBoost = speedBoost;
         this.freezeTime = freezeTime;
         this.energy = energy;
+        this.autoFire = autoFire;
     }
 }
