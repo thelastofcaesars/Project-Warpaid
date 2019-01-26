@@ -221,7 +221,6 @@ public class HUDSystems : MonoBehaviour
                     Debug.Log("HUDSystems:UpdateBoost - boost has not been set in good way!");
                     break;
             }
-            // Debug.Log("boost anchor + " + barSize);
             float Ay = boost.transform.GetComponent<RectTransform>().anchorMax.y;
             boost.transform.GetComponent<RectTransform>().anchorMax = new Vector2(barSize, Ay);
             i++;

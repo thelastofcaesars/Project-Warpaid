@@ -9,7 +9,7 @@
         {
             "type": 7,
             "cumulative": true,
-            "_num": 34
+            "_num": 19
         },
         {
             "type": 1,
@@ -44,12 +44,12 @@
         {
             "type": 12,
             "cumulative": true,
-            "_num": 5300
+            "_num": 10
         },
         {
             "type": 5,
             "cumulative": false,
-            "_num": 133800
+            "_num": 258400
         },
         {
             "type": 15,
@@ -84,7 +84,7 @@
             "description": "I have not spent more time than you in this game!",
             "stepType": 12,
             "stepCount": 1000,
-            "_complete": true
+            "_complete": false
         },
         {
             "name": "SCRIBE",

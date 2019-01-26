@@ -96,6 +96,10 @@
     <Compile Include="Assets\Scripts\Player\PlayerScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShip.cs" />
     <Compile Include="Assets\Scripts\Player\SkillManagement.cs" />
+    <None Include="Assets\Fonts\FreeFPU\fontinfo.txt" />
+    <None Include="Assets\Fonts\FreeFPU\Font License.txt" />
+    <None Include="Assets\Fonts\Free\perfectdark.txt" />
+    <None Include="Assets\Fonts\FreeFPU\earthorbiter.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Noxiu/Documents/Project Warpaid/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

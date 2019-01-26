@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 7751344253193511775}
   - component: {fileID: 7932073825772198352}
   m_Layer: 0
-  m_Name: armorblock
+  m_Name: Armor
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 2
   itemID: 00A1
-  value: 100
+  value: 1000
 --- !u!65 &7932073825772198352
 BoxCollider:
   m_ObjectHideFlags: 0

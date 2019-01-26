@@ -127,7 +127,7 @@ public class AchievementPopUp : MonoBehaviour
         {
             if (_S == null)
             {
-                Debug.LogError("AchievementPopUp:S getter - Attempt to get value of S before it has been set.");
+                Debug.LogError("AchievementPopUp:S getter - attempt to get value of S before it has been set.");
                 return null;
             }
             return _S;
@@ -136,7 +136,7 @@ public class AchievementPopUp : MonoBehaviour
         {
             if (_S != null)
             {
-                Debug.LogError("AchievementPopUp:S setter - Attempt to set S when it has already been set.");
+                Debug.LogError("AchievementPopUp:S setter - attempt to set S when it has already been set.");
             }
             _S = value;
         }

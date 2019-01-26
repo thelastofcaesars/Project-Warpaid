@@ -1242,7 +1242,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 970a7a163c0ceeb459dc39fe1fb3e784, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1665,6 +1665,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: phase_engine_mid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587012832035627532, guid: 0da724287164d4f46a14dcd8eccd4c18,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587012832035627532, guid: 0da724287164d4f46a14dcd8eccd4c18,
+        type: 3}
+      propertyPath: Priority
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1158842301169499233, guid: 0da724287164d4f46a14dcd8eccd4c18,
         type: 3}

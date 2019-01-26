@@ -57,3 +57,6 @@ MonoBehaviour:
   - {fileID: 3583179631564064134, guid: eba951d5a7c3782408bef9fb867079cc, type: 3}
   bossDropPrefabs:
   - {fileID: 6449995279084249822, guid: 70edcf0c604bef148ba5ff776549bd18, type: 3}
+  baseInventory:
+  - {fileID: 1798525601829859535, guid: 7110864bee722744aa9ef5065be02732, type: 3}
+  - {fileID: 7751344253193511774, guid: 3dbea63d327c4f9478eb1ee3e1311a4d, type: 3}

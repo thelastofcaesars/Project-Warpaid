@@ -19,6 +19,7 @@ public class DropScriptableObject : ScriptableObject
     public GameObject[] customDropPrefabs;
     public GameObject[] motherDropPrefabs;
     public GameObject[] bossDropPrefabs;
+    public GameObject[] baseInventory;
 
     public GameObject GetDropPrefab(string kindOfDrop)
     {
@@ -46,5 +47,43 @@ public class DropScriptableObject : ScriptableObject
         }
         Debug.Log("Returned first found element");
         return dropPrefabs[0];
+    }
+    public GameObject GetInventoryItem(string kindOfDrop)
+    {
+        int ndx = 0;
+        switch (kindOfDrop)
+        {
+            case "heart":
+                ndx = 0;
+                return baseInventory[ndx];
+            case "armor":
+                ndx = 1;
+                return baseInventory[ndx];
+            default:
+                Debug.Log("DropScriptableObject:GetInventoryItem - invalid index -> out of arrays");
+                break;
+        }
+        Debug.Log("Returned first found element");
+        return baseInventory[ndx];
+    }
+    public static GameObject GetInventoryItem_SM(string kindOfDrop)
+    {
+        int ndx = 0;
+        switch (kindOfDrop)
+        {
+            case "heart":
+            case "life":
+                ndx = 0;
+                return S.baseInventory[ndx];
+            case "armor":
+            case "shield":
+                ndx = 1;
+                return S.baseInventory[ndx];
+            default:
+                Debug.Log("DropScriptableObject:GetInventoryItem - invalid index -> out of arrays");
+                break;
+        }
+        Debug.Log("Returned first found element");
+        return S.baseInventory[ndx];
     }
 }

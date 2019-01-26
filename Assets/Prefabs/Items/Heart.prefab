@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 1798525601829859534}
   - component: {fileID: 3773517867355769891}
   m_Layer: 0
-  m_Name: heartblock
+  m_Name: Heart
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemID: 00H1
-  value: 100
+  value: 1000
 --- !u!65 &3773517867355769891
 BoxCollider:
   m_ObjectHideFlags: 0

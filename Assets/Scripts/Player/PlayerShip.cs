@@ -93,6 +93,7 @@ public class PlayerShip : MonoBehaviour
     {
         if (CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
+            invulnearbility = false;
             Fire();
         }
 
@@ -126,25 +127,24 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Warpaid.GAME_STATE = Warpaid.eGameState.gameOver;
+    }
+
     void CheckLifeStatus()
     {
-        Item item = new Item();
-
-        if(armors > 0)
+        if (armors > 0)
         {
-            item.itemType = Item.eItemType.Armor;
-            item.itemID = "00A1";
-            RemoveArmor(item);
+            RemoveArmor();
             InstantiateParticleSystem(4); //armorParticle
             StartCoroutine(GetInvulnerability(2f));
         }
-        else if(lifes >= 0)
+        else if(lifes > 0)
         {
-            item.itemType = Item.eItemType.Heart;
-            item.itemID = "00H1";
-            RemoveLife(item);
+            RemoveLife(); // can type heart instead
             InitShipRespawn();
-            StartCoroutine(GetInvulnerability(3f));
+            StartCoroutine(GetInvulnerability(2f));
         }
         else
         {
@@ -238,28 +238,17 @@ public class PlayerShip : MonoBehaviour
         energy = Warpaid.PlayersSO.energy;
 
         particleSystems = Warpaid.PlayersSO.particlePrefabs;
-        //  | - Needed to change Item life = new Item()!
         for (int i = 0; i < lifes; i++)
         {
-            Item life = new Item
-            {
-                itemType = Item.eItemType.Heart,
-                itemID = "00H1"
-            };
-            AddLife(life);
+            AddLife(DropScriptableObject.GetInventoryItem_SM("life").GetComponent<Item>());
         }
         for (int i = 0; i < armors; i++)
         {
-            Item armor = new Item
-            {
-                itemType = Item.eItemType.Armor,
-                itemID = "00A1"
-            };
-            AddLife(armor);
+            AddArmor(DropScriptableObject.GetInventoryItem_SM("armor").GetComponent<Item>());
         }
 
         // innocent
-        transform.name = playerName = Warpaid.PlayersSO.playerName;
+        transform.name = playerName = Warpaid.PlayersSO.playerName; // save's name
     }
 
     #region Adding Items/Lifes etc.
@@ -607,19 +596,18 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             LIFES.Add(life);
-            S.lifes = LIFES.Count;  // look over here in future
+            S.lifes = LIFES.Count;
         }
     }
 
-    static public void RemoveLife(Item life)
+    static public void RemoveLife()
     {
         if (LIFES == null)
         {
             return;
         }
-        LIFES.Remove(life);
-        S.lifes = LIFES.Count;  // look over here in future
-        Debug.Log("lifes" +S.lifes);
+        LIFES.RemoveAt(LIFES.Count - 1);
+        S.lifes = LIFES.Count;
         HUDSystems.UpdateInventory();
     }
 
@@ -638,19 +626,18 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             ARMORS.Add(armor);
-            S.armors = ARMORS.Count; // look over here in future
+            S.armors = ARMORS.Count;
         }
     }
 
-    static public void RemoveArmor(Item armor)
+    static public void RemoveArmor()
     {
         if (ARMORS == null)
         {
             return;
         }
-        ARMORS.Remove(armor);
-        S.armors = ARMORS.Count; // look over here in future
-        Debug.Log(S.armors);
+        ARMORS.RemoveAt(ARMORS.Count - 1);
+        S.armors = ARMORS.Count;
         HUDSystems.UpdateInventory();
     }
 
@@ -715,11 +702,7 @@ public class PlayerShip : MonoBehaviour
                 AchievementManager.AchievementStep(Achievement.eStepType.snafuCompleted, 1);
                 if (LIFES.Count < 3)
                 {
-                    Item life = new Item();
-                    life.itemType = Item.eItemType.Heart;
-                    life.itemID = "00H1";
-
-                    AddLife(life);
+                    AddLife(DropScriptableObject.GetInventoryItem_SM("life").GetComponent<Item>()); // can type heart instead
                     snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
                     snafuSystemCompletion = false;
                     HUDSystems.UpdateInventory();
@@ -735,16 +718,11 @@ public class PlayerShip : MonoBehaviour
         {
             if (LIFES.Count < 3)
             {
-                Item life = new Item();
-                life.itemType = Item.eItemType.Heart;
-                life.itemID = "00H1";
-
-                AddLife(life);
+                AddLife(DropScriptableObject.GetInventoryItem_SM("life").GetComponent<Item>()); // can type heart instead
                 snafuSystem.S = snafuSystem.N = snafuSystem.A = snafuSystem.F = snafuSystem.U = false;
                 snafuSystemCompletion = false;
                 HUDSystems.UpdateInventory();
             }
-
             yield return new WaitForSeconds(2);
         }
     }
