@@ -91,7 +91,7 @@ public class PlayerShip : MonoBehaviour
 
     void Update()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+        if (CrossPlatformInputManager.GetButtonDown("Fire1") && !Warpaid.PAUSED)
         {
             invulnearbility = false;
             Fire();
@@ -249,6 +249,27 @@ public class PlayerShip : MonoBehaviour
 
         // innocent
         transform.name = playerName = Warpaid.PlayersSO.playerName; // save's name
+    }
+
+    static public void DirectToReplace(PlayerInfo playerInfo)
+    {
+        S.lifes = playerInfo.lifes;
+        S.armors = playerInfo.armors;
+        S.bulletRate = playerInfo.bulletRate;
+        S.bulletTime = playerInfo.bulletTime;
+        S.reflex = playerInfo.reflex;
+        S.speedBoost = playerInfo.speedBoost;
+        S.freezeTime = playerInfo.freezeTime;
+        S.energy = playerInfo.energy;
+        for (int i = 0; i < S.lifes; i++)
+        {
+            AddLife(DropScriptableObject.GetInventoryItem_SM("life").GetComponent<Item>());
+        }
+        for (int i = 0; i < S.armors; i++)
+        {
+            AddArmor(DropScriptableObject.GetInventoryItem_SM("armor").GetComponent<Item>());
+        }
+        HUDSystems.UpdateInventory();
     }
 
     #region Adding Items/Lifes etc.
@@ -727,4 +748,28 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+}
+[System.Serializable]
+public class PlayerInfo
+{
+    public int lifes = 1;
+    public int armors = 0;
+    public float bulletRate = 1f;
+    public float bulletTime = 0.1f;
+    public float reflex = 0.1f;
+    public float speedBoost = 0.05f;
+    public float freezeTime = 0f;
+    public float energy = 0f;
+
+    public PlayerInfo(int lifes, int armors, float bulletRate, float bulletTime, float reflex, float speedBoost, float freezeTime, float energy)
+    {
+        this.lifes = lifes;
+        this.armors = armors;
+        this.bulletRate = bulletRate;
+        this.bulletTime = bulletTime;
+        this.reflex = reflex;
+        this.speedBoost = speedBoost;
+        this.freezeTime = freezeTime;
+        this.energy = energy;
+    }
 }

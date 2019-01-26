@@ -217,7 +217,7 @@ public class Achievement
     {
         levelUp,
         bulletFired,
-        hitEnemy,
+        destroyEnemy,
         hitAsteroid,
         luckyShot,
         scoreAttained,

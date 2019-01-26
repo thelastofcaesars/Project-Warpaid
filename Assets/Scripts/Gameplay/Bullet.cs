@@ -54,6 +54,7 @@ public class Bullet : MonoBehaviour {
             return;
         }  
         Destroy(gameObject);
+        AchievementManager.AchievementStep(Achievement.eStepType.destroyEnemy, 1);
     }
     
 }

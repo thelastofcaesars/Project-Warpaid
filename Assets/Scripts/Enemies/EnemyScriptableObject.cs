@@ -28,7 +28,6 @@ public class EnemyScriptableObject : ScriptableObject
 
     public GameObject[] enemyPrefabs;
     public GameObject[] enemyParticlePrefabs;
-    public GameObject[] enemyDropPrefabs;
     public GameObject enemyBullet;
 
     public GameObject GetEnemyPrefab()
@@ -42,12 +41,6 @@ public class EnemyScriptableObject : ScriptableObject
         int ndx = Random.Range(0, enemyParticlePrefabs.Length);
         return enemyParticlePrefabs[ndx];
     }
-
-    /*public GameObject GetEnemyDropPrefab()
-    {
-        int ndx = Random.Range(0, enemyDropPrefabs.Length);
-        return enemyDropPrefabs[ndx];
-    }*/
     public GameObject GetEnemyDropPrefab()
     {
         return Warpaid.DropSO.GetDropPrefab(dropKind);

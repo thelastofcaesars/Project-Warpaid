@@ -532,11 +532,11 @@ public class Warpaid : MonoBehaviour
             Debug.Log("Warpaid:InitDrop - attempt to get value before it has been set!");
             return;
         }
-        if (S.enemiesSO.enemyDropPrefabs.Length == 0)
+        /*if (S.enemiesSO.enemyDropPrefabs.Length == 0)
         {
             Debug.Log("There is no drop from this enemy!");
             return;
-        }
+        }*/
         if (Random.Range(0, 100) < probability)
         {    
             GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);

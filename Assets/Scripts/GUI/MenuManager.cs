@@ -45,6 +45,10 @@ public class MenuManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
-
+    public void DirectToReplace()
+    {
+        AchievementManager.AchievementStep(Achievement.eStepType.directorRoom, 1);
+        PlayerShip.DirectToReplace(new PlayerInfo(3, 2, 1f, 1f, 1f, 1f, 1f, 1f));
+    }
     
 }
