@@ -540,7 +540,7 @@ public class Warpaid : MonoBehaviour
         if (Random.Range(0, 100) < probability)
         {    
             GameObject go = Instantiate(EnemiesSO.GetEnemyDropPrefab(), trans.position, trans.rotation);
-            // Debug.Log("Inited " + go.name);
+            Debug.Log("Inited " + go.name);
         }
     }
 

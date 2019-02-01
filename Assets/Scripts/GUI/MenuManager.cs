@@ -48,7 +48,7 @@ public class MenuManager : MonoBehaviour
     public void DirectToReplace()
     {
         AchievementManager.AchievementStep(Achievement.eStepType.directorRoom, 1);
-        PlayerShip.DirectToReplace(new PlayerInfo(3, 2, 1f, 1f, 1f, 1f, 1f, 1f, true));
+        PlayerShip.DirectToReplace(new PlayerInfo(3, 2, 1.1f, 1f, 1f, 1f, 1f, 1f, true));
     }
     
 }

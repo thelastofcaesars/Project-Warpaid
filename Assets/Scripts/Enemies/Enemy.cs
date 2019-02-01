@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public Transform[] shotSpawns;
     public float bulletTime;
     public float delay;
-
+    private float dropProbability;
     private new AudioSource audio;
     Rigidbody rigid; // protected
 
@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
         InitEnemy();
         //To do: Management, Movement and Firing;
         InvokeRepeating("Fire", delay, bulletTime);
+        dropProbability = score / speed * size;
     }
 
     void Fire()
@@ -110,8 +111,9 @@ public class Enemy : MonoBehaviour
         {
             if (otherGO.tag == "Bullet")
             {
+                immune = true;
                 // Destroy(otherGO); everyobjectdestroysitself
-                Warpaid.InitDrop(score, transform);
+                Warpaid.InitDrop(dropProbability, transform);
                 Warpaid.AddScore(score);
             }
             InstantiateParticleSystem();
@@ -137,7 +139,7 @@ public class Enemy : MonoBehaviour
 
     void InstantiateDrop()
     {
-         Warpaid.InitDrop(score, transform);
+         Warpaid.InitDrop(dropProbability, transform);
     }
 
     private void Update()

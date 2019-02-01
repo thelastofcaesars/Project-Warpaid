@@ -4,12 +4,12 @@
         {
             "type": 6,
             "cumulative": true,
-            "_num": 2
+            "_num": 1
         },
         {
             "type": 7,
             "cumulative": true,
-            "_num": 51
+            "_num": 33
         },
         {
             "type": 1,
@@ -44,12 +44,12 @@
         {
             "type": 12,
             "cumulative": true,
-            "_num": 16950
+            "_num": 4720
         },
         {
             "type": 5,
             "cumulative": false,
-            "_num": 132600
+            "_num": 100400
         },
         {
             "type": 15,
@@ -64,7 +64,7 @@
         {
             "type": 2,
             "cumulative": true,
-            "_num": 100
+            "_num": 112
         }
     ],
     "achievements": [
